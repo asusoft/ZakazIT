@@ -43,13 +43,16 @@ const HomeTabs = () => {
                     },
                     overlayColor: "transparent",
                     drawerLabelStyle: {
-                        fontWeight: "bold"
+                        fontWeight: "bold",
+                        fontSize: 20,
+                        marginStart: 5
+                        
                     },
                     drawerActiveTintColor: COLORS.white,
                     drawerInactiveTintColor: COLORS.grey,
                     activeBackgroundColor: 'white',
                     drawerItemStyle: { backgroundColor: null },
-                    swipeEnabled: true,
+                    swipeEnabled: false,
                     sceneContainerStyle: {
                         backgroundColor: COLORS.primary,
                     }

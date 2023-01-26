@@ -1,4 +1,4 @@
-const categories = [
+const dishCategories = [
     {
         id: 1,
         name: 'Fast Food',
@@ -31,14 +31,14 @@ const categories = [
     },
 ]
 
-const restaurants = [
+const Restaurants = [
     {
         "id": "1",
         "name": "El Cabo Coffe Bar Tres De Mayo",
-        "deliveryFee": 1.4,
-        "minDeliveryTime": 25,
-        "maxDeliveryTime": 35,
-        "rating": 4.7,
+        "deliveryFee": 35,
+        "minDeliveryTime": 20,
+        "maxDeliveryTime": 30,
+        "rating": 4.5,
         "address": "Lenina Avenue 35, No 4, Visotky",
         "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant1.jpeg",
         "dishes": [
@@ -89,8 +89,8 @@ const restaurants = [
     {
         "id": "2",
         "name": "Tony Roma's - C.C. Meridiano",
-        "deliveryFee": 0.4,
-        "minDeliveryTime": 25,
+        "deliveryFee": 40,
+        "minDeliveryTime": 15,
         "maxDeliveryTime": 35,
         "rating": 4.7,
         "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
@@ -142,7 +142,7 @@ const restaurants = [
     {
         "id": "3",
         "name": "Brothers Barbecue",
-        "deliveryFee": 1.4,
+        "deliveryFee": 30,
         "minDeliveryTime": 20,
         "maxDeliveryTime": 30,
         "rating": 4.3,
@@ -195,7 +195,7 @@ const restaurants = [
     {
         "id": "4",
         "name": "Hamburguesa Nostra La Salle",
-        "deliveryFee": 0.9,
+        "deliveryFee": 50,
         "minDeliveryTime": 30,
         "maxDeliveryTime": 40,
         "rating": 4.5,
@@ -249,6 +249,6 @@ const restaurants = [
 
 
 export default {
-    categories,
-    restaurants,
+    dishCategories,
+    Restaurants,
 }

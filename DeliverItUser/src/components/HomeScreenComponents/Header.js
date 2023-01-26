@@ -4,6 +4,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import icons from '../../../assets/constants/icons';
 import { useDrawerStatus } from '@react-navigation/drawer';
+import COLORS from '../../../assets/constants/colors';
 
 const Header = () =>{
   const drawerIsOpen =useDrawerStatus();
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     borderRadius: 20,
-    backgroundColor: "#FFFAF0",
+    backgroundColor: COLORS.secondary,
   },
 
   locationIcon: {
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   greetings: {
     margin: 5,
     marginLeft: 20,
-    marginTop: 20,
+    marginTop: 10,
     padding: 5,
   },
 

@@ -7,6 +7,10 @@ const cross = require('../images/cross.png');
 const deleteIcon = require('../images/delete.png');
 const dollar = require('../images/dollar.png');
 const menu = require('../images/menu.png');
+const filter = require('../images/filter.png');
+const star = require('../images/star.png');
+const delivery = require('../images/delivery.png');
+const time = require('../images/time.png');
 
 export default {
     back,
@@ -17,5 +21,9 @@ export default {
     cross,
     deleteIcon,
     dollar,
-    menu
+    menu,
+    filter,
+    star,
+    delivery,
+    time
 }
