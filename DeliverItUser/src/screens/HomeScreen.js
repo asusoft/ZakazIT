@@ -4,12 +4,14 @@ import { FlatList, SafeAreaView, ScrollView, Dimensions, StatusBar, Platform, St
 
 import COLORS from '../../assets/constants/colors';
 import Header from '../components/HomeScreenComponents/Header';
+import SearchBar from '../components/HomeScreenComponents/SearchBar';
 
 
 export default function HomeScreen() {
   return (
     <SafeAreaView style={[styles.container, styles.droidSafeArea]}>
       <Header />
+      <SearchBar />
       </SafeAreaView>
   );
 }
