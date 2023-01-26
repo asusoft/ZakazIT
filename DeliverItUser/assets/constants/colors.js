@@ -5,7 +5,7 @@ const COLORS = {
     dark: '#616161',
     light: '#f5f5f5',
     grey: '#a8a8a8',
-    background: '#d0d8dc',
+    background: '#FAF0E6',
     red: '#ff4545'
   };
   

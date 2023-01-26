@@ -30,7 +30,7 @@ const HomeTabs = () => {
     return (
         <View style={{
             flex: 1,
-            backgroundColor: "#FFA500"
+            backgroundColor: "#FF0000"
         }}>
             <Drawer.Navigator
                 initialRouteName="Home"
@@ -77,8 +77,5 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         overflow: 'hidden',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: "white"
     },
 }); 
