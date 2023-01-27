@@ -40,47 +40,101 @@ const Restaurants = [
         "maxDeliveryTime": 30,
         "rating": 4.5,
         "address": "Lenina Avenue 35, No 4, Visotky",
+        isFavorite: false,
         "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant1.jpeg",
         "dishes": [
             {
-                "id": "1",
-                "name": "Cheese Tequeños",
+                id: 1,
+                name: "Cheese Tequeños",
                 "description": "6 pieces of chese with sauce.",
                 "price": 6.9,
                 "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
                 categories: [1, 2],
-                isFavourite: true,
+                isFavorite: true,
             },
             {
-                "id": "2",
-                "name": "Hamburger La Super Cabo Burger",
+                id: 2,
+                name: "Hamburger La Super Cabo Burger",
                 "description": "Double meat, gouda cheese, cheddar cheese, cooked ham, bacon, egg, salad and rustic potatoes.",
                 "price": 8.9,
                 categories: [1, 3],
-                isFavourite: false,
+                isFavorite: false,
                 "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg"
             },
             {
-                id: "3",
+                id: 3,
                 categories: [6],
-                isFavourite: false,
-                "name": "U.S.A. Burger",
+                isFavorite: false,
+                name: "U.S.A. Burger",
+                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
+                
                 "description": "Beef, gouda cheese, cheddar cheese, cooked ham, bacon, egg and salad.",
                 "price": 5.4
             },
             {
-                id: "4",
+                id: 4,
                 categories: [3, 5],
-                isFavourite: true,
-                "name": "Slices of Llanero Cheese",
+                isFavorite: true,
+                name: "Slices of Llanero Cheese",
                 "description": "Ripe plantain with cheese and palm honey.",
+                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
+                
                 "price": 5.9
             },
             {
                 id: "5",
                 categories: [2, 3, 6],
-                isFavourite: false,
-                "name": "Papas Locas El Cabo",
+                isFavorite: false,
+                name: "Papas Locas El Cabo",
+                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
+                
+                "description": "French fries with shredded chicken, gouda cheese and ham.",
+                "price": 7.9
+            },
+            {
+                id: 6,
+                name: "Cheese Tequeños",
+                "description": "6 pieces of chese with sauce.",
+                "price": 6.9,
+                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
+                categories: [1, 2],
+                isFavorite: true,
+            },
+            {
+                id: 7,
+                name: "Hamburger La Super Cabo Burger",
+                "description": "Double meat, gouda cheese, cheddar cheese, cooked ham, bacon, egg, salad and rustic potatoes.",
+                "price": 8.9,
+                categories: [1, 3],
+                isFavorite: false,
+                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg"
+            },
+            {
+                id: 8,
+                categories: [6],
+                isFavorite: false,
+                name: "U.S.A. Burger",
+                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
+                
+                "description": "Beef, gouda cheese, cheddar cheese, cooked ham, bacon, egg and salad.",
+                "price": 5.4
+            },
+            {
+                id: 9,
+                categories: [3, 5],
+                isFavorite: true,
+                name: "Slices of Llanero Cheese",
+                "description": "Ripe plantain with cheese and palm honey.",
+                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
+                
+                "price": 5.9
+            },
+            {
+                id: "10",
+                categories: [2, 3, 6],
+                isFavorite: false,
+                name: "Papas Locas El Cabo",
+                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
                 "description": "French fries with shredded chicken, gouda cheese and ham.",
                 "price": 7.9
             }
@@ -93,8 +147,9 @@ const Restaurants = [
         "minDeliveryTime": 15,
         "maxDeliveryTime": 35,
         "rating": 4.7,
+        isFavorite: true,
         "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
-        "dishes": [
+        dishes: [
             {
                 "id": "1",
                 "name": "Cheese Tequeños",
@@ -102,7 +157,7 @@ const Restaurants = [
                 "price": 6.9,
                 "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
                 categories: [1, 2],
-                isFavourite: true,
+                isFavorite: true,
             },
             {
                 "id": "2",
@@ -110,13 +165,13 @@ const Restaurants = [
                 "description": "Double meat, gouda cheese, cheddar cheese, cooked ham, bacon, egg, salad and rustic potatoes.",
                 "price": 8.9,
                 categories: [1, 3],
-                isFavourite: false,
+                isFavorite: false,
                 "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg"
             },
             {
                 id: "3",
                 categories: [6],
-                isFavourite: false,
+                isFavorite: false,
                 "name": "U.S.A. Burger",
                 "description": "Beef, gouda cheese, cheddar cheese, cooked ham, bacon, egg and salad.",
                 "price": 5.4
@@ -124,7 +179,7 @@ const Restaurants = [
             {
                 id: "4",
                 categories: [3, 5],
-                isFavourite: true,
+                isFavorite: true,
                 "name": "Slices of Llanero Cheese",
                 "description": "Ripe plantain with cheese and palm honey.",
                 "price": 5.9
@@ -132,8 +187,9 @@ const Restaurants = [
             {
                 id: "5",
                 categories: [2, 3, 6],
-                isFavourite: false,
+                isFavorite: false,
                 "name": "Papas Locas El Cabo",
+                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
                 "description": "French fries with shredded chicken, gouda cheese and ham.",
                 "price": 7.9
             }
@@ -146,8 +202,9 @@ const Restaurants = [
         "minDeliveryTime": 20,
         "maxDeliveryTime": 30,
         "rating": 4.3,
+        isFavorite: false,
         "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg",
-        "dishes": [
+        dishes: [
             {
                 "id": "1",
                 "name": "Cheese Tequeños",
@@ -155,7 +212,7 @@ const Restaurants = [
                 "price": 6.9,
                 "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
                 categories: [1, 2],
-                isFavourite: true,
+                isFavorite: true,
             },
             {
                 "id": "2",
@@ -163,13 +220,13 @@ const Restaurants = [
                 "description": "Double meat, gouda cheese, cheddar cheese, cooked ham, bacon, egg, salad and rustic potatoes.",
                 "price": 8.9,
                 categories: [1, 3],
-                isFavourite: false,
+                isFavorite: false,
                 "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg"
             },
             {
                 id: "3",
                 categories: [6],
-                isFavourite: false,
+                isFavorite: false,
                 "name": "U.S.A. Burger",
                 "description": "Beef, gouda cheese, cheddar cheese, cooked ham, bacon, egg and salad.",
                 "price": 5.4
@@ -177,7 +234,7 @@ const Restaurants = [
             {
                 id: "4",
                 categories: [3, 5],
-                isFavourite: true,
+                isFavorite: true,
                 "name": "Slices of Llanero Cheese",
                 "description": "Ripe plantain with cheese and palm honey.",
                 "price": 5.9
@@ -185,7 +242,7 @@ const Restaurants = [
             {
                 id: "5",
                 categories: [2, 3, 6],
-                isFavourite: false,
+                isFavorite: false,
                 "name": "Papas Locas El Cabo",
                 "description": "French fries with shredded chicken, gouda cheese and ham.",
                 "price": 7.9
@@ -199,8 +256,9 @@ const Restaurants = [
         "minDeliveryTime": 30,
         "maxDeliveryTime": 40,
         "rating": 4.5,
+        isFavorite: true,
         "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant4.jpeg",
-        "dishes": [
+        dishes: [
             {
                 "id": "1",
                 "name": "Cheese Tequeños",
@@ -208,7 +266,7 @@ const Restaurants = [
                 "price": 6.9,
                 "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
                 categories: [1, 2],
-                isFavourite: true,
+                isFavorite: true,
             },
             {
                 "id": "2",
@@ -216,13 +274,13 @@ const Restaurants = [
                 "description": "Double meat, gouda cheese, cheddar cheese, cooked ham, bacon, egg, salad and rustic potatoes.",
                 "price": 8.9,
                 categories: [1, 3],
-                isFavourite: false,
+                isFavorite: false,
                 "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg"
             },
             {
                 id: "3",
                 categories: [6],
-                isFavourite: false,
+                isFavorite: false,
                 "name": "U.S.A. Burger",
                 "description": "Beef, gouda cheese, cheddar cheese, cooked ham, bacon, egg and salad.",
                 "price": 5.4
@@ -230,7 +288,7 @@ const Restaurants = [
             {
                 id: "4",
                 categories: [3, 5],
-                isFavourite: true,
+                isFavorite: true,
                 "name": "Slices of Llanero Cheese",
                 "description": "Ripe plantain with cheese and palm honey.",
                 "price": 5.9
@@ -238,7 +296,7 @@ const Restaurants = [
             {
                 id: "5",
                 categories: [2, 3, 6],
-                isFavourite: false,
+                isFavorite: false,
                 "name": "Papas Locas El Cabo",
                 "description": "French fries with shredded chicken, gouda cheese and ham.",
                 "price": 7.9

@@ -29,7 +29,7 @@ const CustomDrawerContent = props => {
         >
           <Image
             source = {images.logo1_white}
-            style={{ height: 130, width: 130, borderRadius: 20 }}
+            style={{ height: 130, width: 130, borderRadius: 20,}}
           />
         </View>
             <DrawerItemList {...props} />

@@ -11,6 +11,8 @@ const filter = require('../images/filter.png');
 const star = require('../images/star.png');
 const delivery = require('../images/delivery.png');
 const time = require('../images/time.png');
+const heart = require("../images/heart.png")
+const heartFilled = require("../images/heart_filled.png")
 
 export default {
     back,
@@ -25,5 +27,7 @@ export default {
     filter,
     star,
     delivery,
-    time
+    time,
+    heart,
+    heartFilled
 }

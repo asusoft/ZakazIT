@@ -1,11 +1,19 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import COLORS from '../../../assets/constants/colors';
 import icons from '../../../assets/constants/icons';
 
 const RestaurantItem = ({ restaurant }) => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const routeName = route.name;
+  
   const onPress = () => {
-    console.warn('Restaurant Pressed')
+    navigation.navigate('Restaurants', {
+      screen: 'RestaurantInfoScreen', 
+      params: { restaurant: restaurant, previous_screen: routeName},
+    });
   }
 
   return (
@@ -17,7 +25,7 @@ const RestaurantItem = ({ restaurant }) => {
             uri: restaurant.image,
           }}
         />
-        <FontAwesome style={styles.Like} name="heart" size={30} color="red" />
+        <Image source={restaurant?.isFavorite ? icons.heartFilled : icons.heart} style={styles.Like} />
       </View>
       <View style={styles.ItemInfo}>
         <Text style={styles.ItemName}>{restaurant.name}</Text>
@@ -79,8 +87,12 @@ const styles = StyleSheet.create({
   },
   Like: {
     position: "absolute",
+    top: 8,
+    right: 8,
     padding: 15,
-    alignSelf: "flex-end"
+    height: 35,
+    width: 35,
+    tintColor: COLORS.red
   },
   InfoText: {
     fontSize: 14,

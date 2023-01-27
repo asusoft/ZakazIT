@@ -16,14 +16,13 @@ export default function HomeScreen() {
         <SearchBar />
         <View>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingRight: 20, marginBottom: 10 }}>
-            <Text style={styles.SectionHeader}>All Catergories</Text>
+            <Text style={styles.SectionHeader}>Popular Catergories</Text>
             <Text style={{ fontSize: 15, alignSelf: "flex-end" }}>See all </Text>
           </View>
           <Categories categories={dummyData.dishCategories} />
         </View>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingRight: 20, marginBottom: 10 }}>
           <Text style={styles.SectionHeader}>Restaurants</Text>
-          <Text style={{ fontSize: 15, alignSelf: "flex-end" }}>See all </Text>
         </View>
         <FlatList data={dummyData.Restaurants}
           renderItem={({ item }) => <RestaurantItem restaurant={item} />}
