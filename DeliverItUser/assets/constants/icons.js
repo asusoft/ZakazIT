@@ -2,6 +2,7 @@ const back = require('../images/back.png');
 const cancel = require('../images/cancel.png');
 const check_circle = require('../images/check_circle.png');
 const check_off = require('../images/check_off.png');
+const check_on = require('../images/check_on.png');
 const correct = require('../images/correct.png');
 const cross = require('../images/cross.png');
 const deleteIcon = require('../images/delete.png');
@@ -21,6 +22,7 @@ const bag = require("../images/bag.png")
 const edit = require("../images/edit.png")
 const celebrate = require("../images/celebrate.png")
 const list = require("../images/list.png")
+const support = require("../images/support.png")
 
 const mastercard = require("../images/mastercard.png")
 const apple = require("../images/apple.png")
@@ -34,6 +36,7 @@ export default {
     cancel,
     check_circle,
     check_off,
+    check_on,
     correct,
     cross,
     deleteIcon,
@@ -56,5 +59,6 @@ export default {
     google,
     edit,
     celebrate, 
-    list
+    list,
+    support
 }

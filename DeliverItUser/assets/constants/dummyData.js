@@ -393,6 +393,7 @@ const orders = [
         restaurant: Restaurants[1],
         items: Restaurants[1].dishes,
         total: 30.97,
+        paymentMethod: "Master Card",
         status: "Completed"
     },
     {
@@ -400,6 +401,7 @@ const orders = [
         restaurant: Restaurants[0],
         items: Restaurants[0].dishes,
         total: 30.97,
+        paymentMethod: "Visa",
         status: "In Progress"
     },
     {
@@ -407,6 +409,7 @@ const orders = [
         restaurant: Restaurants[2],
         items: Restaurants[2].dishes,
         total: 30.97,
+        paymentMethod: "Apple Pay",
         status: "Cancelled"
     },
     {
@@ -414,6 +417,7 @@ const orders = [
         restaurant: Restaurants[3],
         items: Restaurants[3].dishes,
         total: 30.97,
+        paymentMethod: "Master Card",
         status: "Completed"
     }
 ]

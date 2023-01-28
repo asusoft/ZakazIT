@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-nati
 import COLORS from '../../../assets/constants/colors';
 
 // create a component
-const OrderList = ({orders}) => {
+const OrderList = ({orders, navigation}) => {
     return (
         <View style={{ margin: 20, marginTop: 10 }}>
             <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 15 }}>
@@ -67,12 +67,12 @@ const OrderList = ({orders}) => {
                                     </View>
                                 </View>
                                 <View style={{ height: "40%", width: "100%", flexDirection: 'row', paddingEnd: 40, paddingBottom: 15 }}>
-                                    <View style={{ backgroundColor: COLORS.primary, ...styles.buttons }}>
+                                    <Pressable style={{ backgroundColor: COLORS.primary, ...styles.buttons }}>
                                         <Text style={{ fontSize: 18, fontWeight: '600', color: COLORS.white }}>Re-order</Text>
-                                    </View>
-                                    <View style={{ backgroundColor: COLORS.lightGray2, ...styles.buttons }}>
+                                    </Pressable>
+                                    <Pressable onPress={() => navigation.push('OrderDetailsScreen', {order: item})} style={{ backgroundColor: COLORS.lightGray2, ...styles.buttons }}>
                                         <Text style={{ fontSize: 18, fontWeight: '600', color: COLORS.primary }}>Details</Text>
-                                    </View>
+                                    </Pressable>
                                 </View>
                             </View>
                         );

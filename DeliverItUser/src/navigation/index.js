@@ -14,6 +14,7 @@ import CustomDrawerContent from './CustomDrawerContent'
 import CheckoutScreen from "../screens/CheckoutScreen";
 import Payment from "../screens/Payment";
 import OrdersScreen from "../screens/OrdersScreen";
+import OrderdetailsScreen from "../screens/OrderDetailsScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -158,6 +159,10 @@ const OrdersStackNavigator = () => {
             <OrdersStack.Screen
                 name="OrdersScreen"
                 component={OrdersScreen}
+            />
+            <OrdersStack.Screen
+                name="OrderDetailsScreen"
+                component={OrderdetailsScreen}
             />
         </OrdersStack.Navigator>
     );

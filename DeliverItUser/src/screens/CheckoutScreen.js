@@ -67,7 +67,7 @@ const CheckoutScreen = ({ navigation }) => {
                             margin: 10
                         }}
                         source={
-                            isDelivery ? icons.correct : icons.check_off
+                            isDelivery ? icons.check_on : icons.check_off
                         }
                     />
                     <View style={{ margin: 10, flex: 1 }}>
@@ -108,7 +108,7 @@ const CheckoutScreen = ({ navigation }) => {
                             margin: 10
                         }}
                         source={
-                            isDelivery ? icons.check_off : icons.correct
+                            isDelivery ? icons.check_off :icons.check_on
                         }
                     /><View style={{ margin: 10, flex: 1 }}>
                         <Text style={{ fontSize: 18, fontWeight: "600", }}>Self Pickup</Text>
@@ -167,14 +167,14 @@ const CheckoutScreen = ({ navigation }) => {
                                         tintColor: selectedPaymentMethod === item.id.toString()
                                             ? COLORS.primary
                                             : [],
-                                        marginTop: 10,
+                                        marginTop: 5,
                                         marginLeft: 5,
                                         alignSelf: 'flex-start',
                                         top: 0
                                     }}
                                         source={
                                             selectedPaymentMethod === item.id.toString()
-                                                ? icons.correct
+                                                ? icons.check_on
                                                 : icons.check_off
 
                                         }
@@ -246,7 +246,7 @@ const CheckoutScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.lightGray,
+        backgroundColor: COLORS.background,
     },
     Header: {
         top: 35,

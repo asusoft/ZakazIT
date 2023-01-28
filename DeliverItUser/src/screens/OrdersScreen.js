@@ -46,7 +46,7 @@ const OrdersScreen = ({ navigation }) => {
             {/* Header */}
             {RenderHeader()}
             {/* List */}
-            <OrderList orders={orders}/>
+            <OrderList orders={orders} navigation={navigation}/>
         </View>
     );
 };
