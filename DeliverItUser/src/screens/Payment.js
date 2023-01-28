@@ -7,6 +7,10 @@ import icons from '../../assets/constants/icons';
 // create a component
 const Payment = ({ navigation, route }) => {
     const { isSuccess, paymentMethod } = route.params;
+    const handleClick = () => {
+        isSuccess ? navigation.navigate('Orders') :
+        navigation.goBack()
+    }
     return (
         <View style={styles.container}>
             {/* Message */}
@@ -72,7 +76,7 @@ const Payment = ({ navigation, route }) => {
             </View>
 
             {/* Footer */}
-            <Pressable onPress={() => navigation.goBack()} style={styles.Footer}>
+            <Pressable onPress={handleClick} style={styles.Footer}>
                 <Text style={{ fontSize: 24, color: COLORS.light, fontWeight: "800" }}> {isSuccess ? `Go to Order` : `Change Payment method`}</Text>
             </Pressable>
         </View>

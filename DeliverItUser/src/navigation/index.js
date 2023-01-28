@@ -13,6 +13,7 @@ import COLORS from '../../assets/constants/colors';
 import CustomDrawerContent from './CustomDrawerContent'
 import CheckoutScreen from "../screens/CheckoutScreen";
 import Payment from "../screens/Payment";
+import OrdersScreen from "../screens/OrdersScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -44,6 +45,10 @@ const StackNavigator = () => {
             <Stacks.Screen
                 name="Cart"
                 component={CartStackNavigator}
+            />
+            <Stacks.Screen
+                name="Orders"
+                component={OrdersStackNavigator}
             />
         </Stacks.Navigator>
     )
@@ -141,6 +146,20 @@ const CartStackNavigator = () => {
                 component={Payment}
             />
         </CartStack.Navigator>
+    );
+};
+
+const OrdersStack = createNativeStackNavigator();
+const OrdersStackNavigator = () => {
+    return (
+        <OrdersStack.Navigator
+            screenOptions={{ headerShown: false }}
+        >
+            <OrdersStack.Screen
+                name="OrdersScreen"
+                component={OrdersScreen}
+            />
+        </OrdersStack.Navigator>
     );
 };
 

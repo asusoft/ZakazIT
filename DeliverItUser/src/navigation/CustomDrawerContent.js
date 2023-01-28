@@ -49,6 +49,7 @@ const CustomDrawerContent = props => {
         <View style={{ marginBottom: 20 }}>
           <CustomDrawerItem label={'Home'} icon={icons.home} isFocused={true} />
           <CustomDrawerItem label={'My Cart'} icon={icons.cart} />
+          <CustomDrawerItem label={'My Orders'} icon={icons.list} />
         </View>
       </View>
     </DrawerContentScrollView>

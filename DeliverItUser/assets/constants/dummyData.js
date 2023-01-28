@@ -387,9 +387,41 @@ const cart = [
     },
 ]
 
+const orders = [
+    {
+        id: 1,
+        restaurant: Restaurants[1],
+        items: Restaurants[1].dishes,
+        total: 30.97,
+        status: "Completed"
+    },
+    {
+        id: 2,
+        restaurant: Restaurants[0],
+        items: Restaurants[0].dishes,
+        total: 30.97,
+        status: "In Progress"
+    },
+    {
+        id: 3,
+        restaurant: Restaurants[2],
+        items: Restaurants[2].dishes,
+        total: 30.97,
+        status: "Cancelled"
+    },
+    {
+        id: 4,
+        restaurant: Restaurants[3],
+        items: Restaurants[3].dishes,
+        total: 30.97,
+        status: "Completed"
+    }
+]
+
 
 export default {
     dishCategories,
     Restaurants,
-    cart
+    cart,
+    orders
 }

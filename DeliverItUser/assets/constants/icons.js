@@ -20,6 +20,7 @@ const cart = require("../images/cart.png")
 const bag = require("../images/bag.png")
 const edit = require("../images/edit.png")
 const celebrate = require("../images/celebrate.png")
+const list = require("../images/list.png")
 
 const mastercard = require("../images/mastercard.png")
 const apple = require("../images/apple.png")
@@ -54,5 +55,6 @@ export default {
     apple,
     google,
     edit,
-    celebrate
+    celebrate, 
+    list
 }
