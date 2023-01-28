@@ -1,14 +1,26 @@
 //import liraries
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable } from 'react-native';
 import COLORS from '../../../assets/constants/colors';
 import icons from '../../../assets/constants/icons';
+
+
+
 // create a component
-const MenuItem = ({item}) => {
+const MenuItem = ({ item }) => {
+    const navigation = useNavigation();
+    const route = useRoute();
+    const routeName = route.name;
     return (
-        <View style={styles.container}>
+        <Pressable onPress={() =>
+            navigation.navigate('DishInfoScreen',
+                { dish: item, previous_screen: routeName}
+            )
+        }
+            style={styles.container}>
             <View style={styles.itemImageContainer}>
-                <Image style={styles.itemImage} source={{uri : item.image}} />
+                <Image style={styles.itemImage} source={{ uri: item.image }} />
             </View>
             <View style={styles.itemInfo}>
                 <Text style={styles.itemName}>{item.name}</Text>
@@ -17,10 +29,10 @@ const MenuItem = ({item}) => {
             </View>
             <View style={styles.itemOptions}>
                 <TouchableOpacity style={styles.like}>
-                    <Image source={item?.isFavorite ? icons.heartFilled : icons.heart} style={{height: 20, width: 20}} />
+                    <Image source={item?.isFavorite ? icons.heartFilled : icons.heart} style={{ height: 20, width: 20 }} />
                 </TouchableOpacity>
             </View>
-        </View>
+        </Pressable>
     );
 };
 
@@ -49,14 +61,14 @@ const styles = StyleSheet.create({
         height: "90%",
         width: "90%",
         borderRadius: 10
-    }, 
+    },
     itemInfo: {
         flex: 1,
         marginHorizontal: 10,
         paddingHorizontal: 10,
         paddingVertical: 10,
         justifyContent: "space-around"
-    }, 
+    },
     itemName: {
         fontSize: 14,
         fontWeight: "600"

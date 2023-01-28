@@ -5,6 +5,7 @@ import { View, StyleSheet } from "react-native";
 
 import HomeScreen from "../screens/HomeScreen";
 import RestaurantInfoScreen from "../screens/RestaurantInfoScreen";
+import DishInfoScreen from "../screens/DishInfoScreen";
 
 import DrawerView from './DrawerView';
 import COLORS from '../../assets/constants/colors';
@@ -93,6 +94,10 @@ const RestaurantStackNavigator = () => {
             <RestaurantStack.Screen
                 name="RestaurantInfoScreen"
                 component={RestaurantInfoScreen}
+            />
+            <RestaurantStack.Screen
+                name="DishInfoScreen"
+                component={DishInfoScreen}
             />
         </RestaurantStack.Navigator>
     );

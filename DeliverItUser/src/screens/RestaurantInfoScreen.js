@@ -1,11 +1,13 @@
 //import liraries
 import React, { Component, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Platform, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Animated, Platform, Image, ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import MenuItem from '../components/RestaurantInfoScreenComponents/MenuItem';
 import COLORS from '../../assets/constants/colors';
 import RestaurantInfo from '../components/RestaurantInfoScreenComponents/RestaurantInfo';
 import icons from '../../assets/constants/icons';
+import dummyData from '../../assets/constants/dummyData';
+import TopButtons from '../components/RestaurantInfoScreenComponents/TopButtons';
 
 const HEADER_HEIGHT = 370;
 // create a component
@@ -15,8 +17,13 @@ const RestaurantInfoScreen = () => {
 
     const { restaurant, previous_screen } = route.params;
 
+    const cart = dummyData.cart;
+
     const goBack = () => {
         navigation.navigate(previous_screen);
+    }
+    const show = () => {
+        console.warn("Checking out");
     }
 
     const scrollY = useRef(new Animated.Value(0)).current;
@@ -139,53 +146,7 @@ const RestaurantInfoScreen = () => {
                     <Text style={{ fontSize: 16, fontWeight: "600" }}>{restaurant.name}</Text>
                 </Animated.View>
 
-                {/* Back Button */}
-                <TouchableOpacity
-                    style={{
-                        alignItems: "center",
-                        justifyContent: "center",
-                        height: 45,
-                        width: 45,
-                        borderRadius: 25,
-                        borderWidth: 1,
-                        borderColor: COLORS.lightGray,
-                        backgroundColor: COLORS.transparentBlack
-                    }}
-                    onPress={goBack}
-                >
-                    <Image
-                        source={icons.back}
-                        style={{
-                            width: 25,
-                            height: 25,
-                            tintColor: COLORS.lightGray
-                        }}
-                    />
-                </TouchableOpacity>
-
-                {/* Like Button */}
-                <TouchableOpacity
-                    style={{
-                        alignItems: "center",
-                        justifyContent: "center",
-                        height: 45,
-                        width: 45,
-                        borderRadius: 25,
-                        borderWidth: 1,
-                        borderColor: COLORS.lightGray,
-                        backgroundColor: COLORS.transparentBlack
-                    }}
-                    onPress={goBack}
-                >
-                    <Image
-                        source={restaurant?.isFavorite ? icons.heartFilled : icons.heart}
-                        style={{
-                            width: 35,
-                            height: 35,
-                            tintColor: COLORS.red
-                        }}
-                    />
-                </TouchableOpacity>
+                <TopButtons back={goBack} item={restaurant}/>
             </View>
         )
     }
@@ -209,6 +170,21 @@ const RestaurantInfoScreen = () => {
                 </Text>
 
             </View>
+        )
+    }
+
+    function RenderCheckout() {
+        return (
+            <Pressable onPress={show} style={styles.Checkout}>
+                {cart.length > 1 ?
+                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> {cart.length} items</Text>
+                    :
+                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> {cart.length} item</Text>
+
+                }
+                <Text style={{ fontSize: 22, color: COLORS.light, fontWeight: "600" }}> Checkout</Text>
+                <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> $10.9</Text>
+            </Pressable>
         )
     }
 
@@ -238,8 +214,8 @@ const RestaurantInfoScreen = () => {
             >
             </Animated.FlatList>
             {renderHearderBar()}
+            {cart.length > 0 ? RenderCheckout() : []}
         </View>
-
     );
 };
 
@@ -263,6 +239,19 @@ const styles = StyleSheet.create({
         right: 30,
         height: 100,
     },
+    Checkout: {
+        position: "absolute",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        padding: 20,
+        alignItems: "center",
+        bottom: 50,
+        right: 30,
+        left: 30,
+        height: 80,
+        backgroundColor: COLORS.primary,
+        borderRadius: 20
+    }
 });
 
 //make this component available to the app

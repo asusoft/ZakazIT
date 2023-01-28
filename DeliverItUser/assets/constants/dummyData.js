@@ -22,7 +22,7 @@ const dishCategories = [
     {
         id: 5,
         name: "Nuggets",
-        icon: "https://www.pngall.com/wp-content/uploads/5/Summer-Cocktail-PNG.png" 
+        icon: "https://www.pngall.com/wp-content/uploads/5/Summer-Cocktail-PNG.png"
     },
     {
         id: 6,
@@ -40,103 +40,138 @@ const Restaurants = [
         "maxDeliveryTime": 30,
         "rating": 4.5,
         "address": "Lenina Avenue 35, No 4, Visotky",
-        isFavorite: false,
+        isFavorite: true,
         "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant1.jpeg",
-        "dishes": [
+        dishes: [
             {
-                id: 1,
-                name: "Cheese Tequeños",
-                "description": "6 pieces of chese with sauce.",
+                "id": "1",
+                "name": "Cheese Tequeños",
+                "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
                 "price": 6.9,
                 "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
                 categories: [1, 2],
                 isFavorite: true,
+                "rating": 4.5,
+                sizes: [
+                    {
+                        "id": "1",
+                        "name": "Small",
+                        "price": 100
+                    },
+                    {
+                        "id": "2",
+                        "name": "Medium",
+                        "price": 150
+                    },
+                    {
+                        "id": "3",
+                        "name": "Big",
+                        "price": 200
+                    },
+                ]
             },
             {
-                id: 2,
-                name: "Hamburger La Super Cabo Burger",
-                "description": "Double meat, gouda cheese, cheddar cheese, cooked ham, bacon, egg, salad and rustic potatoes.",
+                "id": "2",
+                "name": "Hamburger La Super Cabo Burger",
+                "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
                 "price": 8.9,
                 categories: [1, 3],
                 isFavorite: false,
-                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg"
+                "rating": 4.5,
+                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg",
+                sizes: [
+                    {
+                        "id": "1",
+                        "name": "Small",
+                        "price": 100
+                    },
+                    {
+                        "id": "2",
+                        "name": "Medium",
+                        "price": 150
+                    },
+                    {
+                        "id": "3",
+                        "name": "Big",
+                        "price": 200
+                    },
+                ]
             },
             {
-                id: 3,
+                id: "3",
                 categories: [6],
                 isFavorite: false,
-                name: "U.S.A. Burger",
-                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
-                
-                "description": "Beef, gouda cheese, cheddar cheese, cooked ham, bacon, egg and salad.",
-                "price": 5.4
+                "rating": 4.5,
+                "name": "U.S.A. Burger",
+                "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+                "price": 5.4,
+                sizes: [
+                    {
+                        "id": "1",
+                        "name": "Small",
+                        "price": 100
+                    },
+                    {
+                        "id": "2",
+                        "name": "Medium",
+                        "price": 150
+                    },
+                    {
+                        "id": "3",
+                        "name": "Big",
+                        "price": 200
+                    },
+                ]
             },
             {
-                id: 4,
+                id: "4",
                 categories: [3, 5],
                 isFavorite: true,
-                name: "Slices of Llanero Cheese",
-                "description": "Ripe plantain with cheese and palm honey.",
-                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
-                
-                "price": 5.9
+                "name": "Slices of Llanero Cheese",
+                "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+                "price": 5.9,
+                sizes: [
+                    {
+                        "id": "1",
+                        "name": "Small",
+                        "price": 100
+                    },
+                    {
+                        "id": "2",
+                        "name": "Medium",
+                        "price": 150
+                    },
+                    {
+                        "id": "3",
+                        "name": "Big",
+                        "price": 200
+                    },
+                ]
             },
             {
                 id: "5",
                 categories: [2, 3, 6],
                 isFavorite: false,
-                name: "Papas Locas El Cabo",
-                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
-                
-                "description": "French fries with shredded chicken, gouda cheese and ham.",
-                "price": 7.9
-            },
-            {
-                id: 6,
-                name: "Cheese Tequeños",
-                "description": "6 pieces of chese with sauce.",
-                "price": 6.9,
-                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
-                categories: [1, 2],
-                isFavorite: true,
-            },
-            {
-                id: 7,
-                name: "Hamburger La Super Cabo Burger",
-                "description": "Double meat, gouda cheese, cheddar cheese, cooked ham, bacon, egg, salad and rustic potatoes.",
-                "price": 8.9,
-                categories: [1, 3],
-                isFavorite: false,
-                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg"
-            },
-            {
-                id: 8,
-                categories: [6],
-                isFavorite: false,
-                name: "U.S.A. Burger",
-                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
-                
-                "description": "Beef, gouda cheese, cheddar cheese, cooked ham, bacon, egg and salad.",
-                "price": 5.4
-            },
-            {
-                id: 9,
-                categories: [3, 5],
-                isFavorite: true,
-                name: "Slices of Llanero Cheese",
-                "description": "Ripe plantain with cheese and palm honey.",
-                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
-                
-                "price": 5.9
-            },
-            {
-                id: "10",
-                categories: [2, 3, 6],
-                isFavorite: false,
-                name: "Papas Locas El Cabo",
-                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
-                "description": "French fries with shredded chicken, gouda cheese and ham.",
-                "price": 7.9
+                "name": "Papas Locas El Cabo",
+                "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+                "price": 7.9,
+                sizes: [
+                    {
+                        "id": "1",
+                        "name": "Small",
+                        "price": 100
+                    },
+                    {
+                        "id": "2",
+                        "name": "Medium",
+                        "price": 150
+                    },
+                    {
+                        "id": "3",
+                        "name": "Big",
+                        "price": 200
+                    },
+                ]
             }
         ]
     },
@@ -158,6 +193,23 @@ const Restaurants = [
                 "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
                 categories: [1, 2],
                 isFavorite: true,
+                sizes: [
+                    {
+                        "id": "1",
+                        "name": "Small",
+                        "price": 100
+                    },
+                    {
+                        "id": "2",
+                        "name": "Medium",
+                        "price": 150
+                    },
+                    {
+                        "id": "3",
+                        "name": "Big",
+                        "price": 200
+                    },
+                ]
             },
             {
                 "id": "2",
@@ -262,7 +314,7 @@ const Restaurants = [
             {
                 "id": "1",
                 "name": "Cheese Tequeños",
-                "description": "6 pieces of chese with sauce.",
+                "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
                 "price": 6.9,
                 "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
                 categories: [1, 2],
@@ -271,7 +323,7 @@ const Restaurants = [
             {
                 "id": "2",
                 "name": "Hamburger La Super Cabo Burger",
-                "description": "Double meat, gouda cheese, cheddar cheese, cooked ham, bacon, egg, salad and rustic potatoes.",
+                "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
                 "price": 8.9,
                 categories: [1, 3],
                 isFavorite: false,
@@ -282,7 +334,7 @@ const Restaurants = [
                 categories: [6],
                 isFavorite: false,
                 "name": "U.S.A. Burger",
-                "description": "Beef, gouda cheese, cheddar cheese, cooked ham, bacon, egg and salad.",
+                "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
                 "price": 5.4
             },
             {
@@ -290,7 +342,7 @@ const Restaurants = [
                 categories: [3, 5],
                 isFavorite: true,
                 "name": "Slices of Llanero Cheese",
-                "description": "Ripe plantain with cheese and palm honey.",
+                "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
                 "price": 5.9
             },
             {
@@ -298,15 +350,44 @@ const Restaurants = [
                 categories: [2, 3, 6],
                 isFavorite: false,
                 "name": "Papas Locas El Cabo",
-                "description": "French fries with shredded chicken, gouda cheese and ham.",
+                "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
                 "price": 7.9
             }
         ]
     }
 ]
 
+const cart = [
+    {
+        "id": "1",
+        "name": "Cheese Tequeños",
+        "description": "6 pieces of chese with sauce.",
+        "price": 6.9,
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
+        categories: [1, 2],
+        isFavorite: true,
+    },
+    {
+        "id": "2",
+        "name": "Hamburger La Super Cabo Burger",
+        "description": "Double meat, gouda cheese, cheddar cheese, cooked ham, bacon, egg, salad and rustic potatoes.",
+        "price": 8.9,
+        categories: [1, 3],
+        isFavorite: false,
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg"
+    },
+    {
+        id: "3",
+        categories: [6],
+        isFavorite: false,
+        "name": "U.S.A. Burger",
+        "description": "Beef, gouda cheese, cheddar cheese, cooked ham, bacon, egg and salad.",
+        "price": 5.4
+    },
+]
 
 export default {
     dishCategories,
     Restaurants,
+    cart
 }

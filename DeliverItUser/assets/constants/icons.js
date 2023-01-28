@@ -13,6 +13,9 @@ const delivery = require('../images/delivery.png');
 const time = require('../images/time.png');
 const heart = require("../images/heart.png")
 const heartFilled = require("../images/heart_filled.png")
+const plus = require("../images/plus.png")
+const minus = require("../images/minus.png")
+
 
 export default {
     back,
@@ -29,5 +32,7 @@ export default {
     delivery,
     time,
     heart,
-    heartFilled
+    heartFilled,
+    plus,
+    minus
 }
