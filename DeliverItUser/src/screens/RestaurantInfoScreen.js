@@ -11,9 +11,8 @@ import TopButtons from '../components/RestaurantInfoScreenComponents/TopButtons'
 
 const HEADER_HEIGHT = 370;
 // create a component
-const RestaurantInfoScreen = () => {
-    const navigation = useNavigation();
-    const route = useRoute();
+const RestaurantInfoScreen = ({navigation, route}) => {
+    
 
     const { restaurant, previous_screen } = route.params;
 
@@ -22,8 +21,8 @@ const RestaurantInfoScreen = () => {
     const goBack = () => {
         navigation.navigate(previous_screen);
     }
-    const show = () => {
-        console.warn("Checking out");
+    const goToCart = () => {
+        navigation.navigate("Cart", {initial: false,});
     }
 
     const scrollY = useRef(new Animated.Value(0)).current;
@@ -175,7 +174,7 @@ const RestaurantInfoScreen = () => {
 
     function RenderCheckout() {
         return (
-            <Pressable onPress={show} style={styles.Checkout}>
+            <Pressable onPress={goToCart} style={styles.Checkout}>
                 {cart.length > 1 ?
                     <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> {cart.length} items</Text>
                     :

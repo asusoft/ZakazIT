@@ -15,6 +15,17 @@ const heart = require("../images/heart.png")
 const heartFilled = require("../images/heart_filled.png")
 const plus = require("../images/plus.png")
 const minus = require("../images/minus.png")
+const home = require("../images/home.png")
+const cart = require("../images/cart.png")
+const bag = require("../images/bag.png")
+const edit = require("../images/edit.png")
+const celebrate = require("../images/celebrate.png")
+
+const mastercard = require("../images/mastercard.png")
+const apple = require("../images/apple.png")
+const google = require("../images/google.png")
+const visa = require("../images/visa.png")
+
 
 
 export default {
@@ -34,5 +45,14 @@ export default {
     heart,
     heartFilled,
     plus,
-    minus
+    minus,
+    home,
+    cart,
+    bag,
+    mastercard,
+    visa,
+    apple,
+    google,
+    edit,
+    celebrate
 }

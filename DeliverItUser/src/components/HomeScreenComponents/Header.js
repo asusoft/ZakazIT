@@ -6,7 +6,7 @@ import icons from "../../../assets/constants/icons";
 import { useDrawerStatus } from "@react-navigation/drawer";
 import COLORS from "../../../assets/constants/colors";
 
-const Header = () => {
+const Header = ({profile}) => {
   const drawerIsOpen = useDrawerStatus();
   const navigation = useNavigation();
   const onPress = () => {
@@ -27,7 +27,7 @@ const Header = () => {
           />
         </Pressable>
         <Pressable style={styles.location}>
-          <Text style={styles.locationText}>Location</Text>
+          <Text style={styles.locationText} numberOfLines={1}>{profile.address}</Text>
           <View style={styles.locationIcon}>
             <SimpleLineIcons name="location-pin" size={17} color="black" />
           </View>
@@ -35,7 +35,7 @@ const Header = () => {
         <StatusBar style="auto" />
       </View>
       <View style={styles.greetings}>
-        <Text style={styles.greetingHeader}>Hello, Abubakar</Text>
+        <Text style={styles.greetingHeader}>Hello, {profile.name}</Text>
         <Text style={styles.greetingSubheader}>what do you want to eat?</Text>
       </View>
     </View>
@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
   locationText: {
     color: "gray",
     fontWeight: "500",
-    fontSize: 15
+    fontSize: 15,
+    width: 150
   },
 
   greetings: {

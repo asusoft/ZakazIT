@@ -6,13 +6,14 @@ import Header from '../components/HomeScreenComponents/Header';
 import SearchBar from '../components/HomeScreenComponents/SearchBar';
 import Categories from '../components/HomeScreenComponents/Categories';
 import RestaurantItem from '../components/HomeScreenComponents/RestaurantItem';
+import profile from '../../assets/constants/profile';
 
 
 export default function HomeScreen() {
   return (
     <SafeAreaView style={[styles.container, styles.droidSafeArea]}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Header />
+        <Header profile={profile.myProfile}/>
         <SearchBar />
         <View>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingRight: 20, marginBottom: 10 }}>

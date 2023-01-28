@@ -6,10 +6,13 @@ import { View, StyleSheet } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
 import RestaurantInfoScreen from "../screens/RestaurantInfoScreen";
 import DishInfoScreen from "../screens/DishInfoScreen";
+import CartScreen from "../screens/Cart";
 
 import DrawerView from './DrawerView';
 import COLORS from '../../assets/constants/colors';
 import CustomDrawerContent from './CustomDrawerContent'
+import CheckoutScreen from "../screens/CheckoutScreen";
+import Payment from "../screens/Payment";
 
 
 const Stack = createNativeStackNavigator();
@@ -24,6 +27,28 @@ const RootNavigator = () => {
         </Stack.Navigator>
     )
 }
+
+const Stacks = createNativeStackNavigator();
+
+const StackNavigator = () => {
+    return (
+        <Stacks.Navigator screenOptions={{ headerShown: false }} >
+            <Stacks.Screen
+                name="Home"
+                component={HomeScreen}
+            />
+            <Stacks.Screen
+                name="Restaurants"
+                component={RestaurantStackNavigator}
+            />
+            <Stacks.Screen
+                name="Cart"
+                component={CartStackNavigator}
+            />
+        </Stacks.Navigator>
+    )
+}
+
 
 
 const Drawer = createDrawerNavigator();
@@ -48,7 +73,7 @@ const HomeTabs = () => {
                         fontWeight: "bold",
                         fontSize: 20,
                         marginStart: 5
-                        
+
                     },
                     drawerActiveTintColor: COLORS.white,
                     drawerInactiveTintColor: COLORS.dark,
@@ -67,17 +92,10 @@ const HomeTabs = () => {
                     name="Home">
                     {props => (
                         <DrawerView styler={styles.container}>
-                            <HomeScreen {...props} />
+                            <StackNavigator {...props} />
                         </DrawerView>
                     )}
                 </Drawer.Screen>
-                <Drawer.Screen
-                    name="Restaurants"
-                    component={RestaurantStackNavigator}
-                    options={{
-                        drawerItemStyle: { display: 'none' }
-                    }}
-                />
             </Drawer.Navigator>
         </View>
     )
@@ -100,6 +118,29 @@ const RestaurantStackNavigator = () => {
                 component={DishInfoScreen}
             />
         </RestaurantStack.Navigator>
+    );
+};
+
+const CartStack = createNativeStackNavigator();
+
+const CartStackNavigator = () => {
+    return (
+        <CartStack.Navigator
+            screenOptions={{ headerShown: false }}
+        >
+            <CartStack.Screen
+                name="CartScreen"
+                component={CartScreen}
+            />
+            <CartStack.Screen
+                name="CheckoutScreen"
+                component={CheckoutScreen}
+            />
+            <CartStack.Screen
+                name="Payment"
+                component={Payment}
+            />
+        </CartStack.Navigator>
     );
 };
 

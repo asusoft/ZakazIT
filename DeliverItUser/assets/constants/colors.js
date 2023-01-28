@@ -6,9 +6,11 @@ const COLORS = {
     light: '#f5f5f5',
     grey: '#808080',
     lightGray: '#DDDDDD',
-    background: '#FAF0E6',
+    lightGray2: '#ededed',
+    background: '#DDDDDD',
     transparentBlack: "rgba(0, 0, 0, 0.7)",
-    red: '#ff4545'
+    red: '#ff4545',
+    green: '#00FF00'
   };
   
   export default COLORS;

@@ -382,9 +382,11 @@ const cart = [
         isFavorite: false,
         "name": "U.S.A. Burger",
         "description": "Beef, gouda cheese, cheddar cheese, cooked ham, bacon, egg and salad.",
-        "price": 5.4
+        "price": 5.4,
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg"
     },
 ]
+
 
 export default {
     dishCategories,
