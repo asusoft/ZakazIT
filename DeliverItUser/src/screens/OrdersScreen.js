@@ -17,11 +17,10 @@ const OrdersScreen = ({ navigation }) => {
                 {/* Back Button */}
                 <Pressable
                     style={{
-
                         alignItems: "center",
                         justifyContent: "center",
-                        height: 45,
-                        width: 45,
+                        height: 35,
+                        width: 35,
                         borderRadius: 10,
                         borderWidth: 2,
                         borderColor: COLORS.dark,
@@ -32,8 +31,8 @@ const OrdersScreen = ({ navigation }) => {
                     <Image
                         source={drawerIsOpen === "closed" ? icons.menu : icons.cross}
                         style={{
-                            width: 25,
-                            height: 25,
+                            width: 20,
+                            height: 20,
                             tintColor: COLORS.dark
                         }}
                     />
@@ -60,14 +59,11 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
     },
     Header: {
-        top: 35,
         left: 0,
         right: 0,
-        height: 90,
         flexDirection: 'row',
         alignItems: "center",
         paddingHorizontal: 20,
-        paddingBottom: 10
     }
 });
 

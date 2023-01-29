@@ -20,7 +20,6 @@ const Categories = ({ categories }) => {
                         <Pressable onPress={onPress} style={styles.CategoryItem}>
                             <Image source={{ uri: item.icon }} style={styles.ItemIcon} />
                             <Text style={styles.CategoryName}>{item.name}</Text>
-                            <Text >From ₽120 </Text>
                         </Pressable>
                     );
                 }}
@@ -34,23 +33,27 @@ export default Categories;
 
 const styles = StyleSheet.create({
     CategoryItem: {
+        flexDirection: 'row',
         backgroundColor: COLORS.secondary,
         margin: 8,
-        width: 140,
-        height: 200,
-        borderRadius: 25,
+        width: 130,
+        height: 50,
+        borderRadius: 15,
+        alignItems: 'center',
         justifyContent: "flex-start",
-        padding: 15,
+        padding: 15
     },
 
     CategoryName: {
-        fontSize: 15,
+        fontSize: 12,
         fontWeight: "500",
-        marginTop: 20
     },
 
     ItemIcon: {
-        height: 110,
-        width: 110,
+        height: 40,
+        width: 40,
+        marginEnd: 10,
+        resizeMode: "contain"
+        
     }
 });

@@ -13,9 +13,9 @@ const TopButtons = ({ back, item }) => {
                 style={{
                     alignItems: "center",
                     justifyContent: "center",
-                    height: 45,
-                    width: 45,
-                    borderRadius: 25,
+                    height: 40,
+                    width: 40,
+                    borderRadius: 10,
                     borderWidth: 1,
                     borderColor: COLORS.lightGray,
                     backgroundColor: COLORS.transparentBlack
@@ -25,8 +25,8 @@ const TopButtons = ({ back, item }) => {
                 <Image
                     source={icons.back}
                     style={{
-                        width: 25,
-                        height: 25,
+                        width: 20,
+                        height: 20,
                         tintColor: COLORS.lightGray
                     }}
                 />
@@ -37,9 +37,9 @@ const TopButtons = ({ back, item }) => {
                 style={{
                     alignItems: "center",
                     justifyContent: "center",
-                    height: 45,
-                    width: 45,
-                    borderRadius: 25,
+                    height: 40,
+                    width: 40,
+                    borderRadius: 10,
                     borderWidth: 1,
                     borderColor: COLORS.lightGray,
                     backgroundColor: COLORS.transparentBlack
@@ -49,8 +49,8 @@ const TopButtons = ({ back, item }) => {
                 <Image
                     source={item?.isFavorite ? icons.heartFilled : icons.heart}
                     style={{
-                        width: 35,
-                        height: 35,
+                        width: 30,
+                        height: 30,
                         tintColor: COLORS.red
                     }}
                 />

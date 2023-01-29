@@ -41,8 +41,8 @@ const CheckoutScreen = ({ navigation }) => {
                     style={{
                         alignItems: "center",
                         justifyContent: "center",
-                        height: 45,
-                        width: 45,
+                        height: 35,
+                        width: 35,
                         borderRadius: 10,
                         borderWidth: 2,
                         borderColor: COLORS.dark,
@@ -53,8 +53,8 @@ const CheckoutScreen = ({ navigation }) => {
                     <Image
                         source={icons.back}
                         style={{
-                            width: 25,
-                            height: 25,
+                            width: 20,
+                            height: 20,
                             tintColor: COLORS.dark
                         }}
                     />
@@ -379,7 +379,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         paddingHorizontal: 20,
-        paddingBottom: 10
+        paddingBottom: 10,
+        paddingTop: 15
     },
     deliveryMethod: {
         marginTop: 20,

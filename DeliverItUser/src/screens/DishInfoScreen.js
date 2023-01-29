@@ -38,11 +38,15 @@ const DishInfoScreen = () => {
 
 
     const onAdd = () => {
-        setQuantity(quantity + 1);
-        const size = dish.sizes[parseInt(selectedSize) - 1];
-        const newQuantity = quantity + 1;
-        const newPrice = size.price * newQuantity;
-        setPrice(newPrice);
+        let newQuantity;
+
+        if (quantity < 99) {
+            setQuantity(quantity + 1);
+            newQuantity = quantity + 1;
+            const size = dish.sizes[parseInt(selectedSize) - 1];
+            const newPrice = size.price * newQuantity;
+            setPrice(newPrice);
+        }
     }
 
     const onMinus = () => {
@@ -69,7 +73,7 @@ const DishInfoScreen = () => {
                     {dish.sizes.map((item, index) => {
                         return (
                             <Pressable
-                                onPress={() => { setSelectedSize(item.id.toString()); }}
+                                onPress={() => { setSelectedSize(item.id.toString())}}
                                 style={{
                                     marginRight: 10,
                                     height: 40,
@@ -116,18 +120,18 @@ const DishInfoScreen = () => {
                             justifyContent: "center"
                         }}
                     >
-                        <Image style={{ height: 30, width: 35 }} source={icons.minus} />
+                        <Image style={{ height: 30, width: 35, tintColor: COLORS.transparentBlack}} source={icons.minus} />
                     </Pressable>
 
                     <View style={{
                         backgroundColor: COLORS.lightGray,
-                        height: 60, width: 40,
+                        height: 60, width: 45,
                         alignItems: 'center',
                         justifyContent: "center"
                     }}
                     >
                         <Text style={{
-                            fontSize: 30,
+                            fontSize: 25,
                             color: COLORS.black,
                             fontWeight: "600"
                         }}
@@ -147,7 +151,7 @@ const DishInfoScreen = () => {
                             justifyContent: "center"
                         }}
                     >
-                        <Image style={{ height: 30, width: 35, tintColor: COLORS.red }} source={icons.plus} />
+                        <Image style={{ height: 30, width: 35, tintColor: COLORS.primary }} source={icons.plus} />
                     </Pressable>
                 </View>
 
@@ -170,7 +174,7 @@ const DishInfoScreen = () => {
         )
     }
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             {/* Header */}
             <View style={styles.Header}>
                 <TopButtons back={goBack} item={dish} />
@@ -190,8 +194,7 @@ const DishInfoScreen = () => {
                 <Image style={styles.itemImage} source={{ uri: dish.image }} />
                 {RenderCheckout()}
             </View>
-
-        </SafeAreaView>
+        </View>
     );
 };
 
@@ -202,7 +205,6 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
     },
     Header: {
-        position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
@@ -215,8 +217,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.primary
     },
     itemContent: {
-        height: "100%",
-        marginTop: 30,
+        flex: 1,
         backgroundColor: COLORS.primary,
         alignItems: "center",
     },

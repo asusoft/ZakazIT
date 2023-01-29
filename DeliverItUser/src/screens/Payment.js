@@ -87,7 +87,6 @@ const Payment = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 30,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: COLORS.background,
@@ -96,16 +95,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: "30%",
-        width: "100%",
+        width: "85%",
         backgroundColor: COLORS.secondary,
-        borderRadius: 40
+        borderRadius: 40,
+        marginHorizontal: 100
     },
     Info: {
         marginTop: 50,
         padding: 20,
         paddingHorizontal: 35,
         height: "20%",
-        width: "100%",
+        width: "85%",
         backgroundColor: COLORS.secondary
     },
     Footer: {

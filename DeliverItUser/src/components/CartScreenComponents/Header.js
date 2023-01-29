@@ -15,8 +15,8 @@ const Header = ({ navigation, quantity }) => {
                 style={{
                     alignItems: "center",
                     justifyContent: "center",
-                    height: 45,
-                    width: 45,
+                    height: 35,
+                    width: 35,
                     borderRadius: 10,
                     borderWidth: 2,
                     borderColor: COLORS.dark,
@@ -27,8 +27,8 @@ const Header = ({ navigation, quantity }) => {
                 <Image
                     source={icons.back}
                     style={{
-                        width: 25,
-                        height: 25,
+                        width: 20,
+                        height: 20,
                         tintColor: COLORS.dark
                     }}
                 />
@@ -41,8 +41,8 @@ const Header = ({ navigation, quantity }) => {
                 style={{
                     alignItems: "center",
                     justifyContent: "center",
-                    height: 45,
-                    width: 45,
+                    height: 35,
+                    width: 35,
                     borderRadius: 10,
                     borderWidth: 2,
                     borderColor: COLORS.dark,
@@ -52,8 +52,8 @@ const Header = ({ navigation, quantity }) => {
                 <Image
                     source={icons.bag}
                     style={{
-                        width: 35,
-                        height: 35,
+                        width: 25,
+                        height: 25,
                         tintColor: COLORS.dark
                     }}
                 />
@@ -70,6 +70,7 @@ const Header = ({ navigation, quantity }) => {
 // define your styles
 const styles = StyleSheet.create({
     container: {
+        paddingTop: 15,
         left: 0,
         right: 0,
         flexDirection: 'row',
@@ -82,8 +83,8 @@ const styles = StyleSheet.create({
       position: 'absolute',
       top: 5,
       right: 5,
-      height: 15,
-      width: 15,
+      height: 12,
+      width: 12,
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 10,
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
         android: { lineHeight: 17 },
         ios: { lineHeight: 0 },
       }),
-      fontSize: 10,
+      fontSize: 8,
     },
 });
 

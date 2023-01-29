@@ -1,6 +1,14 @@
 //import liraries
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Pressable, Image, SafeAreaView } from "react-native";
+import {
+    View,
+    Text,
+    StyleSheet,
+    Pressable,
+    Image,
+    SafeAreaView,
+    ScrollView
+} from "react-native";
 import COLORS from "../../assets/constants/colors";
 import icons from "../../assets/constants/icons";
 import profile from "../../assets/constants/profile";
@@ -17,8 +25,8 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                     style={{
                         alignItems: "center",
                         justifyContent: "center",
-                        height: 45,
-                        width: 45,
+                        height: 35,
+                        width: 35,
                         borderRadius: 10,
                         borderWidth: 2,
                         borderColor: COLORS.dark,
@@ -29,8 +37,8 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                     <Image
                         source={icons.back}
                         style={{
-                            width: 25,
-                            height: 25,
+                            width: 20,
+                            height: 20,
                             tintColor: COLORS.dark
                         }}
                     />
@@ -40,7 +48,7 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                     style={{
                         fontSize: 18,
                         fontWeight: "600",
-                        marginTop: 10,
+                        marginTop: 10
                     }}
                 >
                     ORDER DETAILS
@@ -50,20 +58,20 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                     style={{
                         alignItems: "center",
                         justifyContent: "center",
-                        height: 45,
-                        width: 45,
+                        height: 35,
+                        width: 35,
                         borderRadius: 10,
                         borderWidth: 2,
                         borderColor: COLORS.dark,
                         backgroundColor: COLORS.background
                     }}
-                    onPress={() => navigation.navigate('Home')}
+                    onPress={() => navigation.navigate("Home")}
                 >
                     <Image
                         source={icons.support}
                         style={{
-                            width: 25,
-                            height: 25,
+                            width: 20,
+                            height: 20
                         }}
                     />
                 </Pressable>
@@ -75,109 +83,148 @@ const OrderdetailsScreen = ({ navigation, route }) => {
             {/* Header */}
             {RenderHeader()}
 
-            <View style={{ padding: 20, backgroundColor: COLORS.secondary, flex: 1 }}>
+            <View style={{ flex: 1 }}>
                 {/* Info */}
-
-                <View style={{ borderBottomWidth: 0.2, borderBottomColor: COLORS.grey, paddingBottom: 15 }}>
-                    <View style={{ flexDirection: "row" }}>
-                        <View>
-                            <Text style={{ right: 0, fontSize: 16, fontWeight: "700" }}>
-                                #23679290
-                            </Text>
-                            <Text style={{ fontSize: 16, fontWeight: "600", opacity: 0.6 }}>
-                                Jan 28, 20:37
-                            </Text>
-                        </View>
-
-                        <Text style={{ position: "absolute", right: 0, fontSize: 16 }}>
-                            {order.status}
-                        </Text>
-                    </View>
-                    <View style={{ marginTop: 20 }}>
-                        <Text style={{ fontSize: 16, fontWeight: "700", opacity: 0.6 }}>
-                            Deliverd to
-                        </Text>
-                        <Text style={{ right: 0, fontSize: 16, fontWeight: "700" }}>
-                            {profile.myProfile.address}
-                        </Text>
-                    </View>
-
-                    <View style={{ marginTop: 20 }}>
-                        <Text style={{ fontSize: 16, fontWeight: "700", opacity: 0.6 }}>
-                            Payment method
-                        </Text>
-                        <Text style={{ right: 0, fontSize: 16, fontWeight: "700" }}>
-                            {order.paymentMethod}
-                        </Text>
-                    </View>
-                </View>
-
-                {/* Items */}
-
-                <View style={{ borderBottomWidth: 0.2, borderBottomColor: COLORS.grey, paddingBottom: 15, marginTop: 20 }}>
-                    {order.items.map((item, index) => {
-                        return (
-                            <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                                <View>
-                                    <Text style={{ right: 0, fontSize: 16, fontWeight: "700" }}>
-                                        {item.name}
-                                    </Text>
-                                    <Text style={{ fontSize: 16, fontWeight: "600", opacity: 0.6 }}>
-                                        small x 3
-                                    </Text>
-                                </View>
-
-                                <Text style={{ position: "absolute", right: 0, fontSize: 16 }}>
-                                    ${item.price}
+                <ScrollView showsVerticalScrollIndicator={false} style={{
+                    marginHorizontal: 10,
+                    padding: 10, backgroundColor: COLORS.secondary,
+                }}
+                >
+                    <View
+                        style={{
+                            borderBottomWidth: 0.2,
+                            borderBottomColor: COLORS.grey,
+                            paddingBottom: 15
+                        }}
+                    >
+                        <View style={{ flexDirection: "row" }}>
+                            <View>
+                                <Text style={{ right: 0, fontSize: 14, fontWeight: "600" }}>
+                                    #23679290
+                                </Text>
+                                <Text style={{ fontSize: 16, fontWeight: "600", opacity: 0.6 }}>
+                                    Jan 28, 20:37
                                 </Text>
                             </View>
-                        );
-                    })}
-                </View>
 
-                {/* Bill */}
-
-                <View style={{ borderBottomWidth: 0.2, borderBottomColor: COLORS.grey, paddingBottom: 15, marginTop: 20 }}>
-
-                    <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                        <View>
-                            <Text style={{ fontSize: 16, fontWeight: "700", opacity: 0.6 }}>
-                                Sub total
+                            <Text style={{ position: "absolute", right: 0, fontSize: 16 }}>
+                                {order.status}
+                            </Text>
+                        </View>
+                        <View style={{ marginTop: 20 }}>
+                            <Text style={{ fontSize: 16, fontWeight: "600", opacity: 0.6 }}>
+                                Deliverd to
+                            </Text>
+                            <Text style={{ right: 0, fontSize: 14, fontWeight: "600" }}>
+                                {profile.myProfile.address}
                             </Text>
                         </View>
 
-                        <Text style={{ position: "absolute", right: 0, fontSize: 16 }}>
-                            $ 270
-                        </Text>
-                    </View>
-                    <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                        <View>
-                            <Text style={{ fontSize: 16, fontWeight: "700", opacity: 0.6 }}>
-                                Delivery Fee
+                        <View style={{ marginTop: 20 }}>
+                            <Text style={{ fontSize: 14, fontWeight: "600", opacity: 0.6 }}>
+                                Payment method
+                            </Text>
+                            <Text style={{ right: 0, fontSize: 14, fontWeight: "600" }}>
+                                {order.paymentMethod}
                             </Text>
                         </View>
-
-                        <Text style={{ position: "absolute", right: 0, fontSize: 16 }}>
-                            $ 30
-                        </Text>
                     </View>
-                    <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                        <View>
-                            <Text style={{ fontSize: 18, fontWeight: "700", }}>
-                                Paid
+
+                    {/* Items */}
+
+                    <View
+                        style={{
+                            borderBottomWidth: 0.2,
+                            borderBottomColor: COLORS.grey,
+                            paddingBottom: 15,
+                            marginTop: 20
+                        }}
+                    >
+                        {order.items.map((item, index) => {
+                            return (
+                                <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                                    <View>
+                                        <Text style={{ right: 0, fontSize: 14, fontWeight: "600" }}>
+                                            {item.name}
+                                        </Text>
+                                        <Text
+                                            style={{ fontSize: 14, fontWeight: "600", opacity: 0.6 }}
+                                        >
+                                            small x 3
+                                        </Text>
+                                    </View>
+
+                                    <Text
+                                        style={{ position: "absolute", right: 0, fontSize: 14 }}
+                                    >
+                                        ${item.price}
+                                    </Text>
+                                </View>
+                            );
+                        })}
+                    </View>
+
+                    {/* Bill */}
+
+                    <View
+                        style={{
+                            borderBottomWidth: 0.2,
+                            borderBottomColor: COLORS.grey,
+                            paddingBottom: 15,
+                            marginTop: 20
+                        }}
+                    >
+                        <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                            <View>
+                                <Text style={{ fontSize: 16, fontWeight: "700", opacity: 0.6 }}>
+                                    Sub total
+                                </Text>
+                            </View>
+
+                            <Text style={{ position: "absolute", right: 0, fontSize: 16 }}>
+                                $ 270
                             </Text>
                         </View>
+                        <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                            <View>
+                                <Text style={{ fontSize: 16, fontWeight: "700", opacity: 0.6 }}>
+                                    Delivery Fee
+                                </Text>
+                            </View>
 
-                        <Text style={{ position: "absolute", right: 0, fontSize: 16, fontWeight: "700" }}>
-                            $ {order.total}
-                        </Text>
+                            <Text style={{ position: "absolute", right: 0, fontSize: 16 }}>
+                                $ 30
+                            </Text>
+                        </View>
+                        <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                            <View>
+                                <Text style={{ fontSize: 18, fontWeight: "700" }}>Paid</Text>
+                            </View>
+
+                            <Text
+                                style={{
+                                    position: "absolute",
+                                    right: 0,
+                                    fontSize: 16,
+                                    fontWeight: "700"
+                                }}
+                            >
+                                $ {order.total}
+                            </Text>
+                        </View>
                     </View>
-                </View>
-                <Pressable style={styles.Footer}>
-                    <Text style={{ fontSize: 24, color: COLORS.light, fontWeight: "800" }}> Order again</Text>
-                </Pressable>
+                </ScrollView>
 
                 {/* Footer */}
+                <Pressable style={styles.Footer}>
+                    <Text
+                        style={{ fontSize: 24, color: COLORS.light, fontWeight: "800" }}
+                    >
+                        {" "}
+                        Order again
+                    </Text>
+                </Pressable>
+
             </View>
         </SafeAreaView>
     );
@@ -190,15 +237,13 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.background
     },
     Header: {
-        top: 35,
         left: 0,
         right: 0,
-        height: 90,
+        height: 85,
         flexDirection: "row",
         alignItems: "center",
         paddingHorizontal: 20,
         paddingBottom: 10,
-        marginBottom: 25,
         justifyContent: "space-between"
     },
     Footer: {
