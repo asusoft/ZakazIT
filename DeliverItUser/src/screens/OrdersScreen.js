@@ -5,10 +5,12 @@ import COLORS from '../../assets/constants/colors';
 import icons from '../../assets/constants/icons';
 import dummyData from '../../assets/constants/dummyData';
 import OrderList from '../components/OrderScreenComponents/OrderList';
+import { useDrawerStatus } from '@react-navigation/drawer';
 
 // create a component
 const OrdersScreen = ({ navigation }) => {
     const orders = dummyData.orders;
+    const drawerIsOpen = useDrawerStatus();
     function RenderHeader() {
         return (
             <View style={styles.Header}>
@@ -25,10 +27,10 @@ const OrdersScreen = ({ navigation }) => {
                         borderColor: COLORS.dark,
                         backgroundColor: COLORS.background
                     }}
-                    onPress={() => navigation.goBack()}
+                    onPress={() => navigation.toggleDrawer()}
                 >
                     <Image
-                        source={icons.back}
+                        source={drawerIsOpen === "closed" ? icons.menu : icons.cross}
                         style={{
                             width: 25,
                             height: 25,
@@ -46,7 +48,7 @@ const OrdersScreen = ({ navigation }) => {
             {/* Header */}
             {RenderHeader()}
             {/* List */}
-            <OrderList orders={orders} navigation={navigation}/>
+            <OrderList orders={orders} navigation={navigation} />
         </View>
     );
 };

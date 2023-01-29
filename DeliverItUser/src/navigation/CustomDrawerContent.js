@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useState } from "react";
 import {
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
@@ -9,7 +9,8 @@ import COLORS from "../../assets/constants/colors";
 import images from "../../assets/constants/images";
 import icons from "../../assets/constants/icons";
 
-const CustomDrawerItem = ({ label, icon, onPress, isFocused }) => {
+
+const CustomDrawerItem = ({ onPress, label, icon, isFocused }) => {
   return (
     <TouchableOpacity
       style={[
@@ -23,7 +24,7 @@ const CustomDrawerItem = ({ label, icon, onPress, isFocused }) => {
   );
 };
 
-const CustomDrawerContent = props => {
+const CustomDrawerContent = ({ navigation }) => {
   return (
     <DrawerContentScrollView
       style={{
@@ -47,9 +48,9 @@ const CustomDrawerContent = props => {
           />
         </View>
         <View style={{ marginBottom: 20 }}>
-          <CustomDrawerItem label={'Home'} icon={icons.home} isFocused={true} />
-          <CustomDrawerItem label={'My Cart'} icon={icons.cart} />
-          <CustomDrawerItem label={'My Orders'} icon={icons.list} />
+          <CustomDrawerItem navigation={navigation} label={'Home'} icon={icons.home} isFocused={true}/>
+          <CustomDrawerItem navigation={navigation} label={'My Cart'} icon={icons.cart} />
+          <CustomDrawerItem navigation={navigation} label={'My Orders'} icon={icons.list} />
         </View>
       </View>
     </DrawerContentScrollView>
@@ -61,11 +62,11 @@ export default CustomDrawerContent;
 const styles = StyleSheet.create({
   drawerItem: {
     flexDirection: 'row',
-    height: 40,
+    height: 50,
     marginBottom: 10,
     alignItems: 'center',
     paddingLeft: 15,
-    borderRadius: 20,
+    borderRadius: 12,
   },
   drawerImage: {
     width: 25,
