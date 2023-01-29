@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, ScrollView, SafeAreaView } from 'react-native';
 import COLORS from '../../assets/constants/colors';
 import icons from '../../assets/constants/icons';
 import dummyData from '../../assets/constants/dummyData';
@@ -44,12 +44,12 @@ const OrdersScreen = ({ navigation }) => {
         )
     }
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {/* Header */}
             {RenderHeader()}
             {/* List */}
             <OrderList orders={orders} navigation={navigation} />
-        </View>
+        </SafeAreaView>
     );
 };
 

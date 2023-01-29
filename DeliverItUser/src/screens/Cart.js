@@ -1,7 +1,7 @@
 //import liraries
 import { useRoute } from '@react-navigation/native';
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable, SafeAreaView } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import COLORS from '../../assets/constants/colors';
 import Header from '../components/CartScreenComponents/Header';
@@ -96,14 +96,14 @@ const CartScreen = ({ navigation }) => {
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {/* Header */}
             <Header navigation={navigation} quantity={cart.length} />
             {/* Cart List */}
             {renderCartList()}
             {/* Footer */}
             {RenderFooter()}
-        </View>
+        </SafeAreaView>
     );
 };
 

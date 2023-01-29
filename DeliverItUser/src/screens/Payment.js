@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, SafeAreaView } from 'react-native';
 import COLORS from '../../assets/constants/colors';
 import icons from '../../assets/constants/icons';
 
@@ -12,7 +12,7 @@ const Payment = ({ navigation, route }) => {
         navigation.goBack()
     }
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {/* Message */}
 
             <View style={styles.Message}>
@@ -79,7 +79,7 @@ const Payment = ({ navigation, route }) => {
             <Pressable onPress={handleClick} style={styles.Footer}>
                 <Text style={{ fontSize: 24, color: COLORS.light, fontWeight: "800" }}> {isSuccess ? `Go to Order` : `Change Payment method`}</Text>
             </Pressable>
-        </View>
+        </SafeAreaView>
     );
 };
 

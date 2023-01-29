@@ -32,6 +32,10 @@ const DishInfoScreen = () => {
         setPrice(newPrice);
     }
 
+    React.useEffect(() => {
+        updatePrice();
+    }, selectedSize)
+
 
     const onAdd = () => {
         setQuantity(quantity + 1);
@@ -65,7 +69,7 @@ const DishInfoScreen = () => {
                     {dish.sizes.map((item, index) => {
                         return (
                             <Pressable
-                                onPress={() => { setSelectedSize(item.id.toString()); updatePrice() }}
+                                onPress={() => { setSelectedSize(item.id.toString()); }}
                                 style={{
                                     marginRight: 10,
                                     height: 40,

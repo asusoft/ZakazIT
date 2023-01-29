@@ -70,10 +70,8 @@ const Header = ({ navigation, quantity }) => {
 // define your styles
 const styles = StyleSheet.create({
     container: {
-        top: 35,
         left: 0,
         right: 0,
-        height: 90,
         flexDirection: 'row',
         alignItems: "center",
         justifyContent: "space-between",

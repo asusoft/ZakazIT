@@ -7,7 +7,8 @@ import {
     Pressable,
     Image,
     ScrollView,
-    FlatList
+    FlatList,
+    SafeAreaView
 } from "react-native";
 import COLORS from "../../assets/constants/colors";
 import icons from "../../assets/constants/icons";
@@ -20,6 +21,13 @@ const CheckoutScreen = ({ navigation }) => {
     const [isSuccess, setIsSuccess] = useState(true);
 
     const ref = useRef();
+    React.useEffect(() => {
+        ref.current?.scrollToIndex({
+            index: parseInt(selectedPaymentMethod) - 1,
+            animated: true,
+            viewPosition: 0.5
+        });
+    }, [selectedPaymentMethod])
 
     const handlePayment = () => {
         navigation.navigate("Payment", { isSuccess: isSuccess });
@@ -200,13 +208,13 @@ const CheckoutScreen = ({ navigation }) => {
                 <FlatList
                     ref={ref}
                     initialScrollIndex={parseInt(selectedPaymentMethod) - 1}
-                    onScrollToIndexFailed={(info) => {
-                        const wait = new Promise((resolve) => setTimeout(resolve, 300));
+                    onScrollToIndexFailed={() => {
+                        const wait = new Promise((resolve) => setTimeout(resolve, 100));
                         wait.then(() => {
                             ref.current?.scrollToIndex({
                                 index: parseInt(selectedPaymentMethod) - 1,
                                 animated: true,
-                                viewPosition: 1
+                                viewPosition: 0.5
                             });
                         });
                     }}
@@ -265,7 +273,6 @@ const CheckoutScreen = ({ navigation }) => {
                                     style={{ width: 50, height: 35, resizeMode: "contain" }}
                                     source={item.icon}
                                 />
-
                                 <Text
                                     style={{
                                         fontSize: 18,
@@ -295,7 +302,7 @@ const CheckoutScreen = ({ navigation }) => {
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {/* Header */}
 
             {RenderHeader()}
@@ -356,7 +363,7 @@ const CheckoutScreen = ({ navigation }) => {
             </View>
 
             {RenderFooter()}
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -367,10 +374,8 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.background
     },
     Header: {
-        top: 35,
         left: 0,
         right: 0,
-        height: 90,
         flexDirection: "row",
         alignItems: "center",
         paddingHorizontal: 20,
