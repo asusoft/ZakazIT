@@ -1,4 +1,5 @@
 import icons from './icons';
+import images from './images';
 
 const myProfile = {
     name: 'Abubakar',
@@ -6,34 +7,7 @@ const myProfile = {
     address: 'No. 88, Jln Padungan, Kuching',
   };
 
-const myCards = [
-    {
-        id: 1,
-        name: 'Master Card',
-        icon: icons.mastercard,
-        card_no: '1234',
-    },
-    {
-        id: 2,
-        name: 'Google Pay',
-        icon: icons.google,
-        card_no: '1234',
-    },
-    {
-        id: 3,
-        name: 'Apple Pay',
-        icon: icons.apple,
-        card_no: '1234',
-    },
-    {
-        id: 4,
-        name: 'Visa',
-        icon: icons.visa,
-        card_no: '1234',
-    },
-];
-
-const allCards = [
+  const cardType = [
     {
         id: 1,
         name: 'Apple Pay',
@@ -61,8 +35,32 @@ const allCards = [
     },
 ];
 
+const myCards = [
+    {
+        id: 1,
+        type: cardType[4],
+        card_no: '1234',
+    },
+    {
+        id: 2,
+        type: cardType[1],
+        card_no: '1234',
+    },
+    {
+        id: 3,
+        type: cardType[0],
+        card_no: '1234',
+    },
+    {
+        id: 4,
+        type: cardType[3],
+        card_no: '1234',
+    }
+];
+
+
 export default {
     myCards,
-    allCards,
+    cardType,
     myProfile
 }

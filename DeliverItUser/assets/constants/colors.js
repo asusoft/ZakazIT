@@ -10,7 +10,8 @@ const COLORS = {
     background: '#FAF0E6',
     transparentBlack: "rgba(0, 0, 0, 0.7)",
     red: '#ff4545',
-    green: '#00FF00'
+    green: '#00FF00',
+    brown: '#5C4033'
   };
   
   export default COLORS;

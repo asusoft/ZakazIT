@@ -16,7 +16,7 @@ import profile from "../../assets/constants/profile";
 
 // create a component
 const CheckoutScreen = ({ navigation }) => {
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("3");
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("1");
     const [isDelivery, setIsDelivery] = useState(true);
     const [isSuccess, setIsSuccess] = useState(true);
 
@@ -212,17 +212,17 @@ const CheckoutScreen = ({ navigation }) => {
                         const wait = new Promise((resolve) => setTimeout(resolve, 100));
                         wait.then(() => {
                             ref.current?.scrollToIndex({
-                                index: parseInt(selectedPaymentMethod) - 1,
+                                index: parseInt(selectedPaymentMethod) -1,
                                 animated: true,
-                                viewPosition: 0.5
                             });
                         });
                     }}
                     horizontal
+                    snapToAlignment={'center'}
                     showsHorizontalScrollIndicator={false}
                     style={styles.paymentMethod}
                     data={profile.myCards}
-                    renderItem={({ item }) => (
+                    renderItem={({ item, index }) => (
                         <View
                             style={{
                                 flexDirection: "row",
@@ -271,7 +271,7 @@ const CheckoutScreen = ({ navigation }) => {
                                 />
                                 <Image
                                     style={{ width: 50, height: 35, resizeMode: "contain" }}
-                                    source={item.icon}
+                                    source={item.type.icon}
                                 />
                                 <Text
                                     style={{
@@ -352,7 +352,7 @@ const CheckoutScreen = ({ navigation }) => {
                         alignItems: "center",
                         justifyContent: "space-between",
                         marginHorizontal: 20,
-                        marginTop: 30
+                        marginTop: 8
                     }}
                 >
                     <Text style={{ fontSize: 20, fontWeight: "600" }}>Total</Text>

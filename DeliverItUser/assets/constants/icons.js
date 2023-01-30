@@ -23,11 +23,13 @@ const edit = require("../images/edit.png")
 const celebrate = require("../images/celebrate.png")
 const list = require("../images/list.png")
 const support = require("../images/support.png")
-
+const cards = require("../images/cards.png")
 const mastercard = require("../images/mastercard.png")
 const apple = require("../images/apple.png")
 const google = require("../images/google.png")
 const visa = require("../images/visa.png")
+const visa_background = require("../images/visa_background.png")
+const apple_background = require("../images/apple_background.png")
 
 
 
@@ -60,5 +62,5 @@ export default {
     edit,
     celebrate, 
     list,
-    support
+    support,cards,visa_background,apple_background
 }

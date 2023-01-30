@@ -51,6 +51,7 @@ const CustomDrawerContent = ({ navigation }) => {
           <CustomDrawerItem navigation={navigation} label={'Home'} icon={icons.home} isFocused={true}/>
           <CustomDrawerItem navigation={navigation} label={'My Cart'} icon={icons.cart} />
           <CustomDrawerItem navigation={navigation} label={'My Orders'} icon={icons.list} />
+          <CustomDrawerItem navigation={navigation} label={'My Cards'} icon={icons.cards} />
         </View>
       </View>
     </DrawerContentScrollView>

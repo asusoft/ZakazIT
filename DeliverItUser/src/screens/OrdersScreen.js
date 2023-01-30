@@ -14,7 +14,7 @@ const OrdersScreen = ({ navigation }) => {
     function RenderHeader() {
         return (
             <View style={styles.Header}>
-                {/* Back Button */}
+                {/* Menu Button */}
                 <Pressable
                     style={{
                         alignItems: "center",

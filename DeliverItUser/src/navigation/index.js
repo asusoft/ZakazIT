@@ -15,6 +15,7 @@ import CheckoutScreen from "../screens/CheckoutScreen";
 import Payment from "../screens/Payment";
 import OrdersScreen from "../screens/OrdersScreen";
 import OrderdetailsScreen from "../screens/OrderDetailsScreen";
+import CardScreen from "../screens/Cards";
 
 
 const Stack = createNativeStackNavigator();
@@ -51,6 +52,10 @@ const StackNavigator = () => {
                 name="Orders"
                 component={OrdersStackNavigator}
             />
+            <Stacks.Screen
+                name="Profile"
+                component={ProfileStackNavigator}
+            />
         </Stacks.Navigator>
     )
 }
@@ -66,7 +71,7 @@ const HomeTabs = () => {
             backgroundColor: "#FF0000"
         }}>
             <Drawer.Navigator
-                initialRouteName="Home"
+                initialRouteName="Index"
                 drawerType="slide"
                 screenOptions={{
                     headerShown: false,
@@ -95,7 +100,7 @@ const HomeTabs = () => {
                 }}
             >
                 <Drawer.Screen
-                    name="Home">
+                    name="Index">
                     {props => (
                         <DrawerView styler={styles.container}>
                             <StackNavigator {...props} />
@@ -165,6 +170,21 @@ const OrdersStackNavigator = () => {
                 component={OrderdetailsScreen}
             />
         </OrdersStack.Navigator>
+    );
+};
+
+const ProfileStack = createNativeStackNavigator();
+
+const ProfileStackNavigator = () => {
+    return (
+        <ProfileStack.Navigator
+            screenOptions={{ headerShown: false }}
+        >
+            <ProfileStack.Screen
+                name="CardScreen"
+                component={CardScreen}
+            />
+        </ProfileStack.Navigator>
     );
 };
 
