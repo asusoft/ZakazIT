@@ -28,6 +28,8 @@ const mastercard = require("../images/mastercard.png")
 const apple = require("../images/apple.png")
 const google = require("../images/google.png")
 const visa = require("../images/visa.png")
+const mir = require("../images/mir.png")
+const paypal = require("../images/paypal.png")
 const visa_background = require("../images/visa_background.png")
 const apple_background = require("../images/apple_background.png")
 
@@ -57,10 +59,11 @@ export default {
     bag,
     mastercard,
     visa,
+    paypal,
     apple,
     google,
     edit,
     celebrate, 
     list,
-    support,cards,visa_background,apple_background
+    support,cards,visa_background,apple_background,mir
 }

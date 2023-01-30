@@ -8,18 +8,12 @@ import {
     Pressable,
     Image,
     SafeAreaView,
-    FlatList,
-    ImageBackground,
-    useWindowDimensions,
-    Animated,
     Dimensions,
     ScrollView
 } from "react-native";
 import COLORS from "../../assets/constants/colors";
 import icons from "../../assets/constants/icons";
 import profile from "../../assets/constants/profile";
-import images from "../../assets/constants/images";
-import dummyData from "../../assets/constants/dummyData";
 import Header from "../components/Header";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -99,7 +93,7 @@ const CardScreen = ({ navigation }) => {
 
     function RenderFooter() {
         return (
-            <Pressable style={styles.Footer}>
+            <Pressable onPress={() => navigation.push('AddCardScreen')} style={styles.Footer}>
                 <Text style={{ fontSize: 24, color: COLORS.light, fontWeight: "800" }}>
                     Add Card
                 </Text>

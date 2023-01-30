@@ -10,35 +10,28 @@ const myProfile = {
   const cardType = [
     {
         id: 1,
-        name: 'Apple Pay',
-        icon: icons.apple,
+        name: 'Visa',
+        icon: icons.visa,
+        image: images.visa_card
     },
     {
         id: 2,
-        name: 'Visa',
-        icon: icons.visa,
+        name: 'Mir',
+        icon: icons.mir,
+        image: images.mir_card
     },
     {
         id: 3,
-        name: 'PayPal',
-        icon: icons.mastercard,
-    },
-    {
-        id: 4,
-        name: 'Google Pay',
-        icon: icons.google,
-    },
-    {
-        id: 5,
         name: 'Master Card',
         icon: icons.mastercard,
+        image: images.master_card
     },
 ];
 
 const myCards = [
     {
         id: 1,
-        type: cardType[4],
+        type: cardType[2],
         card_no: '1234',
     },
     {
@@ -49,11 +42,6 @@ const myCards = [
     {
         id: 3,
         type: cardType[0],
-        card_no: '1234',
-    },
-    {
-        id: 4,
-        type: cardType[3],
         card_no: '1234',
     }
 ];

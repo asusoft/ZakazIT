@@ -16,6 +16,7 @@ import Payment from "../screens/Payment";
 import OrdersScreen from "../screens/OrdersScreen";
 import OrderdetailsScreen from "../screens/OrderDetailsScreen";
 import CardScreen from "../screens/Cards";
+import AddCartScreen from "../screens/AddCard";
 
 
 const Stack = createNativeStackNavigator();
@@ -183,6 +184,10 @@ const ProfileStackNavigator = () => {
             <ProfileStack.Screen
                 name="CardScreen"
                 component={CardScreen}
+            />
+            <ProfileStack.Screen
+                name="AddCardScreen"
+                component={AddCartScreen}
             />
         </ProfileStack.Navigator>
     );
