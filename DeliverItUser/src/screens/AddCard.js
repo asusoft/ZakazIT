@@ -7,7 +7,8 @@ import {
     Pressable,
     Image,
     SafeAreaView,
-    ImageBackground
+    ImageBackground,
+    ScrollView
 } from "react-native";
 import COLORS from "../../assets/constants/colors";
 import icons from "../../assets/constants/icons";
@@ -27,6 +28,7 @@ const AddCartScreen = ({ navigation }) => {
 
     const insets = useSafeAreaInsets();
     const [cardNumber, setCardNumber] = useState('');
+    const [cardName, setCardName] = useState('');
     const [cardNumberError, setCardNumberError] = useState('');
     const [expireDate, setExpireDate] = useState('');
     const [expireDateError, setExpireDateError] = useState('');
@@ -42,6 +44,7 @@ const AddCartScreen = ({ navigation }) => {
 
     const handleAddCard = () => {
         alert(
+            cardName + '\n' +
             cardType.name + '\n' +
             cardNumber + '\n' +
             expireDate + '\n' +
@@ -103,25 +106,64 @@ const AddCartScreen = ({ navigation }) => {
 
     function RenderForm() {
         return (
-            <View style={{ marginHorizontal: 20 }}>
-
+            <View style={{ marginHorizontal: 20, marginTop: 10 }}>
+                <FormInput
+                    label="Name"
+                    keyboardType="number-pad"
+                    maxLength={19}
+                    value={cardName}
+                    inputContainerStyle={{
+                        borderColor: COLORS.grey
+                    }}
+                    onChange={value => {
+                        setCardName(value);
+                    }}
+                />
                 <View style={{ marginVertical: 10 }}>
-                    <SelectList
-                        search={false}
-                        placeholder="Select Card Type"
-                        inputStyles={{
-                            fontSize: 16
-                        }}
-                        setSelected={
-                            (val) => setCardType(cardTypes[val - 1])
-                        }
-                        data={data}
-                    /></View>
+                    <View style={{ marginVertical: 10 }}>
+                        <Text>Choose Card Type</Text>
+                        <ScrollView horizontal>
+                            {
+                                cardTypes.map((item) => {
+                                    return (
+                                        <Pressable
+                                            key={item.id}
+                                            onPress={() => setCardType(item)}
+                                            style={{
+                                                justifyContent: 'center',
+                                                backgroundColor: COLORS.secondary,
+                                                marginEnd: 10,
+                                                marginTop: 10,
+                                                height: 40,
+                                                width: 50,
+                                                alignItems: 'center',
+                                                borderColor: COLORS.primary,
+                                                borderRadius: 8,
+                                                opacity: cardType?.id === item.id ? 1 : 0.3
+                                            }}
+                                        >
+                                            <Image
+                                                resizeMode="contain"
+                                                source={
+                                                    item.icon
+                                                }
+                                                style={{
+                                                    height: 45,
+                                                    width: 40,
+                                                }}
+                                            />
+                                        </Pressable>
+                                    )
+                                })
+                            }
+                        </ScrollView>
+                    </View>
+                </View>
 
                 <FormInput
                     label="Card Number"
                     keyboardType="number-pad"
-                    maxLength={19}
+                    maxLength={16}
                     value={cardNumber}
                     inputContainerStyle={{
                         borderColor: (cardNumber === '' || cardNumberError === '')
@@ -161,8 +203,8 @@ const AddCartScreen = ({ navigation }) => {
                         label="Expire Date"
                         keyboardType="number-pad"
                         value={expireDate}
-                        placeholder={'MM/YY'}
-                        maxLength={5}
+                        placeholder={'MMYY'}
+                        maxLength={4}
                         containerStyle={{
                             flex: 1,
                         }}
@@ -172,7 +214,7 @@ const AddCartScreen = ({ navigation }) => {
                                 : COLORS.red
                         }}
                         onChange={value => {
-                            utils.validateInput(value, 5, setExpireDateError);
+                            utils.validateInput(value, 4, setExpireDateError);
                             setExpireDate(value);
                         }}
                     />
@@ -207,7 +249,7 @@ const AddCartScreen = ({ navigation }) => {
                 opacity: isEnableAddCard() ? 1 : 0.3, ...styles.Footer
             }}>
                 <Text style={{ fontSize: 24, color: COLORS.light, fontWeight: "800" }}>
-                    Add
+                    Save
                 </Text>
             </Pressable>
         );

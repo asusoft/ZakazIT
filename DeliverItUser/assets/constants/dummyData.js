@@ -48,7 +48,7 @@ const Restaurants = [
                 "name": "Cheese Tequeños",
                 "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
                 "price": 6.9,
-                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
+                "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Fsearch%3Fq%3Dburger&psig=AOvVaw0EFSIPzsbXV1lYPwbaTRdi&ust=1675262138979000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCNiSjvmD8vwCFQAAAAAdAAAAABAE",
                 categories: [1, 2],
                 isFavorite: true,
                 "rating": 4.5,

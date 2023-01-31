@@ -25,7 +25,6 @@ const DishInfoScreen = () => {
     const [price, setPrice] = useState(Price);
 
     const updatePrice = () => {
-        let index = parseInt(selectedSize) - 1
         const size = dish.sizes[parseInt(selectedSize) - 1];
         let price = size.price;
         const newPrice = price * quantity;
@@ -36,6 +35,15 @@ const DishInfoScreen = () => {
         updatePrice();
     }, selectedSize)
 
+
+    const handleAddToCart = () => {
+        alert(
+            dish.name + '\n' +
+            selectedSize + '\n' +
+            quantity + '\n' +
+            price
+        )
+    }
 
     const onAdd = () => {
         let newQuantity;
@@ -60,6 +68,7 @@ const DishInfoScreen = () => {
             setPrice(newPrice);
         }
     }
+
     function RenderSizes() {
         return (
             <View style={styles.sizeView}>
@@ -73,7 +82,8 @@ const DishInfoScreen = () => {
                     {dish.sizes.map((item, index) => {
                         return (
                             <Pressable
-                                onPress={() => { setSelectedSize(item.id.toString())}}
+                                key={item.id}
+                                onPress={() => { setSelectedSize(item.id.toString()) }}
                                 style={{
                                     marginRight: 10,
                                     height: 40,
@@ -106,7 +116,7 @@ const DishInfoScreen = () => {
 
     function RenderCheckout() {
         return (
-            <Pressable style={styles.Pick}>
+            <Pressable onPress={handleAddToCart} style={styles.Pick}>
                 <View style={{ flexDirection: "row", borderRadius: 20 }}>
                     <Pressable onPress={
                         onMinus
@@ -120,7 +130,7 @@ const DishInfoScreen = () => {
                             justifyContent: "center"
                         }}
                     >
-                        <Image style={{ height: 30, width: 35, tintColor: COLORS.transparentBlack}} source={icons.minus} />
+                        <Image style={{ height: 30, width: 35, tintColor: COLORS.transparentBlack }} source={icons.minus} />
                     </Pressable>
 
                     <View style={{
@@ -191,7 +201,7 @@ const DishInfoScreen = () => {
                     </View>
                     {RenderSizes()}
                 </View>
-                <Image style={styles.itemImage} source={{ uri: dish.image }} />
+                <Image resizeMode='stretch' style={styles.itemImage} source={{ uri: dish?.image }} />
                 {RenderCheckout()}
             </View>
         </View>
