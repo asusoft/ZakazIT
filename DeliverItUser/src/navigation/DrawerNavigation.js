@@ -16,12 +16,14 @@ import CardScreen from "../screens/Cards";
 import AddCartScreen from "../screens/AddCard";
 import TrackOrderScreen from "../screens/TrackOrderScreen";
 
-
 import COLORS from '../../assets/constants/colors';
+
+import { connect } from "react-redux"
+import { setSelectedTab } from "../store/tabs/tabActions";
 
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigation = () => {
+const DrawerNavigation = ({selectedTab, setSelectedTab}) => {
     return (
         <View style={{
             flex: 1,
@@ -55,6 +57,8 @@ const DrawerNavigation = () => {
                 drawerContent={props => {
                     return <CustomDrawerContent
                         {...props}
+                        selectedTab={selectedTab} 
+                        setSelectedTab={setSelectedTab}
                     />;
                 }}
             >
@@ -201,7 +205,7 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default DrawerNavigation;
+export default connect(mapStateToProps, mapDispatchToProps) (DrawerNavigation);
 
 
 const styles = StyleSheet.create({

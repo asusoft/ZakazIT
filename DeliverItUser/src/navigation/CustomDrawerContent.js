@@ -9,6 +9,7 @@ import COLORS from "../../assets/constants/colors";
 import images from "../../assets/constants/images";
 import icons from "../../assets/constants/icons";
 
+import screens from '../../assets/constants/screens'
 
 const CustomDrawerItem = ({ onPress, label, icon, isFocused }) => {
   return (
@@ -24,7 +25,7 @@ const CustomDrawerItem = ({ onPress, label, icon, isFocused }) => {
   );
 };
 
-const CustomDrawerContent = ({ navigation }) => {
+const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
   return (
     <DrawerContentScrollView
       style={{
@@ -48,10 +49,43 @@ const CustomDrawerContent = ({ navigation }) => {
           />
         </View>
         <View style={{ marginBottom: 20 }}>
-          <CustomDrawerItem navigation={navigation} label={'Home'} icon={icons.home} isFocused={true}/>
-          <CustomDrawerItem navigation={navigation} label={'My Cart'} icon={icons.cart} />
-          <CustomDrawerItem navigation={navigation} label={'My Orders'} icon={icons.list} />
-          <CustomDrawerItem navigation={navigation} label={'My Cards'} icon={icons.cards} />
+          <CustomDrawerItem 
+            label={'Home'} 
+            icon={icons.home} 
+            isFocused={selectedTab === screens.home}
+            onPress={() => {
+              setSelectedTab(screens.home);
+              navigation.navigate('Home');
+            }}/>
+          <CustomDrawerItem 
+            label={'My Cart'} 
+            icon={icons.cart} 
+            isFocused={selectedTab === screens.cart}
+            onPress={() => {
+              setSelectedTab(screens.cart);
+              navigation.navigate('Cart');
+            }}
+            />
+          <CustomDrawerItem 
+            navigation={navigation} 
+            label={'My Orders'} 
+            icon={icons.list} 
+            isFocused={selectedTab === screens.order}
+            onPress={() => {
+              setSelectedTab(screens.order);
+              navigation.navigate('Orders');
+            }}
+            />
+          <CustomDrawerItem 
+            navigation={navigation} 
+            label={'My Cards'} 
+            icon={icons.cards} 
+            isFocused={selectedTab === screens.profile}
+            onPress={() => {
+              setSelectedTab(screens.profile);
+              navigation.navigate('Profile');
+            }}
+            />
         </View>
       </View>
     </DrawerContentScrollView>

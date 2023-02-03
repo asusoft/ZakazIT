@@ -152,6 +152,7 @@ const CartScreen = ({ navigation }) => {
     }
 
     return (
+        
         <SafeAreaView style={styles.container}>
             {/* Header */}
             <Header navigation={navigation} quantity={cart.length} />
