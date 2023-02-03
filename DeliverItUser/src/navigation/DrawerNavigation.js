@@ -109,19 +109,7 @@ const DrawerNavigation = ({ selectedTab, setSelectedTab }) => {
                       }}>
                     {props => (
                         <DrawerView styler={styles.container}>
-                            <CartScreen {...props} />
-                        </DrawerView>
-                    )}
-                </Drawer.Screen>
-
-                <Drawer.Screen
-                    name="CheckoutScreen"
-                    options={{
-                        drawerItemStyle: { display: 'none' }
-                      }}>
-                    {props => (
-                        <DrawerView styler={styles.container}>
-                            <CheckoutScreen {...props} />
+                            <CartStackNavigator {...props} />
                         </DrawerView>
                     )}
                 </Drawer.Screen>
@@ -205,10 +193,6 @@ const CartStackNavigator = () => {
             <CartStack.Screen
                 name="CheckoutScreen"
                 component={CheckoutScreen}
-            />
-            <CartStack.Screen
-                name="Payment"
-                component={Payment}
             />
         </CartStack.Navigator>
     );

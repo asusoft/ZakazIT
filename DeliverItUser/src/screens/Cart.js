@@ -4,10 +4,10 @@ import React, { Component, useState } from 'react';
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import COLORS from '../../assets/constants/colors';
-import Header from '../components/CartScreenComponents/Header';
 import dummyData from '../../assets/constants/dummyData';
 import icons from '../../assets/constants/icons';
 import { SafeAreaView } from 'react-native-safe-area-context'
+import Header from '../components/Header';
 
 
 // create a component
@@ -27,6 +27,71 @@ const CartScreen = ({ navigation }) => {
         newMyCartList.splice(index, 1);
         setCart(newMyCartList);
     };
+
+    function RenderHeader() {
+        return (
+            <Header
+                title="MY CART"
+                containerStyle={{
+                    height: 50,
+                    marginHorizontal: 20,
+                }}
+                titleStyle={{}}
+                leftComponent={
+                    <Pressable
+                        style={{
+                            alignItems: "center",
+                            justifyContent: "center",
+                            height: 35,
+                            width: 35,
+                            borderRadius: 10,
+                            borderWidth: 2,
+                            borderColor: COLORS.dark,
+                            backgroundColor: COLORS.background
+                        }}
+                        onPress={() => navigation.goBack()}
+                    >
+                        <Image
+                            source={icons.back}
+                            style={{
+                                width: 20,
+                                height: 20,
+                                tintColor: COLORS.dark
+                            }}
+                        />
+                    </Pressable>
+                }
+                rightComponent={
+                    <View
+                        style={{
+                            alignItems: "center",
+                            justifyContent: "center",
+                            height: 35,
+                            width: 35,
+                            borderRadius: 10,
+                            borderWidth: 2,
+                            borderColor: COLORS.dark,
+                            backgroundColor: COLORS.background
+                        }}
+                    >
+                        <Image
+                            source={icons.bag}
+                            style={{
+                                width: 25,
+                                height: 25,
+                                tintColor: COLORS.dark
+                            }}
+                        />
+
+                        <View style={styles.badge}>
+                            <Text style={styles.quantityNumber}>{cart.length}</Text>
+                        </View>
+
+                    </View>
+                }
+            />
+        );
+    }
 
     const renderCartList = () => {
 
@@ -153,10 +218,10 @@ const CartScreen = ({ navigation }) => {
     }
 
     return (
-        
+
         <SafeAreaView style={styles.container}>
             {/* Header */}
-            <Header navigation={navigation} quantity={cart.length} />
+            {RenderHeader()}
             {/* Cart List */}
             {
                 cart.length > 0 ? renderCartList()
@@ -219,7 +284,26 @@ const styles = StyleSheet.create({
         height: 80,
         backgroundColor: COLORS.primary,
         borderRadius: 20
-    }
+    },
+    badge: {
+      position: 'absolute',
+      top: 5,
+      right: 5,
+      height: 12,
+      width: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 10,
+      backgroundColor: COLORS.primary,
+    },
+    quantityNumber: {
+      color: COLORS.white,
+      ...Platform.select({
+        android: { lineHeight: 17 },
+        ios: { lineHeight: 0 },
+      }),
+      fontSize: 8,
+    },
 });
 
 //make this component available to the app

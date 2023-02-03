@@ -11,7 +11,6 @@ import COLORS from "../../assets/constants/colors";
 import icons from "../../assets/constants/icons";
 import profile from "../../assets/constants/profile";
 import Header from "../components/Header";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -29,14 +28,12 @@ const CardScreen = ({ navigation }) => {
     };
 
     function RenderHeader() {
-        const insets = useSafeAreaInsets;
         return (
             <Header
                 title="MY CARDS"
                 containerStyle={{
                     height: 50,
                     marginHorizontal: 20,
-                    marginTop: insets.top,
                 }}
                 titleStyle={{}}
                 leftComponent={

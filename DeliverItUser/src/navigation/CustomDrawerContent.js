@@ -44,14 +44,18 @@ const CustomDrawerContent = props => {
           }}
         >
           <Image
-            source = {images.logo1_white}
-            style={{ height: 130, width: 130, borderRadius: 20,}}
+            source={images.logo1_white}
+            style={{ height: 130, width: 130, borderRadius: 20, }}
           />
         </View>
-        <View style={{ marginBottom: 20, }}>
+        <View style={{ flex: 1, marginBottom: 20, height:600}}>
 
           <DrawerItemList {...props} />
-         {/*} <CustomDrawerItem 
+
+          <View style={{ position: 'absolute', bottom: 0}}>
+            <CustomDrawerItem label={'Logout'} icon={icons.cross} />
+          </View>
+          {/*} <CustomDrawerItem 
             label={'Home'} 
             icon={icons.home} 
             isFocused={selectedTab === screens.home}
@@ -115,6 +119,6 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: 20
   },
-}); 
+});
 
 

@@ -183,7 +183,7 @@ const Restaurants = [
         "minDeliveryTime": 15,
         "maxDeliveryTime": 35,
         "rating": 4.7,
-        isFavorite: true,
+        isFavorite: false,
         "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
         dishes: [
             {

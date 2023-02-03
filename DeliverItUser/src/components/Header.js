@@ -1,15 +1,7 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { View, Text, ViewStyle, StyleSheet, TextStyle } from 'react-native';
 
-type HeaderProps = {
-    title: string;
-    containerStyle: ViewStyle;
-    leftComponent: any;
-    rightComponent: any;
-    titleStyle: TextStyle;
-};
-
-const Header: FunctionComponent<HeaderProps> = ({
+const Header = ({
     title,
     containerStyle,
     leftComponent,

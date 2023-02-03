@@ -22,7 +22,6 @@ const OrdersScreen = ({ navigation }) => {
                 containerStyle={{
                     height: 50,
                     marginHorizontal: 20,
-                    marginTop: drawerIsOpen === 'open' ? 10 : 0
                 }}
                 titleStyle={{}}
                 leftComponent={
