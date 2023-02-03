@@ -6,8 +6,6 @@ import {
     StyleSheet,
     Pressable,
     Image,
-    SafeAreaView,
-    ImageBackground,
     ScrollView
 } from "react-native";
 import COLORS from "../../assets/constants/colors";
@@ -16,6 +14,7 @@ import profile from "../../assets/constants/profile";
 import Header from "../components/Header";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FormInput from "../components/FormInput";
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import utils from '../utils/Utils'
 

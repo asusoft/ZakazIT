@@ -1,12 +1,13 @@
 //import liraries
 import { useRoute } from '@react-navigation/native';
 import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, Image, Pressable, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import COLORS from '../../assets/constants/colors';
 import Header from '../components/CartScreenComponents/Header';
 import dummyData from '../../assets/constants/dummyData';
 import icons from '../../assets/constants/icons';
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 // create a component

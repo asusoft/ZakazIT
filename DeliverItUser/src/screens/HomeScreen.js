@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, SafeAreaView, ScrollView, Dimensions, StatusBar, Platform, StyleSheet, Text, View, Image, TouchableOpacity, Pressable, useWindowDimensions } from 'react-native';
+import { FlatList, ScrollView, Dimensions, StatusBar, Platform, StyleSheet, Text, View, Image, TouchableOpacity, Pressable, useWindowDimensions } from 'react-native';
 import dummyData from '../../assets/constants/dummyData';
 import COLORS from '../../assets/constants/colors';
 import Header from '../components/HomeScreenComponents/Header';
@@ -9,6 +9,7 @@ import RestaurantItem from '../components/HomeScreenComponents/RestaurantItem';
 import profile from '../../assets/constants/profile';
 import { useNavigation } from '@react-navigation/native';
 import icons from '../../assets/constants/icons';
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 export default function HomeScreen() {

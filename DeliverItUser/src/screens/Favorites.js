@@ -1,28 +1,22 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable} from 'react-native';
 import COLORS from '../../assets/constants/colors';
+import Header from '../components/Header';
 import icons from '../../assets/constants/icons';
-import dummyData from '../../assets/constants/dummyData';
-import OrderList from '../components/OrderScreenComponents/OrderList';
-import { useDrawerStatus } from '@react-navigation/drawer';
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import Header from '../components/Header';
-
 // create a component
-const OrdersScreen = ({ navigation }) => {
-    const orders = dummyData.orders;
-    const drawerIsOpen = useDrawerStatus();
-    
+const Favorites = ({navigation}) => {
+   
     function RenderHeader() {
         return (
             <Header
-                title="MY ORDERS"
+                title="MY FAVORITES"
                 containerStyle={{
                     height: 50,
                     marginHorizontal: 20,
-                    marginTop: drawerIsOpen === 'open' ? 10 : 0
+                    marginTop: 10,
                 }}
                 titleStyle={{}}
                 leftComponent={
@@ -40,7 +34,7 @@ const OrdersScreen = ({ navigation }) => {
                         onPress={() => navigation.toggleDrawer()}
                     >
                         <Image
-                            source={drawerIsOpen === 'open' ? icons.cross : icons.menu}
+                            source={icons.menu}
                             style={{
                                 width: 20,
                                 height: 20,
@@ -53,13 +47,13 @@ const OrdersScreen = ({ navigation }) => {
             />
         );
     }
-
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, styles.droidSafeArea]}>
             {/* Header */}
             {RenderHeader()}
+            {/* Options */}
+
             {/* List */}
-            <OrderList orders={orders} navigation={navigation} />
         </SafeAreaView>
     );
 };
@@ -73,4 +67,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default OrdersScreen;
+export default Favorites;

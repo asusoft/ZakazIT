@@ -6,12 +6,12 @@ import {
     StyleSheet,
     Pressable,
     Image,
-    SafeAreaView,
     ScrollView
 } from "react-native";
 import COLORS from "../../assets/constants/colors";
 import icons from "../../assets/constants/icons";
 import profile from "../../assets/constants/profile";
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 // create a component
 const OrderdetailsScreen = ({ navigation, route }) => {

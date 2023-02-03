@@ -18,6 +18,7 @@ import TrackOrderScreen from "../screens/TrackOrderScreen";
 
 import COLORS from '../../assets/constants/colors';
 import icons from "../../assets/constants/icons";
+import Favorites from "../screens/Favorites";
 
 const Drawer = createDrawerNavigator();
 
@@ -81,6 +82,20 @@ const DrawerNavigation = ({ selectedTab, setSelectedTab }) => {
                     {props => (
                         <DrawerView styler={styles.container}>
                             <RestaurantStackNavigator {...props} />
+                        </DrawerView>
+                    )}
+                </Drawer.Screen>
+                <Drawer.Screen
+                    name="Favorites"
+                    options={{
+                        title: 'Favorites',
+                        drawerIcon: ({color}) => (
+                          <Image source={icons.heart} style={{tintColor: color, ...styles.drawerImage}} />
+                        ),
+                      }}>
+                    {props => (
+                        <DrawerView styler={styles.container}>
+                            <Favorites {...props} />
                         </DrawerView>
                     )}
                 </Drawer.Screen>
