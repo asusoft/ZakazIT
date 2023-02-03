@@ -38,7 +38,7 @@ const TrackOrderScreen = ({ navigation, route }) => {
 
    React.useEffect(() => {
     setCurrentStatus(order.status.id)
-   }, order)
+   }, [order])
 
     React.useEffect(() => {
         let region = {
@@ -399,9 +399,7 @@ const TrackOrderScreen = ({ navigation, route }) => {
             </View>
         )
     }
-    console.log(order.status)
     return (
-
         <View style={styles.container}>
             {/* Header */}
             {RenderHeader()}

@@ -10,7 +10,7 @@ const RestaurantItem = ({ restaurant }) => {
   const routeName = route.name;
   
   const onPress = () => {
-    navigation.navigate('Restaurants', {
+    navigation.navigate('Restaurant', {
       screen: 'RestaurantInfoScreen', 
       params: { restaurant: restaurant, previous_screen: routeName},
     });

@@ -78,7 +78,6 @@ const OrderdetailsScreen = ({ navigation, route }) => {
             </View>
         );
     }
-    console.log(order)
     return (
         <SafeAreaView style={styles.container}>
             {/* Header */}
@@ -143,7 +142,7 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                     >
                         {order.items.map((item, index) => {
                             return (
-                                <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                                <View key={item.id} style={{ flexDirection: "row", marginBottom: 10 }}>
                                     <View>
                                         <Text style={{ right: 0, fontSize: 14, fontWeight: "600" }}>
                                             {item.name}

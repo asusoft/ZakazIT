@@ -20,7 +20,7 @@ import FormInput from "../components/FormInput";
 import utils from '../utils/Utils'
 
 // create a component
-const AddCartScreen = ({ navigation }) => {
+const AddCardScreen = ({ navigation }) => {
     const cardTypes = profile.cardType;
     const [cardType, setCardType] = useState('');
     const [data, setData] = React.useState([]);
@@ -282,4 +282,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default AddCartScreen;
+export default AddCardScreen;

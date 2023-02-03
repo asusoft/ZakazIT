@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 
 import HomeScreen from "../screens/HomeScreen";
 import RestaurantInfoScreen from "../screens/RestaurantInfoScreen";
@@ -13,24 +13,22 @@ import Payment from "../screens/Payment";
 import OrdersScreen from "../screens/OrdersScreen";
 import OrderdetailsScreen from "../screens/OrderDetailsScreen";
 import CardScreen from "../screens/Cards";
-import AddCartScreen from "../screens/AddCard";
+import AddCardScreen from "../screens/AddCard";
 import TrackOrderScreen from "../screens/TrackOrderScreen";
 
 import COLORS from '../../assets/constants/colors';
-
-import { connect } from "react-redux"
-import { setSelectedTab } from "../store/tabs/tabActions";
+import icons from "../../assets/constants/icons";
 
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigation = ({selectedTab, setSelectedTab}) => {
+const DrawerNavigation = ({ selectedTab, setSelectedTab }) => {
     return (
         <View style={{
             flex: 1,
             backgroundColor: "#FF0000"
         }}>
             <Drawer.Navigator
-                initialRouteName="Index"
+                initialRouteName="Home"
                 drawerType="slide"
                 screenOptions={{
                     headerShown: false,
@@ -42,13 +40,11 @@ const DrawerNavigation = ({selectedTab, setSelectedTab}) => {
                     drawerLabelStyle: {
                         fontWeight: "bold",
                         fontSize: 20,
-                        marginStart: 5
-
+                        marginStart: -5
                     },
                     drawerActiveTintColor: COLORS.white,
                     drawerInactiveTintColor: COLORS.dark,
-                    activeBackgroundColor: 'white',
-                    drawerItemStyle: { backgroundColor: null },
+                    drawerActiveBackgroundColor: COLORS.transparentBlack,
                     swipeEnabled: true,
                     sceneContainerStyle: {
                         backgroundColor: COLORS.primary,
@@ -57,51 +53,105 @@ const DrawerNavigation = ({selectedTab, setSelectedTab}) => {
                 drawerContent={props => {
                     return <CustomDrawerContent
                         {...props}
-                        selectedTab={selectedTab} 
+                        selectedTab={selectedTab}
                         setSelectedTab={setSelectedTab}
                     />;
                 }}
             >
                 <Drawer.Screen
-                    name="Index">
+                    name="Home"
+                    options={{
+                        title: 'Home',
+                        drawerIcon: ({color}) => (
+                          <Image source={icons.home} style={{tintColor: color, ...styles.drawerImage}} />
+                        ),
+                      }}>
                     {props => (
                         <DrawerView styler={styles.container}>
-                            <StackNavigator {...props} />
+                            <HomeScreen {...props} />
+                        </DrawerView>
+                    )}
+                </Drawer.Screen>
+                <Drawer.Screen
+                    name="Restaurant"
+                    options={{
+                        drawerItemStyle: { display: 'none' }
+                      }}
+                      >
+                    {props => (
+                        <DrawerView styler={styles.container}>
+                            <RestaurantStackNavigator {...props} />
+                        </DrawerView>
+                    )}
+                </Drawer.Screen>
+                <Drawer.Screen
+                    name="Cart"
+                    options={{
+                        title: 'My Cart',
+                        drawerIcon: ({color}) => (
+                          <Image source={icons.cart} style={{tintColor: color, ...styles.drawerImage}} />
+                        ),
+                      }}>
+                    {props => (
+                        <DrawerView styler={styles.container}>
+                            <CartScreen {...props} />
+                        </DrawerView>
+                    )}
+                </Drawer.Screen>
+
+                <Drawer.Screen
+                    name="CheckoutScreen"
+                    options={{
+                        drawerItemStyle: { display: 'none' }
+                      }}>
+                    {props => (
+                        <DrawerView styler={styles.container}>
+                            <CheckoutScreen {...props} />
+                        </DrawerView>
+                    )}
+                </Drawer.Screen>
+
+                <Drawer.Screen
+                    name="Payment"
+                    options={{
+                        drawerItemStyle: { display: 'none' }
+                      }}>
+                    {props => (
+                        <DrawerView styler={styles.container}>
+                            <Payment {...props} />
+                        </DrawerView>
+                    )}
+                </Drawer.Screen>
+                <Drawer.Screen
+                    name="Orders"
+                    options={{
+                        title: 'My Orders',
+                        drawerIcon: ({color}) => (
+                          <Image source={icons.list} style={{tintColor: color, ...styles.drawerImage}} />
+                        ),
+                      }}>
+                    {props => (
+                        <DrawerView styler={styles.container}>
+                            <OrdersStackNavigator {...props} />
+                        </DrawerView>
+                    )}
+                </Drawer.Screen>
+                <Drawer.Screen
+                    name="Profile"
+                    options={{
+                        title: 'My Cards',
+                        drawerIcon: ({color}) => (
+                          <Image source={icons.cards} style={{tintColor: color, ...styles.drawerImage}} />
+                        ),
+                      }}>
+                    {props => (
+                        <DrawerView styler={styles.container}>
+                            <ProfileStackNavigator {...props} />
                         </DrawerView>
                     )}
                 </Drawer.Screen>
             </Drawer.Navigator>
         </View>
-    )
-}
-
-
-const Stacks = createNativeStackNavigator();
-
-const StackNavigator = () => {
-    return (
-        <Stacks.Navigator screenOptions={{ headerShown: false }} >
-            <Stacks.Screen
-                name="Home"
-                component={HomeScreen}
-            />
-            <Stacks.Screen
-                name="Restaurants"
-                component={RestaurantStackNavigator}
-            />
-            <Stacks.Screen
-                name="Cart"
-                component={CartStackNavigator}
-            />
-            <Stacks.Screen
-                name="Orders"
-                component={OrdersStackNavigator}
-            />
-            <Stacks.Screen
-                name="Profile"
-                component={ProfileStackNavigator}
-            />
-        </Stacks.Navigator>
     )
 }
 
@@ -131,6 +181,7 @@ const CartStackNavigator = () => {
     return (
         <CartStack.Navigator
             screenOptions={{ headerShown: false }}
+            initialRouteName="CartScreen"
         >
             <CartStack.Screen
                 name="CartScreen"
@@ -153,7 +204,7 @@ const OrdersStackNavigator = () => {
     return (
         <OrdersStack.Navigator
             screenOptions={{ headerShown: false }}
-            initialRouteName={OrdersScreen}
+            initialRouteName= "OrdersScreen"
         >
             <OrdersStack.Screen
                 name="OrdersScreen"
@@ -177,6 +228,7 @@ const ProfileStackNavigator = () => {
     return (
         <ProfileStack.Navigator
             screenOptions={{ headerShown: false }}
+            initialRouteName= "CardScreen"
         >
             <ProfileStack.Screen
                 name="CardScreen"
@@ -184,28 +236,13 @@ const ProfileStackNavigator = () => {
             />
             <ProfileStack.Screen
                 name="AddCardScreen"
-                component={AddCartScreen}
+                component={AddCardScreen}
             />
         </ProfileStack.Navigator>
     );
 };
 
-
-function mapStateToProps(state) {
-    return {
-        selectedTab: state.tabReducer.selectedTab
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        setSelectedTab: (selectedTab) => {
-            return dispatch(setSelectedTab(selectedTab))
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps) (DrawerNavigation);
+export default DrawerNavigation;
 
 
 const styles = StyleSheet.create({
@@ -213,4 +250,8 @@ const styles = StyleSheet.create({
         flex: 1,
         overflow: 'hidden',
     },
+    drawerImage: {
+        width: 25,
+        height: 25,
+      },
 }); 

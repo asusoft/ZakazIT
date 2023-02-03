@@ -2,6 +2,7 @@ import "react-native-gesture-handler";
 import React, { useState } from "react";
 import {
   DrawerContentScrollView,
+  DrawerItemList,
 } from "@react-navigation/drawer";
 
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
@@ -9,7 +10,6 @@ import COLORS from "../../assets/constants/colors";
 import images from "../../assets/constants/images";
 import icons from "../../assets/constants/icons";
 
-import screens from '../../assets/constants/screens'
 
 const CustomDrawerItem = ({ onPress, label, icon, isFocused }) => {
   return (
@@ -25,7 +25,7 @@ const CustomDrawerItem = ({ onPress, label, icon, isFocused }) => {
   );
 };
 
-const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
+const CustomDrawerContent = props => {
   return (
     <DrawerContentScrollView
       style={{
@@ -48,8 +48,10 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
             style={{ height: 130, width: 130, borderRadius: 20,}}
           />
         </View>
-        <View style={{ marginBottom: 20 }}>
-          <CustomDrawerItem 
+        <View style={{ marginBottom: 20, }}>
+
+          <DrawerItemList {...props} />
+         {/*} <CustomDrawerItem 
             label={'Home'} 
             icon={icons.home} 
             isFocused={selectedTab === screens.home}
@@ -83,9 +85,9 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
             isFocused={selectedTab === screens.profile}
             onPress={() => {
               setSelectedTab(screens.profile);
-              navigation.navigate('Profile');
+              navigation.navigate('Cards');
             }}
-            />
+            /> */}
         </View>
       </View>
     </DrawerContentScrollView>

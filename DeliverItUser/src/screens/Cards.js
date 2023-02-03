@@ -1,5 +1,4 @@
 //import liraries
-import { useDrawerStatus } from "@react-navigation/drawer";
 import React, { useState } from "react";
 import {
     View,
@@ -21,7 +20,6 @@ import { SwipeListView } from "react-native-swipe-list-view";
 const CardScreen = ({ navigation }) => {
 
     const [cards, setCards] = useState(profile.myCards);
-    const drawerIsOpen = useDrawerStatus();
 
     const handleRemoveCard = (id) => {
         let newCardList = [...cards];

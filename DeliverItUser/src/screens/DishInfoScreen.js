@@ -33,7 +33,7 @@ const DishInfoScreen = () => {
 
     React.useEffect(() => {
         updatePrice();
-    }, selectedSize)
+    }, [selectedSize])
 
 
     const handleAddToCart = () => {

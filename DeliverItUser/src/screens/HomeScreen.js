@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, SafeAreaView, ScrollView, Dimensions, StatusBar, Platform, StyleSheet, Text, View, Image, TouchableOpacity, Pressable } from 'react-native';
+import { FlatList, SafeAreaView, ScrollView, Dimensions, StatusBar, Platform, StyleSheet, Text, View, Image, TouchableOpacity, Pressable, useWindowDimensions } from 'react-native';
 import dummyData from '../../assets/constants/dummyData';
 import COLORS from '../../assets/constants/colors';
 import Header from '../components/HomeScreenComponents/Header';
@@ -8,10 +8,41 @@ import Categories from '../components/HomeScreenComponents/Categories';
 import RestaurantItem from '../components/HomeScreenComponents/RestaurantItem';
 import profile from '../../assets/constants/profile';
 import { useNavigation } from '@react-navigation/native';
+import icons from '../../assets/constants/icons';
 
 
 export default function HomeScreen() {
+  const {height} = useWindowDimensions()
   const navigation = useNavigation();
+
+  function RenderCart() {
+    return (
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          height: 70,
+          width: 70,
+          borderRadius: 35,
+          backgroundColor: COLORS.primary,
+        }}
+      >
+        <Image
+          source={icons.cart}
+          style={{
+            width: 45,
+            height: 45,
+            tintColor: COLORS.white
+          }}
+        />
+
+        <View style={styles.badge}>
+          <Text style={styles.quantityNumber}>3</Text>
+        </View>
+
+      </View>
+    )
+  }
   return (
     <SafeAreaView style={[styles.container, styles.droidSafeArea]}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -27,9 +58,7 @@ export default function HomeScreen() {
           <Categories categories={dummyData.dishCategories} />
         </View>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingRight: 20, marginBottom: 10 }}>
-
           <Text style={styles.SectionHeader}>Popular Restaurants</Text>
-
         </View>
         <FlatList data={dummyData.Restaurants}
           renderItem={({ item }) => <RestaurantItem restaurant={item} />}
@@ -57,5 +86,23 @@ const styles = StyleSheet.create({
   droidSafeArea: {
     flex: 1,
     paddingTop: Platform.OS === 'android' ? 30 : 0
+  },
+  badge: {
+    position: 'absolute',
+    top: 10,
+    right: 5,
+    height: 25,
+    width: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    backgroundColor: COLORS.white,
+  },
+  quantityNumber: {
+    ...Platform.select({
+      android: { lineHeight: 17 },
+      ios: { lineHeight: 0 },
+    }),
+    fontSize: 14,
   },
 });

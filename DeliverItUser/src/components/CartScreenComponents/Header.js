@@ -36,7 +36,7 @@ const Header = ({ navigation, quantity }) => {
 
             <Text style={{ fontSize: 18, fontWeight: "600", marginTop: 10 }}>MY CART</Text>
 
-            {/* Like Button */}
+            {/* Cart */}
             <View
                 style={{
                     alignItems: "center",
