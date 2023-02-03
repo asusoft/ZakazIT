@@ -29,7 +29,9 @@ const apple = require("../images/apple.png")
 const google = require("../images/google.png")
 const visa = require("../images/visa.png")
 const mir = require("../images/mir.png")
+const man = require("../images/man.png")
 const paypal = require("../images/paypal.png")
+const dotted_line = require("../images/dotted_line.png")
 const visa_background = require("../images/visa_background.png")
 const apple_background = require("../images/apple_background.png")
 
@@ -65,5 +67,6 @@ export default {
     edit,
     celebrate, 
     list,
-    support,cards,visa_background,apple_background,mir
+    man,
+    support,cards,visa_background,apple_background,mir, dotted_line
 }

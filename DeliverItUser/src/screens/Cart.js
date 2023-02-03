@@ -1,6 +1,6 @@
 //import liraries
 import { useRoute } from '@react-navigation/native';
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { View, Text, StyleSheet, Image, Pressable, SafeAreaView } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import COLORS from '../../assets/constants/colors';
@@ -8,78 +8,134 @@ import Header from '../components/CartScreenComponents/Header';
 import dummyData from '../../assets/constants/dummyData';
 import icons from '../../assets/constants/icons';
 
-const cart = dummyData.cart;
 
-const renderCartList = () => {
-    return (
-        <SwipeListView
-            data={cart}
-            key={item => `${item.id}`}
-            contentContainerStyle={{
-                marginTop: 10,
-                paddingHorizontal: 10,
-                paddingBottom: 10 * 2,
-            }}
-            disableRightSwipe={true}
-            rightOpenValue={-75}
-            renderItem={(data, rowMap) => {
-                return (
-                    <View
-                        style={{
-                            height: 100,
-                            backgroundColor: COLORS.lightGray2,
-                            ...styles.cartItemContainer,
-                        }}>
-                        {/* Food Image */}
-                        <View style={{ width: 90, height: 100, marginLeft: 10, marginRight: 10, borderRadius: 20, justifyContent: 'center'}}>
-                            <Image
-                                source={{ uri: data.item.image}}
-                                style={{
-                                    width: '80%',
-                                    height: '80%',
-                                    position: 'absolute',
-                                    borderRadius: 10
-                                }}
-                            />
-                        </View>
-                        {/* Food Info */}
-                        <View style={{ flex: 1 }}>
-                            <Text style={{ color: COLORS.black }}>
-                                {data.item.name}
-                            </Text>
-                            <Text style={{ color: COLORS.primary}}>
-                                ${data.item.price}
-                            </Text>
-                        </View>
-                        {/* Quantity */}
-                    </View>
-                )
-            }}
-
-            renderHiddenItem={(data, rowMap) => {
-                return (
-                  <View
-                    style={{
-                      flex: 1,
-                      justifyContent: 'flex-end',
-                      backgroundColor: COLORS.primary,
-                      ...styles.cartItemContainer,
-                    }}
-                  >
-                    <Image style={{height: 20, width: 20, marginRight: 10}} source={icons.deleteIcon} />
-                    </View>
-                );
-              }}
-
-        />
-    )
-}
 // create a component
 const CartScreen = ({ navigation }) => {
+    const [cart, setCart] = useState(dummyData.cart)
+
+    const handleUpdateQuantity = (newQty, id) => {
+        const newMyCartList = cart.map(cl => {
+            return cl.id === id ? { ...cl, quantity: newQty } : cl;
+        });
+        setCart(newMyCartList);
+    };
+
+    const handleRemoveFromCart = (id) => {
+        let newMyCartList = [...cart];
+        const index = cart.findIndex(cart => cart.id === id);
+        newMyCartList.splice(index, 1);
+        setCart(newMyCartList);
+    };
+
+    const renderCartList = () => {
+
+        return (
+            <SwipeListView
+                data={cart}
+                key={item => `${item.id}`}
+                contentContainerStyle={{
+                    marginTop: 10,
+                    marginHorizontal: 20,
+                    paddingBottom: 20,
+                }}
+                disableRightSwipe={true}
+                rightOpenValue={-65}
+                renderItem={(data, rowMap) => {
+                    return (
+                        <View
+                            style={{
+                                height: 80,
+                                backgroundColor: COLORS.secondary,
+                                ...styles.cartItemContainer,
+                            }}>
+                            {/* Food Image */}
+                            <View style={{ width: 60, height: 60, marginLeft: 10, marginRight: 10, borderRadius: 10, justifyContent: 'center', borderWidth: 1, borderColor: COLORS.lightGray, alignItems: 'center' }}>
+                                <Image
+                                    source={{ uri: data.item.dish.image }}
+                                    style={{
+                                        width: 40,
+                                        height: 40,
+                                        position: 'absolute',
+                                        borderRadius: 10
+                                    }}
+                                />
+                            </View>
+                            {/* Food Info */}
+                            <View style={{ flex: 1 }}>
+                                <Text style={{ color: COLORS.black }}>
+                                    {data.item.dish.name}
+                                </Text>
+                                <Text style={{ color: COLORS.primary }}>
+                                    ${data.item.sizes.price}
+                                </Text>
+                                <Text style={{ color: COLORS.black }}>
+                                    {data.item.sizes.name}
+                                </Text>
+                            </View>
+                            {/* Quantity */}
+
+                            <View style={{ width: 80, height: 60, marginLeft: 10, marginRight: 10, borderRadius: 10, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
+                                <Pressable
+                                    onPress={() => handleUpdateQuantity(data.item.quantity - 1, data.item.id)} >
+                                    <Image
+                                        source={icons.minus}
+                                        style={{
+                                            width: 25,
+                                            height: 25,
+                                            borderRadius: 10
+                                        }}
+                                    />
+                                </Pressable>
+                                <Text>{data.item.quantity}</Text>
+                                <Pressable
+                                    onPress={() => handleUpdateQuantity(data.item.quantity + 1, data.item.id)} >
+                                    <Image
+                                        source={icons.plus}
+                                        style={{
+                                            width: 25,
+                                            height: 25,
+                                            borderRadius: 10,
+                                            tintColor: COLORS.primary
+                                        }}
+                                    />
+                                </Pressable>
+                            </View>
+                        </View>
+                    )
+                }}
+
+                renderHiddenItem={(data, rowMap) => {
+                    return (
+                        <Pressable
+                            onPress={() => handleRemoveFromCart(data.item.id)}
+                            style={{
+                                flex: 1,
+                                justifyContent: 'flex-end',
+                                backgroundColor: COLORS.primary,
+                                ...styles.cartItemContainer,
+                            }}
+                        >
+                            <Image style={{ height: 20, width: 20, marginRight: 10 }} source={icons.deleteIcon} />
+                        </Pressable>
+                    );
+                }}
+
+            />
+        )
+    }
 
     const checkout = () => {
         navigation.navigate("CheckoutScreen")
     }
+
+    function RenderChooseRestaurant() {
+        return (
+            <Pressable onPress={() => navigation.navigate('Home')} style={styles.Footer}>
+                <Text style={{ fontSize: 22, color: COLORS.light, fontWeight: "600", left: 100 }}> Add Dishes</Text>
+            </Pressable>
+        )
+    }
+
     function RenderFooter() {
         return (
             <Pressable onPress={checkout} style={styles.Footer}>
@@ -100,9 +156,29 @@ const CartScreen = ({ navigation }) => {
             {/* Header */}
             <Header navigation={navigation} quantity={cart.length} />
             {/* Cart List */}
-            {renderCartList()}
+            {
+                cart.length > 0 ? renderCartList()
+                    :
+                    <View style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <Text style={{
+                            fontSize: 24,
+                            fontWeight: '600',
+                            opacity: 0.5
+                        }}>Your cart is empty</Text>
+                    </View>
+            }
+
             {/* Footer */}
-            {RenderFooter()}
+            {
+                cart.length > 0 ?
+                    RenderFooter()
+                    :
+                    RenderChooseRestaurant()
+            }
         </SafeAreaView>
     );
 };
@@ -114,20 +190,20 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
     },
     leftIconButton: {
-      width: 40,
-      height: 40,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderWidth: 1,
-      borderRadius: 10,
-      borderColor: COLORS.gray,
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: COLORS.gray,
     },
     cartItemContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginTop: 10,
-      paddingHorizontal: 10,
-      borderRadius: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10,
+        paddingHorizontal: 10,
+        borderRadius: 10,
     },
     Footer: {
         position: "absolute",

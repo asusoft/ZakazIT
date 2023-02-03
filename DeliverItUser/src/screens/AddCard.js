@@ -15,7 +15,6 @@ import icons from "../../assets/constants/icons";
 import profile from "../../assets/constants/profile";
 import Header from "../components/Header";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { SelectList } from "react-native-dropdown-select-list";
 import FormInput from "../components/FormInput";
 
 import utils from '../utils/Utils'
@@ -109,8 +108,6 @@ const AddCartScreen = ({ navigation }) => {
             <View style={{ marginHorizontal: 20, marginTop: 10 }}>
                 <FormInput
                     label="Name"
-                    keyboardType="number-pad"
-                    maxLength={19}
                     value={cardName}
                     inputContainerStyle={{
                         borderColor: COLORS.grey
@@ -178,7 +175,7 @@ const AddCartScreen = ({ navigation }) => {
                         )
                         utils.validateInput(
                             value,
-                            Platform.OS === 'android' ? 16 : 19,
+                            Platform.OS === 'android' ? 16 : 16,
                             setCardNumberError,
                         );
                     }}
@@ -236,9 +233,9 @@ const AddCartScreen = ({ navigation }) => {
                         onChange={value => {
                             utils.validateInput(value, 3, setCvvError);
                             setCvv(value);
-                        }} />
+                        }}
+                    />
                 </View>
-
             </View>
         )
     }

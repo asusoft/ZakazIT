@@ -78,6 +78,7 @@ const OrderdetailsScreen = ({ navigation, route }) => {
             </View>
         );
     }
+    console.log(order)
     return (
         <SafeAreaView style={styles.container}>
             {/* Header */}
@@ -108,7 +109,7 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                             </View>
 
                             <Text style={{ position: "absolute", right: 0, fontSize: 16 }}>
-                                {order.status}
+                                {order.status.name}
                             </Text>
                         </View>
                         <View style={{ marginTop: 20 }}>

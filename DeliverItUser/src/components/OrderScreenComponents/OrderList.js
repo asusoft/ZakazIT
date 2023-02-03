@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-nati
 import COLORS from '../../../assets/constants/colors';
 
 // create a component
-const OrderList = ({orders, navigation}) => {
+const OrderList = ({ orders, navigation }) => {
     return (
         <View style={{ margin: 20, marginTop: 10 }}>
             <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 15 }}>
@@ -15,6 +15,7 @@ const OrderList = ({orders, navigation}) => {
                     {orders.map((item, index) => {
                         return (
                             <View
+                            key={item.id}
                                 style={{
                                     marginRight: 30,
                                     height: 170,
@@ -60,17 +61,29 @@ const OrderList = ({orders, navigation}) => {
                                             fontSize: 14,
                                             fontWeight: "600",
                                             marginTop: 5
-                                        }}>Order {item.status}</Text>
+                                        }}>{item.status.name}</Text>
                                     </View>
                                     <View style={{ alignItems: "flex-end", marginTop: 10, marginEnd: 10 }}>
                                         <Text style={{ alignSelf: "flex-end", fontSize: 20, fontWeight: "800", color: COLORS.primary }}>${item.total}</Text>
                                     </View>
                                 </View>
                                 <View style={{ height: "40%", width: "100%", flexDirection: 'row', paddingEnd: 40, paddingBottom: 15 }}>
-                                    <Pressable style={{ backgroundColor: COLORS.primary, ...styles.buttons }}>
-                                        <Text style={{ fontSize: 18, fontWeight: '600', color: COLORS.white }}>Re-order</Text>
-                                    </Pressable>
-                                    <Pressable onPress={() => navigation.push('OrderDetailsScreen', {order: item})} style={{ backgroundColor: COLORS.lightGray2, ...styles.buttons }}>
+
+                                    {
+                                        item.status.name === 'Delivered' || item.status.name === 'Cancelled'
+                                            ?
+                                            <Pressable style={{ backgroundColor: COLORS.primary, ...styles.buttons }}>
+                                                <Text style={{ fontSize: 18, fontWeight: '600', color: COLORS.white }}>Re-order</Text>
+                                            </Pressable>
+                                            : 
+                                            <Pressable 
+                                            onPress={() => navigation.push("TrackOrderScreen", { order: item })}
+                                            style={{ backgroundColor: COLORS.primary, ...styles.buttons }}>
+                                                <Text style={{ fontSize: 18, fontWeight: '600', color: COLORS.white }}>Track order</Text>
+                                            </Pressable>
+                                    }
+
+                                    <Pressable onPress={() => navigation.push('OrderDetailsScreen', { order: item })} style={{ backgroundColor: COLORS.lightGray2, ...styles.buttons }}>
                                         <Text style={{ fontSize: 18, fontWeight: '600', color: COLORS.primary }}>Details</Text>
                                     </Pressable>
                                 </View>

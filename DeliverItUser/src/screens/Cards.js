@@ -1,6 +1,6 @@
 //import liraries
 import { useDrawerStatus } from "@react-navigation/drawer";
-import React, { Component, useRef, useState } from "react";
+import React, { useState } from "react";
 import {
     View,
     Text,
@@ -8,27 +8,27 @@ import {
     Pressable,
     Image,
     SafeAreaView,
-    Dimensions,
-    ScrollView
 } from "react-native";
 import COLORS from "../../assets/constants/colors";
 import icons from "../../assets/constants/icons";
 import profile from "../../assets/constants/profile";
 import Header from "../components/Header";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-
-const { width, height } = Dimensions.get('screen');
-const ITEM_WIDTH = width * 0.85
-const ITEM_HEIGHT = ITEM_WIDTH * 0.2
-const SPACING = 10
+import { SwipeListView } from "react-native-swipe-list-view";
 
 
 // create a component
 const CardScreen = ({ navigation }) => {
-    const cards = profile.myCards;
+
+    const [cards, setCards] = useState(profile.myCards);
     const drawerIsOpen = useDrawerStatus();
 
+    const handleRemoveCard = (id) => {
+        let newCardList = [...cards];
+        const index = cards.findIndex(cards => cards.id === id);
+        newCardList.splice(index, 1);
+        setCards(newCardList);
+    };
 
     function RenderHeader() {
         const insets = useSafeAreaInsets;
@@ -70,24 +70,71 @@ const CardScreen = ({ navigation }) => {
         );
     }
 
-    const RenderCards = (card) => {
+    const RenderCards = () => {
         return (
-            <View key={card.id} style={styles.cardHolder}>
-                <Image source={card.type.icon} style={{ height: 40, width: 50, resizeMode: "contain" }} />
-                <Text style={{
+            <SwipeListView
+                data={cards}
+                key={item => `${item.id}`}
+                contentContainerStyle={{
+                    marginTop: 10,
                     marginHorizontal: 20,
-                    fontSize: 18,
-                    fontWeight: '600'
-                }}>{card.type.name}</Text>
+                    paddingBottom: 20,
+                }}
+                disableRightSwipe={true}
+                rightOpenValue={-65}
+                renderItem={(data, rowMap) => {
+                    return (
+                        <View
+                            style={{
+                                height: 80,
+                                backgroundColor: COLORS.secondary,
+                                ...styles.cardHolder,
+                            }}>
+                            {/* Food Image */}
+                            <View style={{ width: 50, height: 40, marginLeft: 10, marginRight: 10, borderRadius: 10, justifyContent: 'center', borderWidth: 1, borderColor: COLORS.lightGray, alignItems: 'center' }}>
+                                <Image
+                                    resizeMode="contain"
+                                    source={data.item.type.icon}
+                                    style={{
+                                        width: 40,
+                                        height: 40,
+                                        position: 'absolute',
+                                        borderRadius: 10
+                                    }}
+                                />
+                            </View>
+                            {/* Food Info */}
+                            <View style={{ flex: 1 }}>
+                                <Text style={{ color: COLORS.black, fontSize: 16, fontWeight: '600', marginStart: 20 }}>
+                                    {data.item.type.name}
+                                </Text>
+                            </View>
+                            {/* Quantity */}
+                            <View style={{ height: 60, marginLeft: 10, marginRight: 10, borderRadius: 10, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
+                                <Text style={{ color: COLORS.black }}>
+                                    {data.item.card_no} 1234 1234 1234
+                                </Text>
+                            </View>
+                        </View>
+                    )
+                }}
 
-                <Text style={{
-                    position: 'absolute',
-                    right: 15,
-
-                    fontSize: 12,
-                    fontWeight: '600'
-                }}>{card.card_no} 1234 1234 1234</Text>
-            </View>
+                renderHiddenItem={(data, rowMap) => {
+                    return (
+                        <Pressable
+                            onPress={() => handleRemoveCard(data.item.id)}
+                            style={{
+                                flex: 1,
+                                justifyContent: 'flex-end',
+                                backgroundColor: COLORS.primary,
+                                ...styles.cardHolder,
+                            }}
+                        >
+                            <Image style={{ height: 20, width: 20, marginRight: 10 }} source={icons.deleteIcon} />
+                        </Pressable>
+                    );
+                }}
+            />
         )
     }
 
@@ -104,19 +151,23 @@ const CardScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             {RenderHeader()}
-            <ScrollView style={styles.cardsHolder} contentContainerStyle={{
-                justifyContent: 'center',
-                alignItems: "center"
-            }}>
-                {
-                    cards.map((card, index) => {
-                        return (
-                            RenderCards(card)
-                        )
-                    })
 
-                }
-            </ScrollView>
+            {
+                cards.length > 0 ? RenderCards() : 
+                <View style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <Text style={{
+                        fontSize: 24,
+                        fontWeight: '600',
+                        opacity: 0.5
+                    }}>You have not added any card</Text>
+                </View>
+            
+            }
+            
             {RenderFooter()}
         </SafeAreaView>
     );
@@ -128,18 +179,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.background
     },
-    cardsHolder: {
-        flex: 1,
-    },
     cardHolder: {
-        height: ITEM_HEIGHT,
-        width: ITEM_WIDTH,
-        backgroundColor: COLORS.secondary,
-        borderRadius: 10,
-        alignItems: "center",
-        padding: 20,
         flexDirection: 'row',
-        marginBottom: 10
+        alignItems: 'center',
+        marginTop: 10,
+        paddingHorizontal: 10,
+        borderRadius: 10,
 
     },
     Footer: {

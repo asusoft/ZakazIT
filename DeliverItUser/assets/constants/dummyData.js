@@ -48,7 +48,7 @@ const Restaurants = [
                 "name": "Cheese Tequeños",
                 "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
                 "price": 6.9,
-                "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Fsearch%3Fq%3Dburger&psig=AOvVaw0EFSIPzsbXV1lYPwbaTRdi&ust=1675262138979000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCNiSjvmD8vwCFQAAAAAdAAAAABAE",
+                "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant1.jpeg",
                 categories: [1, 2],
                 isFavorite: true,
                 "rating": 4.5,
@@ -105,6 +105,7 @@ const Restaurants = [
                 "name": "U.S.A. Burger",
                 "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
                 "price": 5.4,
+                "image": "https://www.pngall.com/wp-content/uploads/5/Summer-Cocktail-PNG.png",
                 sizes: [
                     {
                         "id": "1",
@@ -360,31 +361,50 @@ const Restaurants = [
 const cart = [
     {
         "id": "1",
-        "name": "Cheese Tequeños",
-        "description": "6 pieces of chese with sauce.",
-        "price": 6.9,
-        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
-        categories: [1, 2],
-        isFavorite: true,
+        dish: Restaurants[0].dishes[0],
+        sizes: Restaurants[0].dishes[0].sizes[0],
+        quantity: 3
     },
     {
         "id": "2",
-        "name": "Hamburger La Super Cabo Burger",
-        "description": "Double meat, gouda cheese, cheddar cheese, cooked ham, bacon, egg, salad and rustic potatoes.",
-        "price": 8.9,
-        categories: [1, 3],
-        isFavorite: false,
-        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg"
+        dish: Restaurants[0].dishes[1],
+        sizes: Restaurants[0].dishes[1].sizes[2],
+        quantity: 2
     },
     {
         id: "3",
-        categories: [6],
-        isFavorite: false,
-        "name": "U.S.A. Burger",
-        "description": "Beef, gouda cheese, cheddar cheese, cooked ham, bacon, egg and salad.",
-        "price": 5.4,
-        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg"
+        dish: Restaurants[0].dishes[2],
+        sizes: Restaurants[0].dishes[2].sizes[2],
+        quantity: 2
     },
+]
+
+const OrderStatus= [
+    {
+        id: 0,
+        name: 'Cancelled',
+        isDone: false
+    },
+    {
+        id: 1,
+        name: 'Accepted',
+        isDone: false
+    },
+    {
+        id: 2,
+        name: 'Cooking',
+        isDone: false
+    },
+    {
+        id: 3,
+        name: 'Arriving',
+        isDone: false
+    },
+    {
+        id: 4,
+        name: 'Delivered',
+        isDone: false
+    }
 ]
 
 const orders = [
@@ -394,7 +414,7 @@ const orders = [
         items: Restaurants[1].dishes,
         total: 30.97,
         paymentMethod: "Master Card",
-        status: "Completed"
+        status: OrderStatus[4]
     },
     {
         id: 2,
@@ -402,7 +422,7 @@ const orders = [
         items: Restaurants[0].dishes,
         total: 30.97,
         paymentMethod: "Visa",
-        status: "In Progress"
+        status: OrderStatus[1]
     },
     {
         id: 3,
@@ -410,7 +430,7 @@ const orders = [
         items: Restaurants[2].dishes,
         total: 30.97,
         paymentMethod: "Apple Pay",
-        status: "Cancelled"
+        status: OrderStatus[2]
     },
     {
         id: 4,
@@ -418,14 +438,17 @@ const orders = [
         items: Restaurants[3].dishes,
         total: 30.97,
         paymentMethod: "Master Card",
-        status: "Completed"
+        status: OrderStatus[3]
     }
 ]
+
+
 
 
 export default {
     dishCategories,
     Restaurants,
     cart,
-    orders
+    orders,
+    OrderStatus
 }

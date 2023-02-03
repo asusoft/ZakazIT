@@ -17,6 +17,7 @@ import OrdersScreen from "../screens/OrdersScreen";
 import OrderdetailsScreen from "../screens/OrderDetailsScreen";
 import CardScreen from "../screens/Cards";
 import AddCartScreen from "../screens/AddCard";
+import TrackOrderScreen from "../screens/TrackOrderScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -161,6 +162,7 @@ const OrdersStackNavigator = () => {
     return (
         <OrdersStack.Navigator
             screenOptions={{ headerShown: false }}
+            initialRouteName={OrdersScreen}
         >
             <OrdersStack.Screen
                 name="OrdersScreen"
@@ -169,6 +171,10 @@ const OrdersStackNavigator = () => {
             <OrdersStack.Screen
                 name="OrderDetailsScreen"
                 component={OrderdetailsScreen}
+            />
+            <OrdersStack.Screen
+                name="TrackOrderScreen"
+                component={TrackOrderScreen}
             />
         </OrdersStack.Navigator>
     );
