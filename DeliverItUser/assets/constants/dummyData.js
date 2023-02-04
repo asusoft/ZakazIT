@@ -392,7 +392,7 @@ const OrderStatus= [
     },
     {
         id: 2,
-        name: 'Cooking',
+        name: 'Preparing',
         isDone: false
     },
     {

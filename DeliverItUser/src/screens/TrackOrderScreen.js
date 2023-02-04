@@ -19,7 +19,7 @@ const TrackOrderScreen = ({ navigation, route }) => {
 
     const ordersList = dummyData.orders;
     const orderStatuses = dummyData.OrderStatus;
-    const [orderStatus, setOrderStatus] = useState( order.status.name)
+    const [orderStatus, setOrderStatus] = useState(order.status.name)
     const [currentStatus, setCurrentStatus] = useState(1);
 
     const insets = useSafeAreaInsets();
@@ -30,15 +30,16 @@ const TrackOrderScreen = ({ navigation, route }) => {
     const mapView = useRef();
     const [region, setRegion] = useState(null);
     const [toLoc, setToLoc] = useState(null);
+    const [fromLocation, setFromLocation] = useState(null);
     const [courierLocation, setCourierLocation] = useState(null);
     const [angle, setAngle] = useState(0);
     const [isReady, setIsReady] = useState(false);
     const [duration, setDuration] = useState('');
 
 
-   React.useEffect(() => {
-    setCurrentStatus(order.status.id)
-   }, [order])
+    React.useEffect(() => {
+        setCurrentStatus(order.status.id)
+    }, [order])
 
     React.useEffect(() => {
         let region = {
@@ -53,9 +54,14 @@ const TrackOrderScreen = ({ navigation, route }) => {
             longitude: 44.530590,
         };
 
+        let fromLocation = {
+            latitude: 48.723100,
+            longitude: 44.535950,
+        };
+
         let courierLocation = {
-            latitude: 48.756330,
-            longitude: 44.478010,
+            latitude: 48.720687,
+            longitude: 44.536242,
             latitudeDelta: 0.02,
             longitudeDelta: 0.02
         };
@@ -63,6 +69,7 @@ const TrackOrderScreen = ({ navigation, route }) => {
         setRegion(region)
         setToLoc(myLocation)
         setCourierLocation(courierLocation)
+        setFromLocation(fromLocation)
 
     }, [])
 
@@ -229,33 +236,64 @@ const TrackOrderScreen = ({ navigation, route }) => {
                         </View>
                     </Marker>
                 }
-                <MapViewDirections
-                    origin={courierLocation}
-                    destination={toLoc}
-                    apikey={constants.GOOGLE_MAP_API_KEY}
-                    strokeWidth={5}
-                    strokeColor={COLORS.primary}
-                    optimizeWaypoints={true}
-                    onReady={result => {
-                        setDuration(Math.ceil(result.duration));
-                        if (!isReady) {
-                            mapView.current.fitToCoordinates(result.coordinates, {
-                                edgePadding: {
-                                    right: MAP_WIDTH * 0.1,
-                                    left: MAP_WIDTH * 0.1,
-                                    top: MAP_HEIGHT * 0.1,
-                                },
-                            });
 
-                            // Reposition the navigator
-                            if (result.coordinates.length >= 2) {
-                                let angle = utils.calculateAngle(result.coordinates);
-                                setAngle(angle);
-                            }
-                            setIsReady(true);
-                        }
-                    }}
-                />
+                {
+                    fromLocation &&
+                    <Marker
+                        coordinate={fromLocation}
+                        anchor={{ x: 0.5, y: 0.5 }}
+                    >
+                        <View style={{
+                            height: 30,
+                            width: 30,
+                            alignItems: "center",
+                            justifyContent: 'center',
+                            borderRadius: 20,
+                            backgroundColor: COLORS.primary
+                        }}>
+                            <Image style={{
+                                height: 20,
+                                width: 20,
+                                tintColor: COLORS.secondary,
+                            }} source={icons.bag} />
+
+                        </View>
+                    </Marker>
+                }
+
+                {
+                    currentStatus == 3 ?
+                        <MapViewDirections
+                            origin={courierLocation}
+                            destination={toLoc}
+                            apikey={constants.GOOGLE_MAP_API_KEY}
+                            strokeWidth={5}
+                            strokeColor={COLORS.primary}
+                            optimizeWaypoints={true}
+                            onReady={result => {
+                                setDuration(Math.ceil(result.duration));
+                                if (!isReady) {
+                                    mapView.current.fitToCoordinates(result.coordinates, {
+                                        edgePadding: {
+                                            right: MAP_WIDTH * 0.1,
+                                            left: MAP_WIDTH * 0.1,
+                                            top: MAP_HEIGHT * 0.1,
+                                        },
+                                    });
+
+                                    // Reposition the navigator
+                                    if (result.coordinates.length >= 2) {
+                                        let angle = utils.calculateAngle(result.coordinates);
+                                        setAngle(angle);
+                                    }
+                                    setIsReady(true);
+                                }
+                            }}
+                        />
+                        :
+                        []
+                }
+
             </MapView>
         )
     }
@@ -413,8 +451,8 @@ const TrackOrderScreen = ({ navigation, route }) => {
                     RenderInfo(),
                     RenderCourierInfo(),
                 ]
-                :
-                []
+                    :
+                    []
             }
 
         </View>
