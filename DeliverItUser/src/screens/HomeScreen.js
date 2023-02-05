@@ -12,6 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { DataStore } from 'aws-amplify';
 import { Restaurant, Categories} from '../models'
+import { useAuthContext } from '../contexts/AuthContext';
 
 export default function HomeScreen() {
   const navigation = useNavigation();

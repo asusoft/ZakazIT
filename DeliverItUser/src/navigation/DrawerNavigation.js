@@ -19,6 +19,7 @@ import TrackOrderScreen from "../screens/TrackOrderScreen";
 import COLORS from '../../assets/constants/colors';
 import icons from "../../assets/constants/icons";
 import Favorites from "../screens/Favorites";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -142,7 +143,7 @@ const DrawerNavigation = ({ selectedTab, setSelectedTab }) => {
                 <Drawer.Screen
                     name="Profile"
                     options={{
-                        title: 'My Cards',
+                        title: 'My Profile',
                         drawerIcon: ({color}) => (
                           <Image source={icons.cards} style={{tintColor: color, ...styles.drawerImage}} />
                         ),
@@ -227,8 +228,12 @@ const ProfileStackNavigator = () => {
     return (
         <ProfileStack.Navigator
             screenOptions={{ headerShown: false }}
-            initialRouteName= "CardScreen"
+            initialRouteName= "Profile"
         >
+            <ProfileStack.Screen
+                name="Profile"
+                component={ProfileScreen}
+            />
             <ProfileStack.Screen
                 name="CardScreen"
                 component={CardScreen}

@@ -8,13 +8,27 @@ const SizeName = {
   "BIG": "BIG"
 };
 
-const { Dish, Sizes, Categories, Restaurant, CategoriesDish } = initSchema(schema);
+const OrderStatus = {
+  "ACCEPTED": "ACCEPTED",
+  "PREPARING": "PREPARING",
+  "ARRIVING": "ARRIVING",
+  "READY_FOR_PICK_UP": "READY_FOR_PICK_UP",
+  "COMPLETED": "COMPLETED"
+};
+
+const { Dish, Sizes, Categories, OrderItem, Order, Restaurant, Cart, CartItem, User, CategoriesDish } = initSchema(schema);
 
 export {
   Dish,
   Sizes,
   Categories,
+  OrderItem,
+  Order,
   Restaurant,
+  Cart,
+  CartItem,
+  User,
   CategoriesDish,
-  SizeName
+  SizeName,
+  OrderStatus
 };

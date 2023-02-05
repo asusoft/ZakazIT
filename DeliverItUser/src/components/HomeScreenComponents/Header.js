@@ -5,10 +5,13 @@ import { useNavigation } from "@react-navigation/native";
 import icons from "../../../assets/constants/icons";
 import { useDrawerStatus } from "@react-navigation/drawer";
 import COLORS from "../../../assets/constants/colors";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const Header = ({ profile }) => {
   const drawerIsOpen = useDrawerStatus();
   const navigation = useNavigation();
+  const {dbUser} = useAuthContext();
+
   const onPress = () => {
     navigation.toggleDrawer();
   };
@@ -39,7 +42,7 @@ const Header = ({ profile }) => {
         </Pressable>
         <Pressable style={styles.location}>
           <Text style={styles.locationText} numberOfLines={1}>
-            {profile.address}
+            {dbUser.address}
           </Text>
           <View style={styles.locationIcon}>
             <SimpleLineIcons name="location-pin" size={17} color="black" />
@@ -49,7 +52,7 @@ const Header = ({ profile }) => {
       </View>
       <View style={styles.greetings}>
         <Text style={styles.greetingHeader}>
-          Hello, {profile.name}
+          Hello, {dbUser.name}
         </Text>
         <Text style={styles.greetingSubheader}>what do you want to eat?</Text>
       </View>
