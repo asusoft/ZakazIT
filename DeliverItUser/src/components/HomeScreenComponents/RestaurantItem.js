@@ -1,5 +1,4 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import COLORS from '../../../assets/constants/colors';
 import icons from '../../../assets/constants/icons';
@@ -12,7 +11,7 @@ const RestaurantItem = ({ restaurant }) => {
   const onPress = () => {
     navigation.navigate('Restaurant', {
       screen: 'RestaurantInfoScreen', 
-      params: { restaurant: restaurant, previous_screen: routeName},
+      params: { restaurant_ID: restaurant.id, previous_screen: routeName},
     });
   }
 
@@ -29,14 +28,14 @@ const RestaurantItem = ({ restaurant }) => {
       </View>
       <View style={styles.ItemInfo}>
         <Text style={styles.ItemName}>{restaurant.name}</Text>
-        <Text style={styles.ItemDescription}>Fast Food, Breakfast, Chicken</Text>
+        <Text style={styles.ItemDescription}>{restaurant.address}</Text>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Image style={styles.InfoIcon} source={icons.star} />
-          <Text style={styles.InfoText}>{restaurant.rating}</Text>
+          <Text style={styles.InfoText}>{restaurant.rating.toFixed(1)}</Text>
           <Image style={styles.InfoIcon} source={icons.delivery} />
-          <Text style={styles.InfoText}>₽{restaurant.deliveryFee}</Text>
+          <Text style={styles.InfoText}>₽{restaurant.deliveryFee.toFixed(0)}</Text>
           <Image style={styles.InfoIcon} source={icons.time} />
-          <Text style={styles.InfoText}>{restaurant.minDeliveryTime} - {restaurant.maxDeliveryTime} mins</Text>
+          <Text style={styles.InfoText}>{restaurant.minDeliveryTime.toFixed(0)} - {restaurant.maxDeliveryTime.toFixed(0)} mins</Text>
         </View>
       </View>
     </Pressable>
@@ -105,5 +104,4 @@ const styles = StyleSheet.create({
     width: 25,
     tintColor: COLORS.primary
   }
-
 });

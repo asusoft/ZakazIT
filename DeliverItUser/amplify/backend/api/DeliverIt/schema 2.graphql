@@ -1,0 +1,44 @@
+enum SizeName {
+  SMALL
+  MEDIUM
+  BIG
+}
+
+type Sizes @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: SizeName
+  price: Float
+  dishID: ID @index(name: "byDish")
+}
+
+type Categories @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  image: String!
+  Dishes: [Dish] @manyToMany(relationName: "CategoriesDish")
+}
+
+type Dish @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  image: String
+  description: String!
+  restaurantID: ID! @index(name: "byRestaurant")
+  Sizes: [Sizes] @hasMany(indexName: "byDish", fields: ["id"])
+  categoriess: [Categories] @manyToMany(relationName: "CategoriesDish")
+}
+
+type Restaurant @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  image: String!
+  deliveryFee: Float!
+  minDeliveryTime: Float!
+  maxDeliveryTime: Float!
+  rating: Float
+  address: String!
+  lat: Float!
+  lng: Float!
+  Dishes: [Dish] @hasMany(indexName: "byRestaurant", fields: ["id"])
+}
+ 

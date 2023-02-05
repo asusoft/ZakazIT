@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import COLORS from '../../../assets/constants/colors';
 import Rating from './Rating';
@@ -11,8 +11,8 @@ const RestaurantInfo = ({restaurant}) => {
         <View style={styles.container}>
             <Text style={{fontSize: 20, fontWeight: "700"}}>{restaurant.name}</Text>
             <Text style={{fontSize: 16, color: COLORS.grey,opacity: 1}}>{restaurant.address}</Text>
-            <Text style={{fontSize: 16, }}>Delivers in {restaurant.minDeliveryTime} - {restaurant.maxDeliveryTime} mins</Text>
-            <Rating rating={restaurant.rating}/>
+            <Text style={{fontSize: 16, }}>Delivers in {restaurant.minDeliveryTime.toFixed(0)} - {restaurant.maxDeliveryTime.toFixed(0)} mins</Text>
+            <Rating rating={restaurant.rating.toFixed(1)}/>
         </View>
     );
 };

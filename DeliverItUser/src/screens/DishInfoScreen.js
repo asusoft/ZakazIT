@@ -1,32 +1,48 @@
 //import liraries
 import { useNavigation, useRoute } from '@react-navigation/native';
-import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, SafeAreaView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Pressable, Image, ActivityIndicator } from 'react-native';
 import COLORS from '../../assets/constants/colors';
 import icons from '../../assets/constants/icons';
 import TopButtons from '../components/RestaurantInfoScreenComponents/TopButtons';
+
+import { DataStore } from 'aws-amplify';
+import { Dish, Sizes } from '../models'
 
 // create a component
 const DishInfoScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const { dish, previous_screen } = route.params;
+    const dish_ID = route.params?.dish_ID;
+    const [sizes, setSizes] = useState([]);
+    const [dish, setDish] = useState([])
+    const [selectedSize, setSelectedSize] = useState(1);
+    const [quantity, setQuantity] = useState(1);
+    const [price, setPrice] = useState(null);
+
+
+    React.useEffect(() => {
+        DataStore.query(Dish, dish_ID).then(result => setDish(result))
+        DataStore.query(Sizes, (size) => size.dishID.eq(dish_ID)).then(result => {
+            result.sort((a, b) => a.price - b.price);
+            setSizes(result);
+        });
+    }, [dish_ID])
+
+    React.useEffect(() => {
+        const size = sizes[parseInt(selectedSize)] || {};
+        setPrice(size.price * quantity);
+    }, [sizes, selectedSize, quantity]);
+
+
     const goBack = () => {
         navigation.goBack();
     }
 
-
-    const [selectedSize, setSelectedSize] = useState('2');
-    const [quantity, setQuantity] = useState(1);
-
-    const size = dish.sizes[parseInt(selectedSize) - 1];
-    const Price = size.price * quantity;
-
-    const [price, setPrice] = useState(Price);
-
     const updatePrice = () => {
-        const size = dish.sizes[parseInt(selectedSize) - 1];
+        const size = sizes[parseInt(selectedSize)] || {};
         let price = size.price;
+
         const newPrice = price * quantity;
         setPrice(newPrice);
     }
@@ -51,7 +67,7 @@ const DishInfoScreen = () => {
         if (quantity < 99) {
             setQuantity(quantity + 1);
             newQuantity = quantity + 1;
-            const size = dish.sizes[parseInt(selectedSize) - 1];
+            const size = sizes[parseInt(selectedSize)] || {};
             const newPrice = size.price * newQuantity;
             setPrice(newPrice);
         }
@@ -63,13 +79,17 @@ const DishInfoScreen = () => {
         if (quantity > 1) {
             setQuantity(quantity - 1);
             newQuantity = quantity - 1;
-            const size = dish.sizes[parseInt(selectedSize) - 1];
+            const size = sizes[parseInt(selectedSize)] || {};
             const newPrice = size.price * newQuantity;
             setPrice(newPrice);
         }
     }
 
     function RenderSizes() {
+        const sizesLowercase = sizes.map(size => ({
+            name: size.name.charAt(0).toUpperCase() + size.name.slice(1).toLowerCase(),
+            price: size.price
+        }));
         return (
             <View style={styles.sizeView}>
                 <Text style={{ color: COLORS.black, fontSize: 18 }}>Sizes:</Text>
@@ -79,16 +99,16 @@ const DishInfoScreen = () => {
                         flexWrap: 'wrap',
                         marginLeft: 20,
                     }}>
-                    {dish.sizes.map((item, index) => {
+                    {sizesLowercase.map((item, index) => {
                         return (
                             <Pressable
                                 key={item.id}
-                                onPress={() => { setSelectedSize(item.id.toString()) }}
+                                onPress={() => { setSelectedSize(index) }}
                                 style={{
                                     marginRight: 10,
                                     height: 40,
                                     width: 75,
-                                    backgroundColor: selectedSize === item.id.toString()
+                                    backgroundColor: selectedSize === index
                                         ? COLORS.primary
                                         : COLORS.background,
                                     alignItems: 'center',
@@ -99,7 +119,7 @@ const DishInfoScreen = () => {
                             >
                                 <Text style={{
                                     fontSize: 18,
-                                    color: selectedSize === item.id.toString()
+                                    color: selectedSize === index
                                         ? COLORS.white
                                         : COLORS.grey,
 
@@ -183,7 +203,12 @@ const DishInfoScreen = () => {
             </Pressable>
         )
     }
-    return (
+    if (!dish) {
+        return (
+            <View style={styles.loading}>
+                <ActivityIndicator size={"large"} color={COLORS.primary} />
+            </View>)
+    } else return (
         <View style={styles.container}>
             {/* Header */}
             <View style={styles.Header}>
@@ -195,9 +220,9 @@ const DishInfoScreen = () => {
                     <Text style={{ fontSize: 20, fontWeight: "800", marginBottom: 10 }}>{dish.name}</Text>
                     <Text style={{ fontSize: 16, }}>{dish.description}</Text>
                     <View style={{ marginTop: 30, flexDirection: 'row' }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600", }}>{dish.price}</Text>
-                        <Text style={{ fontSize: 20, fontWeight: "600", marginLeft: 10 }}>{dish.price}</Text>
-                        <Text style={{ fontSize: 20, fontWeight: "600", marginLeft: 10 }}>{dish.price}</Text>
+                        <Text style={{ fontSize: 20, fontWeight: "600", }}>{price}</Text>
+                        <Text style={{ fontSize: 20, fontWeight: "600", marginLeft: 10 }}>{price}</Text>
+                        <Text style={{ fontSize: 20, fontWeight: "600", marginLeft: 10 }}>{price}</Text>
                     </View>
                     {RenderSizes()}
                 </View>
@@ -212,6 +237,12 @@ const DishInfoScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: COLORS.background,
+    },
+    loading: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: COLORS.background,
     },
     Header: {

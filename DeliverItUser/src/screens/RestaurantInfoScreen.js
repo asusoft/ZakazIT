@@ -1,20 +1,28 @@
 //import liraries
-import React, { Component, useRef } from 'react';
-import { View, Text, StyleSheet, Pressable, Animated, Platform, Image, ScrollView } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import React, { useRef, useState } from 'react';
+import { View, Text, StyleSheet, Pressable, Animated, ActivityIndicator } from 'react-native';
 import MenuItem from '../components/RestaurantInfoScreenComponents/MenuItem';
 import COLORS from '../../assets/constants/colors';
 import RestaurantInfo from '../components/RestaurantInfoScreenComponents/RestaurantInfo';
-import icons from '../../assets/constants/icons';
 import dummyData from '../../assets/constants/dummyData';
 import TopButtons from '../components/RestaurantInfoScreenComponents/TopButtons';
 
+import { DataStore } from 'aws-amplify';
+import { Restaurant, Dish } from '../models';
+
 const HEADER_HEIGHT = 370;
 // create a component
-const RestaurantInfoScreen = ({navigation, route}) => {
-    
+const RestaurantInfoScreen = ({ navigation, route }) => {
+    const { restaurant_ID, previous_screen } = route.params;
 
-    const { restaurant, previous_screen } = route.params;
+    const [restaurant, setRestaurant] = useState()
+    const [dishes, setDishes] = useState([])
+
+    React.useEffect(() => {
+        DataStore.query(Restaurant, restaurant_ID).then(result => setRestaurant(result))
+        DataStore.query(Dish, (dish) => dish.restaurantID.eq(restaurant_ID)).then(result => setDishes(result))
+        
+    }, [restaurant_ID])
 
     const cart = dummyData.cart;
 
@@ -22,7 +30,7 @@ const RestaurantInfoScreen = ({navigation, route}) => {
         navigation.navigate(previous_screen);
     }
     const goToCart = () => {
-        navigation.navigate("Cart", {initial: false,});
+        navigation.navigate("Cart", { initial: false, });
     }
 
     const scrollY = useRef(new Animated.Value(0)).current;
@@ -41,7 +49,7 @@ const RestaurantInfoScreen = ({navigation, route}) => {
                 }}
             >
                 <Animated.Image
-                    source={{ uri: restaurant.image }}
+                    source={{ uri: restaurant?.image }}
                     resizeMode="contain"
                     style={{
                         height: HEADER_HEIGHT,
@@ -145,7 +153,7 @@ const RestaurantInfoScreen = ({navigation, route}) => {
                     <Text style={{ fontSize: 16, fontWeight: "600" }}>{restaurant.name}</Text>
                 </Animated.View>
 
-                <TopButtons back={goBack} item={restaurant}/>
+                <TopButtons back={goBack} item={restaurant} />
             </View>
         )
     }
@@ -165,7 +173,7 @@ const RestaurantInfoScreen = ({navigation, route}) => {
 
                 <Text style={{ flex: 1, fontSize: 26 }}>Menu</Text>
                 <Text style={{ color: COLORS.dark, fontSize: 16, marginTop: 5 }}>
-                    {restaurant?.dishes.length} items
+                    {dishes?.length} items
                 </Text>
 
             </View>
@@ -187,11 +195,15 @@ const RestaurantInfoScreen = ({navigation, route}) => {
         )
     }
 
-
-    return (
+    if (!restaurant) {
+        return (
+            <View style={styles.loading}>
+                <ActivityIndicator size={"large"} color={COLORS.primary} />
+            </View>)
+    } else return (
         <View style={styles.container}>
             <Animated.FlatList
-                data={restaurant?.dishes}
+                data={dishes}
                 keyExtractor={item => `${item.id}`}
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={
@@ -222,7 +234,14 @@ const RestaurantInfoScreen = ({navigation, route}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.secondary,
+        backgroundColor: COLORS.background,
+    },
+
+    loading: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: COLORS.background,
     },
 
     itemImage: {

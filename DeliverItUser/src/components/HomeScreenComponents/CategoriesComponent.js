@@ -1,9 +1,8 @@
 import { Image, Pressable, StyleSheet, Text, View, FlatList } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import COLORS from '../../../assets/constants/colors';
-import icons from '../../../assets/constants/icons';
 
-const Categories = ({ categories }) => {
+const CategoriesComponent = ({ categories }) => {
     const onPress = () => {
         console.warn('Category Pressed')
     }
@@ -14,11 +13,10 @@ const Categories = ({ categories }) => {
                 data={categories}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                style={styles.CategoryItems}
                 renderItem={({ item }) => {
                     return (
                         <Pressable onPress={onPress} style={styles.CategoryItem}>
-                            <Image source={{ uri: item.icon }} style={styles.ItemIcon} />
+                            <Image source={{ uri: item.image }} style={styles.ItemIcon} />
                             <Text style={styles.CategoryName}>{item.name}</Text>
                         </Pressable>
                     );
@@ -28,7 +26,7 @@ const Categories = ({ categories }) => {
     );
 };
 
-export default Categories;
+export default CategoriesComponent;
 
 
 const styles = StyleSheet.create({

@@ -1,49 +1,30 @@
-import React from 'react'
-import { FlatList, ScrollView, Dimensions, StatusBar, Platform, StyleSheet, Text, View, Image, TouchableOpacity, Pressable, useWindowDimensions } from 'react-native';
-import dummyData from '../../assets/constants/dummyData';
+import React, { useState } from 'react'
+import { FlatList, ScrollView, Platform, StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import COLORS from '../../assets/constants/colors';
 import Header from '../components/HomeScreenComponents/Header';
 import SearchBar from '../components/HomeScreenComponents/SearchBar';
-import Categories from '../components/HomeScreenComponents/Categories';
+import CategoriesComponent from '../components/HomeScreenComponents/CategoriesComponent';
 import RestaurantItem from '../components/HomeScreenComponents/RestaurantItem';
 import profile from '../../assets/constants/profile';
 import { useNavigation } from '@react-navigation/native';
 import icons from '../../assets/constants/icons';
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { DataStore } from 'aws-amplify';
+import { Restaurant, Categories} from '../models'
 
 export default function HomeScreen() {
-  const {height} = useWindowDimensions()
   const navigation = useNavigation();
 
-  function RenderCart() {
-    return (
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          height: 70,
-          width: 70,
-          borderRadius: 35,
-          backgroundColor: COLORS.primary,
-        }}
-      >
-        <Image
-          source={icons.cart}
-          style={{
-            width: 45,
-            height: 45,
-            tintColor: COLORS.white
-          }}
-        />
+  const [restaurants, setRestaurants] = useState([])
+  const [categories, setCategories] = useState([])
 
-        <View style={styles.badge}>
-          <Text style={styles.quantityNumber}>3</Text>
-        </View>
+  React.useEffect(() => {
+    DataStore.query(Restaurant).then(setRestaurants)
+    DataStore.query(Categories).then(setCategories)
 
-      </View>
-    )
-  }
+  }, [])
+
   return (
     <SafeAreaView style={[styles.container, styles.droidSafeArea]}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -56,12 +37,12 @@ export default function HomeScreen() {
               <Text style={{ fontSize: 15, alignSelf: "flex-end" }}>See all </Text>
             </Pressable>
           </View>
-          <Categories categories={dummyData.dishCategories} />
+          <CategoriesComponent categories={categories} />
         </View>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingRight: 20, marginBottom: 10 }}>
           <Text style={styles.SectionHeader}>Popular Restaurants</Text>
         </View>
-        <FlatList data={dummyData.Restaurants}
+        <FlatList data={restaurants}
           renderItem={({ item }) => <RestaurantItem restaurant={item} />}
           showsVerticalScrollIndicator={false}
         />
@@ -69,7 +50,6 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {

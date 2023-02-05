@@ -1,6 +1,6 @@
 //import liraries
-import { useNavigation, useRoute } from '@react-navigation/native';
-import React, { Component } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable } from 'react-native';
 import COLORS from '../../../assets/constants/colors';
 import icons from '../../../assets/constants/icons';
@@ -10,12 +10,10 @@ import icons from '../../../assets/constants/icons';
 // create a component
 const MenuItem = ({ item }) => {
     const navigation = useNavigation();
-    const route = useRoute();
-    const routeName = route.name;
     return (
         <Pressable onPress={() =>
             navigation.navigate('DishInfoScreen',
-                { dish: item, previous_screen: routeName}
+                { dish_ID: item.id}
             )
         }
             style={styles.container}>
@@ -25,7 +23,7 @@ const MenuItem = ({ item }) => {
             <View style={styles.itemInfo}>
                 <Text style={styles.itemName}>{item.name}</Text>
                 <Text style={styles.itemDescription} numberOfLines={1}>{item.description}</Text>
-                <Text style={styles.itemPrice}>${item.price}</Text>
+                <Text style={styles.itemPrice}>$</Text>
             </View>
             <View style={styles.itemOptions}>
                 <TouchableOpacity style={styles.like}>
