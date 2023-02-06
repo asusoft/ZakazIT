@@ -7,7 +7,7 @@ import icons from '../../assets/constants/icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FormInput from "../components/FormInput";
 
-import { auth, db } from '../../config'
+import { auth } from '../../config'
 
 
 
@@ -17,10 +17,6 @@ const SignIn = ({ navigation }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    const showUser = () => {
-        console.log(user)
-    }
 
     const signOut = () => {
         auth.signOut().then(function () {
@@ -125,9 +121,6 @@ const SignIn = ({ navigation }) => {
         <SafeAreaView style={styles.container}>
             {RenderHeader()}
             {RenderForm()}
-            <Pressable onPress={showUser}>
-                <Text>{user?.email}</Text>
-            </Pressable>
             <Pressable onPress={signOut}>
                 <Text>SignOut</Text>
             </Pressable>

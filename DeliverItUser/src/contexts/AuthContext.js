@@ -1,10 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
-import { Auth, DataStore } from "aws-amplify";
-
-import { User } from "../models";
-
-
 import { auth, db } from "../../config";
+
+
 const AuthContext = createContext({});
 
 const AuthContextProvider = ({ children }) => {
@@ -20,20 +17,15 @@ const AuthContextProvider = ({ children }) => {
     }, [user])
 
     React.useEffect(() => {
-        user ? 
+        user ?
             db.collection("User").where("sub", "==", uid)
-            .get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    setDbUser(doc.data())
-                });
-            })
-            .catch((error) => {
-                console.log("Error getting documents: ", error);
-            })
+                .onSnapshot((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        setDbUser(doc.data())
+                    });
+                })
+            : []
 
-         : []
-       
     }, [uid]);
 
 

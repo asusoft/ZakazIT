@@ -11,6 +11,8 @@ import { DataStore } from 'aws-amplify';
 import { Restaurant, Dish, } from '../models';
 import { useCartContext } from '../contexts/CartContext';
 
+import { db } from '../../config';
+
 const HEADER_HEIGHT = 370;
 // create a component
 const RestaurantInfoScreen = ({ navigation, route }) => {
@@ -19,13 +21,36 @@ const RestaurantInfoScreen = ({ navigation, route }) => {
     const [restaurant, setRestaurant] = useState()
     const [dishes, setDishes] = useState([])
 
+    const [temp, setTemp] = useState()
+
     const { setRestaurant: setCartRestaurant, cart, cartItems, total } = useCartContext();
 
     React.useEffect(() => {
         setCartRestaurant(null);
-        DataStore.query(Restaurant, restaurant_ID).then(result => setRestaurant(result))
-        DataStore.query(Dish, (dish) => dish.restaurantID.eq(restaurant_ID)).then(result => setDishes(result))
+        db.collection("Restaurant").doc(restaurant_ID)
+            .onSnapshot((doc) => {
+                const restaurantData = doc.data()
+                const restaurantObject = { ...restaurantData, id: restaurant_ID };
+                setRestaurant(restaurantObject)
+            });
 
+        db.collection("Dish")
+            .onSnapshot((querySnapshot) => {
+                const dishList = [];
+                querySnapshot.forEach((doc) => {
+                    const dishID = doc.id;
+                    const dysh = doc.data()
+                    dishList.push({ ...dysh, id: dishID.toString() });
+                });
+                setDishes(dishList)
+            });
+
+        db.collection("CartItem").doc("i1e0fvNCxsn3QsILlljT").get().then((cartItemDoc) => {
+            const cartItem = cartItemDoc.data();
+            cartItem.Dish.get().then((dishDoc) => {
+                const dish = dishDoc.data();
+            });
+        });
     }, [restaurant_ID])
 
     React.useEffect(() => {
