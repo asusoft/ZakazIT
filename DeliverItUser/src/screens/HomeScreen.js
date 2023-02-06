@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FlatList, ScrollView, Platform, StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { FlatList, ScrollView, Platform, StyleSheet, Text, View, Image, Pressable, Alert } from 'react-native';
 import COLORS from '../../assets/constants/colors';
 import Header from '../components/HomeScreenComponents/Header';
 import SearchBar from '../components/HomeScreenComponents/SearchBar';
@@ -21,8 +21,12 @@ export default function HomeScreen() {
   const [categories, setCategories] = useState([])
 
   React.useEffect(() => {
-    DataStore.query(Restaurant).then(setRestaurants)
-    DataStore.query(Categories).then(setCategories)
+    DataStore.query(Restaurant).then(setRestaurants).catch(function(error) {
+      Alert.alert("Error", error.message);
+    });
+    DataStore.query(Categories).then(setCategories).catch(function(error) {
+      Alert.alert("Error", error.message);
+    });
 
   }, [])
 

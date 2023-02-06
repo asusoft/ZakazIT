@@ -16,17 +16,17 @@ const OrderStatus = {
   "COMPLETED": "COMPLETED"
 };
 
-const { Dish, Sizes, Categories, OrderItem, Order, Restaurant, Cart, CartItem, User, CategoriesDish } = initSchema(schema);
+const { Cart, CartItem, Dish, Categories, Sizes, OrderItem, Order, Restaurant, User, CategoriesDish } = initSchema(schema);
 
 export {
+  Cart,
+  CartItem,
   Dish,
-  Sizes,
   Categories,
+  Sizes,
   OrderItem,
   Order,
   Restaurant,
-  Cart,
-  CartItem,
   User,
   CategoriesDish,
   SizeName,

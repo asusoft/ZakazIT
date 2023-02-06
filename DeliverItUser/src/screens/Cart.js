@@ -9,9 +9,14 @@ import icons from '../../assets/constants/icons';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../components/Header';
 
+import { useCartContext } from '../contexts/CartContext';
+
 
 // create a component
 const CartScreen = ({ navigation }) => {
+
+    const { restaurant } = useCartContext();
+
     const [cart, setCart] = useState(dummyData.cart)
 
     const handleUpdateQuantity = (newQty, id) => {

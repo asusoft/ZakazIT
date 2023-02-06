@@ -8,7 +8,8 @@ import dummyData from '../../assets/constants/dummyData';
 import TopButtons from '../components/RestaurantInfoScreenComponents/TopButtons';
 
 import { DataStore } from 'aws-amplify';
-import { Restaurant, Dish } from '../models';
+import { Restaurant, Dish, } from '../models';
+import { useCartContext } from '../contexts/CartContext';
 
 const HEADER_HEIGHT = 370;
 // create a component
@@ -18,13 +19,18 @@ const RestaurantInfoScreen = ({ navigation, route }) => {
     const [restaurant, setRestaurant] = useState()
     const [dishes, setDishes] = useState([])
 
+    const { setRestaurant: setCartRestaurant, cart, cartItems, total } = useCartContext();
+
     React.useEffect(() => {
+        setCartRestaurant(null);
         DataStore.query(Restaurant, restaurant_ID).then(result => setRestaurant(result))
         DataStore.query(Dish, (dish) => dish.restaurantID.eq(restaurant_ID)).then(result => setDishes(result))
-        
+
     }, [restaurant_ID])
 
-    const cart = dummyData.cart;
+    React.useEffect(() => {
+        setCartRestaurant(restaurant)
+    }, [restaurant])
 
     const goBack = () => {
         navigation.navigate(previous_screen);
@@ -183,14 +189,13 @@ const RestaurantInfoScreen = ({ navigation, route }) => {
     function RenderCheckout() {
         return (
             <Pressable onPress={goToCart} style={styles.Checkout}>
-                {cart.length > 1 ?
-                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> {cart.length} items</Text>
+                {cartItems.length > 1 ?
+                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> {cartItems.length} items</Text>
                     :
-                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> {cart.length} item</Text>
-
+                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> {cartItems.length} item</Text>
                 }
-                <Text style={{ fontSize: 22, color: COLORS.light, fontWeight: "600" }}> Checkout</Text>
-                <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> $10.9</Text>
+                <Text style={{ fontSize: 22, color: COLORS.light, fontWeight: "600" }}> Go To Cart</Text>
+                <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> ${total}</Text>
             </Pressable>
         )
     }
@@ -225,7 +230,9 @@ const RestaurantInfoScreen = ({ navigation, route }) => {
             >
             </Animated.FlatList>
             {renderHearderBar()}
-            {cart.length > 0 ? RenderCheckout() : []}
+            {cart && (
+                RenderCheckout()
+            )}
         </View>
     );
 };

@@ -9,6 +9,7 @@ import config from './src/aws-exports';
 import { withAuthenticator } from 'aws-amplify-react-native';
 
 import AuthContextProvider from './src/contexts/AuthContext';
+import CartContextProvider from './src/contexts/CartContext';
 
 Amplify.configure({
   ...config,
@@ -22,7 +23,9 @@ const App = () => {
   return (
     <NavigationContainer>
       <AuthContextProvider>
-        <RootNavigator />
+        <CartContextProvider>
+          <RootNavigator />
+        </CartContextProvider>
       </AuthContextProvider>
     </NavigationContainer>
   );

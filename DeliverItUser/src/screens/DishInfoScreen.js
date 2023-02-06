@@ -8,6 +8,7 @@ import TopButtons from '../components/RestaurantInfoScreenComponents/TopButtons'
 
 import { DataStore } from 'aws-amplify';
 import { Dish, Sizes } from '../models'
+import { useCartContext } from '../contexts/CartContext';
 
 // create a component
 const DishInfoScreen = () => {
@@ -19,7 +20,9 @@ const DishInfoScreen = () => {
     const [selectedSize, setSelectedSize] = useState(1);
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(null);
+    const [size, setSize] = useState(sizes[parseInt(selectedSize)] || {})
 
+    const {addDishToCart} = useCartContext();
 
     React.useEffect(() => {
         DataStore.query(Dish, dish_ID).then(result => setDish(result))
@@ -31,6 +34,7 @@ const DishInfoScreen = () => {
 
     React.useEffect(() => {
         const size = sizes[parseInt(selectedSize)] || {};
+        setSize(size)
         setPrice(size.price * quantity);
     }, [sizes, selectedSize, quantity]);
 
@@ -41,8 +45,8 @@ const DishInfoScreen = () => {
 
     const updatePrice = () => {
         const size = sizes[parseInt(selectedSize)] || {};
+        setSize(size)
         let price = size.price;
-
         const newPrice = price * quantity;
         setPrice(newPrice);
     }
@@ -52,13 +56,9 @@ const DishInfoScreen = () => {
     }, [selectedSize])
 
 
-    const handleAddToCart = () => {
-        alert(
-            dish.name + '\n' +
-            selectedSize + '\n' +
-            quantity + '\n' +
-            price
-        )
+    const handleAddToCart =  async () => {
+        await addDishToCart(dish, size.id, quantity);
+        navigation.goBack()
     }
 
     const onAdd = () => {
@@ -68,6 +68,7 @@ const DishInfoScreen = () => {
             setQuantity(quantity + 1);
             newQuantity = quantity + 1;
             const size = sizes[parseInt(selectedSize)] || {};
+            setSize(size)
             const newPrice = size.price * newQuantity;
             setPrice(newPrice);
         }
@@ -80,6 +81,7 @@ const DishInfoScreen = () => {
             setQuantity(quantity - 1);
             newQuantity = quantity - 1;
             const size = sizes[parseInt(selectedSize)] || {};
+            setSize(size)
             const newPrice = size.price * newQuantity;
             setPrice(newPrice);
         }
@@ -102,7 +104,7 @@ const DishInfoScreen = () => {
                     {sizesLowercase.map((item, index) => {
                         return (
                             <Pressable
-                                key={item.id}
+                                key={index}
                                 onPress={() => { setSelectedSize(index) }}
                                 style={{
                                     marginRight: 10,
@@ -221,6 +223,7 @@ const DishInfoScreen = () => {
                     <Text style={{ fontSize: 16, }}>{dish.description}</Text>
                     <View style={{ marginTop: 30, flexDirection: 'row' }}>
                         <Text style={{ fontSize: 20, fontWeight: "600", }}>{price}</Text>
+                        <Text style={{ fontSize: 20, fontWeight: "600", marginLeft: 10 }}>{price}</Text>
                         <Text style={{ fontSize: 20, fontWeight: "600", marginLeft: 10 }}>{price}</Text>
                         <Text style={{ fontSize: 20, fontWeight: "600", marginLeft: 10 }}>{price}</Text>
                     </View>

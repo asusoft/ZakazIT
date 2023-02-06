@@ -1,11 +1,26 @@
+type Cart @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  CartItems: [CartItem] @hasMany(indexName: "byCart", fields: ["id"])
+  userID: ID! @index(name: "byUser")
+  restaurantID: ID! @index(name: "byRestaurant")
+}
+
+type CartItem @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  quantity: Int!
+  Dish: Dish @hasOne
+  cartID: ID! @index(name: "byCart")
+  price: Float!
+}
+
 type Dish @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   image: String!
   description: String!
-  Sizes: [Sizes] @hasMany(indexName: "byDish", fields: ["id"])
   restaurantID: ID! @index(name: "byRestaurant")
   categoriess: [Categories] @manyToMany(relationName: "CategoriesDish")
+  Sizes: [Sizes] @hasMany(indexName: "byDish", fields: ["id"])
 }
 
 enum OrderStatus {
@@ -34,20 +49,6 @@ type Order @model @auth(rules: [{allow: public}]) {
   OrderItems: [OrderItem] @hasMany(indexName: "byOrder", fields: ["id"])
 }
 
-type CartItem @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  quantity: Int!
-  cartID: ID! @index(name: "byCart")
-  Dish: Dish @hasOne
-}
-
-type Cart @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  CartItems: [CartItem] @hasMany(indexName: "byCart", fields: ["id"])
-  userID: ID! @index(name: "byUser")
-  restaurantID: ID! @index(name: "byRestaurant")
-}
-
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
@@ -55,8 +56,8 @@ type User @model @auth(rules: [{allow: public}]) {
   lat: Float!
   lng: Float!
   Orders: [Order] @hasMany(indexName: "byUser", fields: ["id"])
-  Carts: [Cart] @hasMany(indexName: "byUser", fields: ["id"])
   sub: String
+  Carts: [Cart] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
 enum SizeName {
@@ -70,6 +71,7 @@ type Sizes @model @auth(rules: [{allow: public}]) {
   name: SizeName
   price: Float
   dishID: ID! @index(name: "byDish")
+  CartItem: CartItem @hasOne
 }
 
 type Categories @model @auth(rules: [{allow: public}]) {
@@ -90,7 +92,7 @@ type Restaurant @model @auth(rules: [{allow: public}]) {
   address: String!
   lat: Float!
   lng: Float!
-  Carts: [Cart] @hasMany(indexName: "byRestaurant", fields: ["id"])
   Dishes: [Dish] @hasMany(indexName: "byRestaurant", fields: ["id"])
+  Carts: [Cart] @hasMany(indexName: "byRestaurant", fields: ["id"])
 }
  
