@@ -9,6 +9,8 @@ import FormInput from "../components/FormInput";
 
 import { Auth, DataStore } from 'aws-amplify';
 import { User } from '../models';
+
+import { db, auth } from '../../config';
 import { useAuthContext } from '../contexts/AuthContext';
 
 // create a component
@@ -22,7 +24,7 @@ const ProfileScreen = ({ navigation }) => {
     const { sub, setDbUser } = useAuthContext();
 
     const onSave = async () => {
-        dbUser ? await updateUser() : await createUser()
+        await createUser()
 
         navigation.goBack()
     }
@@ -44,20 +46,20 @@ const ProfileScreen = ({ navigation }) => {
     }
 
     const createUser = async () => {
-        try {
-            const user = await DataStore.save(
-                new User({
-                    name,
-                    address,
-                    lat: parseFloat(lat),
-                    lng: parseFloat(lng),
-                    sub
-                })
-            );
-            setDbUser(user);
-        } catch (error) {
-            Alert.alert("Error", error.message);
-        }
+
+        db.collection("User").add({
+            name: name,
+            address: address,
+            lat: parseFloat(lat),
+            lng: parseFloat(lng),
+            sub: sub
+        })
+            .then((docRef) => {
+                setDbUser(docRef);;
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+            });
     }
 
     function RenderHeader() {

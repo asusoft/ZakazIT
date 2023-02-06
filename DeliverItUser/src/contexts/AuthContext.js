@@ -3,26 +3,39 @@ import { Auth, DataStore } from "aws-amplify";
 
 import { User } from "../models";
 
+
+import { auth, db } from "../../config";
 const AuthContext = createContext({});
 
 const AuthContextProvider = ({ children }) => {
+    const user = auth.currentUser;
+    const uid = user?.uid;
+
     const [authUser, setAuthUser] = useState(null);
     const [dbUser, setDbUser] = useState(null);
-    const sub = authUser?.attributes?.sub;
+    const sub = uid;
 
     React.useEffect(() => {
-        Auth.currentAuthenticatedUser({ bypassCache: true }).then(setAuthUser);
-    }, [])
+        setAuthUser(user)
+    }, [user])
 
     React.useEffect(() => {
-        DataStore.query(
-            User, (user) =>
-            user.sub.eq(sub))
-            .then(
-                (users) =>
-                    setDbUser(users[0])
-            )
-    }, [sub])
+        user ? 
+            db.collection("User").where("sub", "==", uid)
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    setDbUser(doc.data())
+                });
+            })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
+            })
+
+         : []
+       
+    }, [uid]);
+
 
     return (
         <AuthContext.Provider value={{ authUser, dbUser, sub, setDbUser }}>

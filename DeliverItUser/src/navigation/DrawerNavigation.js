@@ -20,6 +20,7 @@ import COLORS from '../../assets/constants/colors';
 import icons from "../../assets/constants/icons";
 import Favorites from "../screens/Favorites";
 import ProfileScreen from "../screens/ProfileScreen";
+import SignIn from "../screens/SignIn";
 
 const Drawer = createDrawerNavigator();
 
@@ -151,6 +152,21 @@ const DrawerNavigation = ({ selectedTab, setSelectedTab }) => {
                     {props => (
                         <DrawerView styler={styles.container}>
                             <ProfileStackNavigator {...props} />
+                        </DrawerView>
+                    )}
+                </Drawer.Screen>
+
+                <Drawer.Screen
+                    name="SignIn"
+                    options={{
+                        title: 'Sign In',
+                        drawerIcon: ({color}) => (
+                          <Image source={icons.home} style={{tintColor: color, ...styles.drawerImage}} />
+                        ),
+                      }}>
+                    {props => (
+                        <DrawerView styler={styles.container}>
+                            <SignIn {...props} />
                         </DrawerView>
                     )}
                 </Drawer.Screen>
