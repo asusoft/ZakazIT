@@ -10,6 +10,8 @@ import { DataStore } from 'aws-amplify';
 import { Dish, Sizes } from '../models'
 import { useCartContext } from '../contexts/CartContext';
 
+import { db } from '../../config';
+
 // create a component
 const DishInfoScreen = () => {
     const navigation = useNavigation();
@@ -25,11 +27,26 @@ const DishInfoScreen = () => {
     const {addDishToCart} = useCartContext();
 
     React.useEffect(() => {
-        DataStore.query(Dish, dish_ID).then(result => setDish(result))
-        DataStore.query(Sizes, (size) => size.dishID.eq(dish_ID)).then(result => {
-            result.sort((a, b) => a.price - b.price);
-            setSizes(result);
+        db.collection("Dish").doc(dish_ID)
+        .onSnapshot((doc) => {
+            const dishData = doc.data()
+            const dishObject = { ...dishData, id: dish_ID };
+            setDish(dishObject)
         });
+
+        db.collection("Sizes").where("dishID", "==", dish_ID)
+            .onSnapshot((querySnapshot) => {
+                const sizeList = [];
+                querySnapshot.forEach((doc) => {
+                    const sizeID = doc.id;
+                    const size = doc.data()
+                    sizeList.push({ ...size, id: sizeID.toString() });
+
+                    const sortedSizes = sizeList.sort((a, b) => a.price - b.price);
+                    console.log(sortedSizes)
+                    setSizes(sortedSizes)
+                });
+            });
     }, [dish_ID])
 
     React.useEffect(() => {

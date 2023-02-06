@@ -34,7 +34,7 @@ const RestaurantInfoScreen = ({ navigation, route }) => {
                 setRestaurant(restaurantObject)
             });
 
-        db.collection("Dish")
+        db.collection("Dish").where("restaurantID", "==", restaurant_ID)
             .onSnapshot((querySnapshot) => {
                 const dishList = [];
                 querySnapshot.forEach((doc) => {
