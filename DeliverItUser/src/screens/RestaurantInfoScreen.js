@@ -50,7 +50,10 @@ const RestaurantInfoScreen = ({ navigation, route }) => {
         navigation.navigate(previous_screen);
     }
     const goToCart = () => {
-        navigation.navigate("Cart", { initial: false, });
+        navigation.navigate('Cart', {
+            screen: 'CartScreen', 
+            params: { cartID: cart.id},
+          });
     }
 
     const scrollY = useRef(new Animated.Value(0)).current;

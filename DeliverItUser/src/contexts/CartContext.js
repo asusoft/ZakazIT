@@ -71,13 +71,27 @@ const CartContextProvider = ({ children }) => {
                 const price = sizePrice * quantity;
 
                 const cartItemRef = db.collection('CartItem').doc();
-                const dishRef = db.collection('Dish').doc(dish.id);
+                let itemDish = {}
+                await db.collection('Dish').doc(dish.id).get().then(dishDoc => {
+                    if (dishDoc.exists) {
+                        const itemDishID = dishDoc.id;
+                        itemDish = {...dishDoc.data(), id: itemDishID} ;
+                    }
+                });
+
+                let itemSize = {}
+                await db.collection('Sizes').doc(size.id).get().then(sizeDoc => {
+                    if (sizeDoc.exists) {
+                        const itemSizeID = sizeDoc.id;
+                        itemSize = {...sizeDoc.data(), id: itemSizeID} ;
+                    }
+                });
 
                 const newCartItem = {
                     quantity: quantity,
-                    dish: dishRef,
+                    dish: itemDish,
                     cartID: theCart.id,
-                    sizeID: size.id,
+                    size: itemSize,
                     price: price
                 };
 

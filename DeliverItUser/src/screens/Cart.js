@@ -1,6 +1,5 @@
 //import liraries
-import { useRoute } from '@react-navigation/native';
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import COLORS from '../../assets/constants/colors';
@@ -11,13 +10,18 @@ import Header from '../components/Header';
 
 import { useCartContext } from '../contexts/CartContext';
 
-
 // create a component
 const CartScreen = ({ navigation }) => {
 
-    const { restaurant } = useCartContext();
-
     const [cart, setCart] = useState(dummyData.cart)
+    const { cartItems, total } = useCartContext();
+
+    const [cartDishes, setCartDishes] = useState(null)
+
+    React.useEffect(() => {
+        setCartDishes(null)
+        setCartDishes(cartItems)
+    }, [cartItems])
 
     const handleUpdateQuantity = (newQty, id) => {
         const newMyCartList = cart.map(cl => {
@@ -89,7 +93,7 @@ const CartScreen = ({ navigation }) => {
                         />
 
                         <View style={styles.badge}>
-                            <Text style={styles.quantityNumber}>{cart.length}</Text>
+                            <Text style={styles.quantityNumber}>{cartItems.length}</Text>
                         </View>
 
                     </View>
@@ -99,10 +103,9 @@ const CartScreen = ({ navigation }) => {
     }
 
     const renderCartList = () => {
-
         return (
             <SwipeListView
-                data={cart}
+                data={cartDishes}
                 key={item => `${item.id}`}
                 contentContainerStyle={{
                     marginTop: 10,
@@ -122,10 +125,12 @@ const CartScreen = ({ navigation }) => {
                             {/* Food Image */}
                             <View style={{ width: 60, height: 60, marginLeft: 10, marginRight: 10, borderRadius: 10, justifyContent: 'center', borderWidth: 1, borderColor: COLORS.lightGray, alignItems: 'center' }}>
                                 <Image
-                                    source={{ uri: data.item.dish.image }}
+                                    source={{
+                                        uri: data.item.dish.image
+                                    }}
                                     style={{
-                                        width: 40,
-                                        height: 40,
+                                        width: 45,
+                                        height: 45,
                                         position: 'absolute',
                                         borderRadius: 10
                                     }}
@@ -137,10 +142,10 @@ const CartScreen = ({ navigation }) => {
                                     {data.item.dish.name}
                                 </Text>
                                 <Text style={{ color: COLORS.primary }}>
-                                    ${data.item.sizes.price}
+                                    ${data.item.price}
                                 </Text>
                                 <Text style={{ color: COLORS.black }}>
-                                    {data.item.sizes.name}
+                                {data.item.size.name}
                                 </Text>
                             </View>
                             {/* Quantity */}
@@ -210,14 +215,14 @@ const CartScreen = ({ navigation }) => {
     function RenderFooter() {
         return (
             <Pressable onPress={checkout} style={styles.Footer}>
-                {cart.length > 1 ?
-                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> {cart.length} items</Text>
+                {cartItems.length > 1 ?
+                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> {cartItems.length} items</Text>
                     :
-                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> {cart.length} item</Text>
+                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> {cartItems.length} item</Text>
 
                 }
                 <Text style={{ fontSize: 22, color: COLORS.light, fontWeight: "600" }}> Checkout</Text>
-                <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> $10.9</Text>
+                <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> ${total}</Text>
             </Pressable>
         )
     }
@@ -291,23 +296,23 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     badge: {
-      position: 'absolute',
-      top: 5,
-      right: 5,
-      height: 12,
-      width: 12,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 10,
-      backgroundColor: COLORS.primary,
+        position: 'absolute',
+        top: 5,
+        right: 5,
+        height: 12,
+        width: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        backgroundColor: COLORS.primary,
     },
     quantityNumber: {
-      color: COLORS.white,
-      ...Platform.select({
-        android: { lineHeight: 17 },
-        ios: { lineHeight: 0 },
-      }),
-      fontSize: 8,
+        color: COLORS.white,
+        ...Platform.select({
+            android: { lineHeight: 17 },
+            ios: { lineHeight: 0 },
+        }),
+        fontSize: 8,
     },
 });
 
