@@ -1,6 +1,4 @@
-import React, { Children, createContext, useContext, useState } from "react";
-import { DataStore } from "@aws-amplify/datastore";
-import { Cart, CartItem, Sizes } from "../models";
+import React, { createContext, useContext, useState } from "react";
 import { useAuthContext } from "./AuthContext";
 
 import { db } from "../../config";

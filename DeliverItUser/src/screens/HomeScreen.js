@@ -10,10 +10,6 @@ import { useNavigation } from '@react-navigation/native';
 import icons from '../../assets/constants/icons';
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { DataStore } from 'aws-amplify';
-import { Restaurant, Categories} from '../models'
-import { useAuthContext } from '../contexts/AuthContext';
-
 import { db } from '../../config';
 
 export default function HomeScreen() {
@@ -25,17 +21,26 @@ export default function HomeScreen() {
   React.useEffect(() => {
     db.collection("Restaurant")
     .onSnapshot((querySnapshot) => {
-        const restaurantList = [];
+      const restaurantList = [];
         querySnapshot.forEach((doc) => {
           const resID = doc.id;
           const rest = doc.data()
           restaurantList.push({...rest, id: resID.toString()});
+          setRestaurants(restaurantList)
         });
-        setRestaurants(restaurantList)
     });
-    DataStore.query(Categories).then(setCategories).catch(function(error) {
-      Alert.alert("Error", error.message);
+
+    db.collection("Categories")
+    .onSnapshot((querySnapshot) => {
+      const categoriesList = [];
+        querySnapshot.forEach((doc) => {
+          const catID = doc.id;
+          const cat = doc.data()
+          categoriesList.push({...cat, id: catID.toString()});
+          setCategories(categoriesList)
+        });
     });
+    
 
   }, [])
 

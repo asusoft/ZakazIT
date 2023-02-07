@@ -7,9 +7,6 @@ import icons from '../../assets/constants/icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FormInput from "../components/FormInput";
 
-import { Auth, DataStore } from 'aws-amplify';
-import { User } from '../models';
-
 import { db, auth } from '../../config';
 import { useAuthContext } from '../contexts/AuthContext';
 
@@ -29,7 +26,7 @@ const ProfileScreen = ({ navigation }) => {
         navigation.goBack()
     }
 
-    const updateUser = async () => {
+    /* const updateUser = async () => {
         try {
             const user = await DataStore.save(
                 User.copyOf(dbUser, (updated) => {
@@ -43,7 +40,7 @@ const ProfileScreen = ({ navigation }) => {
         } catch (error) {
             Alert.alert("Error", error.message);
         }
-    }
+    } */
 
     const createUser = async () => {
 

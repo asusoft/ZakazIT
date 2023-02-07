@@ -5,9 +5,6 @@ import { View, Text, StyleSheet, Pressable, Image, ActivityIndicator } from 'rea
 import COLORS from '../../assets/constants/colors';
 import icons from '../../assets/constants/icons';
 import TopButtons from '../components/RestaurantInfoScreenComponents/TopButtons';
-
-import { DataStore } from 'aws-amplify';
-import { Dish, Sizes } from '../models'
 import { useCartContext } from '../contexts/CartContext';
 
 import { db } from '../../config';
@@ -41,7 +38,6 @@ const DishInfoScreen = () => {
                     const sizeID = doc.id;
                     const size = doc.data()
                     sizeList.push({ ...size, id: sizeID.toString() });
-
                     const sortedSizes = sizeList.sort((a, b) => a.price - b.price);
                     setSizes(sortedSizes)
                 });

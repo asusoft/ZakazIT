@@ -4,11 +4,7 @@ import { View, Text, StyleSheet, Pressable, Animated, ActivityIndicator } from '
 import MenuItem from '../components/RestaurantInfoScreenComponents/MenuItem';
 import COLORS from '../../assets/constants/colors';
 import RestaurantInfo from '../components/RestaurantInfoScreenComponents/RestaurantInfo';
-import dummyData from '../../assets/constants/dummyData';
 import TopButtons from '../components/RestaurantInfoScreenComponents/TopButtons';
-
-import { DataStore } from 'aws-amplify';
-import { Restaurant, Dish, } from '../models';
 import { useCartContext } from '../contexts/CartContext';
 
 import { db } from '../../config';

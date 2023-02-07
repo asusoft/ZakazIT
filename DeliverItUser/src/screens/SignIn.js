@@ -7,13 +7,16 @@ import icons from '../../assets/constants/icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FormInput from "../components/FormInput";
 
-import { auth } from '../../config'
+import { useAuthContext } from "../contexts/AuthContext";
 
+import { auth } from '../../config'
 
 
 // create a component
 const SignIn = ({ navigation }) => {
     const user = auth.currentUser;
+
+    const { setAuthUser } = useAuthContext();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -27,6 +30,7 @@ const SignIn = ({ navigation }) => {
     const onSignIn = async () => {
         auth.signInWithEmailAndPassword(email, password).then(userCredentials => {
             const user = userCredentials.user;
+            setAuthUser(user)
             console.log('Signe In with:', user.email);
         }).catch(error => alert(error.message))
     }
@@ -36,6 +40,10 @@ const SignIn = ({ navigation }) => {
             const user = userCredentials.user;
             console.log('Created a User In with:', user.email);
         }).catch(error => alert(error.message))
+    }
+
+    const showUser = () => {
+        alert(user.email)
     }
 
     function RenderHeader() {
@@ -123,6 +131,10 @@ const SignIn = ({ navigation }) => {
             {RenderForm()}
             <Pressable onPress={signOut}>
                 <Text>SignOut</Text>
+            </Pressable>
+
+            <Pressable onPress={showUser}>
+                <Text>Show User</Text>
             </Pressable>
 
             <Pressable onPress={onSignIn} style={{

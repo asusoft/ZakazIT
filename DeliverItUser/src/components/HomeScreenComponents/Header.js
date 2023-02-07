@@ -7,7 +7,7 @@ import { useDrawerStatus } from "@react-navigation/drawer";
 import COLORS from "../../../assets/constants/colors";
 import { useAuthContext } from "../../contexts/AuthContext";
 
-const Header = ({ profile }) => {
+const Header = () => {
   const drawerIsOpen = useDrawerStatus();
   const navigation = useNavigation();
   const {dbUser} = useAuthContext();
