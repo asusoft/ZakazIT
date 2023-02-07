@@ -57,24 +57,33 @@ const CartContextProvider = ({ children }) => {
         try {
             // get existing cart or create new one
             let theCart = cart || await createNewCart();
+            // Check for existing cart item with the same size
 
-            let sizePrice = size.price || 0;
-            const price = sizePrice * quantity;
+            const snapshot = await db.collection("CartItem").where("sizeID", "==", size.id).get();
 
-            const cartItemRef = db.collection('CartItem').doc();
-            const dishRef = db.collection('Dish').doc(dish.id);
+            if (!snapshot.empty) {
+                const itemRef = snapshot.docs[0].ref;
+                const updatedQuantity = quantity;
+                const updatedPrice = size.price * updatedQuantity;
+                await itemRef.update({ quantity: updatedQuantity, price: updatedPrice });
+            } else {
+                let sizePrice = size.price || 0;
+                const price = sizePrice * quantity;
 
-            const newCartItem = {
-                quantity: quantity,
-                dish: dishRef,
-                cartID: theCart.id,
-                sizeID: size.id,
-                price: price
-            };
+                const cartItemRef = db.collection('CartItem').doc();
+                const dishRef = db.collection('Dish').doc(dish.id);
 
-            await db.collection("CartItem").add({ ...newCartItem, id: cartItemRef.id })
-            setCartItems([...cartItems, { ...newCartItem, id: cartItemRef.id }]);
+                const newCartItem = {
+                    quantity: quantity,
+                    dish: dishRef,
+                    cartID: theCart.id,
+                    sizeID: size.id,
+                    price: price
+                };
 
+                await db.collection("CartItem").add({ ...newCartItem, id: cartItemRef.id })
+                setCartItems([...cartItems, { ...newCartItem, id: cartItemRef.id }]);
+            }
         } catch (error) {
             alert(error.message)
         }
