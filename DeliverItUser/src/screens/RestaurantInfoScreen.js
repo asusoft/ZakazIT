@@ -21,10 +21,9 @@ const RestaurantInfoScreen = ({ navigation, route }) => {
     const [restaurant, setRestaurant] = useState()
     const [dishes, setDishes] = useState([])
 
-    const [temp, setTemp] = useState()
-
     const { setRestaurant: setCartRestaurant, cart, cartItems, total } = useCartContext();
 
+    
     React.useEffect(() => {
         setCartRestaurant(null);
         db.collection("Restaurant").doc(restaurant_ID)
@@ -44,16 +43,10 @@ const RestaurantInfoScreen = ({ navigation, route }) => {
                 });
                 setDishes(dishList)
             });
-
-        db.collection("CartItem").doc("i1e0fvNCxsn3QsILlljT").get().then((cartItemDoc) => {
-            const cartItem = cartItemDoc.data();
-            cartItem.Dish.get().then((dishDoc) => {
-                const dish = dishDoc.data();
-            });
-        });
     }, [restaurant_ID])
 
     React.useEffect(() => {
+        setCartRestaurant(null);
         setCartRestaurant(restaurant)
     }, [restaurant])
 
@@ -242,7 +235,6 @@ const RestaurantInfoScreen = ({ navigation, route }) => {
                         {renderRestaurantcardHeader()}
                         {/* Menu Header */}
                         {RenderMenuHeader()}
-
                     </View>
                 }
                 scrollEventThrottle={16}

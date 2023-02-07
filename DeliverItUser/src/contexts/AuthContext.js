@@ -21,7 +21,9 @@ const AuthContextProvider = ({ children }) => {
             db.collection("User").where("sub", "==", uid)
                 .onSnapshot((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
-                        setDbUser(doc.data())
+                        const dbUserData = doc.data()
+                        const dbUserObject = { ...dbUserData, id: doc.id };
+                        setDbUser(dbUserObject)
                     });
                 })
             : []

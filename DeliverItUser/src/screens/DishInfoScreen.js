@@ -19,7 +19,7 @@ const DishInfoScreen = () => {
     const dish_ID = route.params?.dish_ID;
     const [sizes, setSizes] = useState([]);
     const [dish, setDish] = useState([])
-    const [selectedSize, setSelectedSize] = useState(1);
+    const [selectedSize, setSelectedSize] = useState(0);
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(null);
     const [size, setSize] = useState(sizes[parseInt(selectedSize)] || {})
@@ -43,7 +43,6 @@ const DishInfoScreen = () => {
                     sizeList.push({ ...size, id: sizeID.toString() });
 
                     const sortedSizes = sizeList.sort((a, b) => a.price - b.price);
-                    console.log(sortedSizes)
                     setSizes(sortedSizes)
                 });
             });
@@ -74,7 +73,7 @@ const DishInfoScreen = () => {
 
 
     const handleAddToCart =  async () => {
-        await addDishToCart(dish, size.id, quantity);
+        await addDishToCart(dish, size, quantity);
         navigation.goBack()
     }
 

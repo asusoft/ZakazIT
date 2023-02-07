@@ -3,6 +3,8 @@ import { DataStore } from "@aws-amplify/datastore";
 import { Cart, CartItem, Sizes } from "../models";
 import { useAuthContext } from "./AuthContext";
 
+import { db } from "../../config";
+
 const CartContext = createContext({});
 
 const CartContextProvider = ({ children }) => {
@@ -12,84 +14,86 @@ const CartContextProvider = ({ children }) => {
     const [cart, setCart] = useState(null);
     const [cartItems, setCartItems] = useState([]);
 
+    const dbUserID = dbUser?.id
+    const cartRestaurantID = restaurant?.id
+
     const total = cartItems.reduce(
         (sum, cartItem) => sum + cartItem.price, 0
     )
 
+
     React.useEffect(() => {
-        DataStore.query(Cart, (crt) => crt.and(crt => [
-            crt.restaurantID.eq(restaurant.id),
-            crt.userID.eq(dbUser.id)
-        ])).then(carts => setCart(carts[0]));
+        setCart(null)
+        if (dbUserID && cartRestaurantID) {
+            db.collection("Cart")
+                .where("restaurantID", "==", restaurant.id)
+                .where("userID", "==", dbUser?.id)
+                .onSnapshot((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        const cartData = doc.data();
+                        const cartObject = { ...cartData };
+                        setCart(cartObject)
+                    });
+                }
+                );
+        }
     }, [dbUser, restaurant])
 
     React.useEffect(() => {
+        setCartItems([])
         if (cart) {
-            DataStore.query(CartItem, (ci) =>
-                ci.cartID.eq(cart.id))
-                .then(setCartItems)
+            db.collection("CartItem").where("cartID", "==", cart.id)
+                .onSnapshot((querySnapshot) => {
+                    const cartItemList = [];
+                    querySnapshot.forEach((doc) => {
+                        const itemID = doc.id;
+                        const item = doc.data()
+                        cartItemList.push({ ...item, id: itemID.toString() });
+                    });
+                    setCartItems(cartItemList)
+                });
         }
     }, [cart])
 
-    const addDishToCart = async (dish, size_id, quantity) => {
-        // get existing cart or create new one
-        let theCart = cart || await createNewCart();
+    const addDishToCart = async (dish, size, quantity) => {
+        try {
+            // get existing cart or create new one
+            let theCart = cart || await createNewCart();
 
-        const size = await DataStore.query(Sizes, size_id);
-        let sizePrice = size.price || 0;
-        const price = sizePrice * quantity;
+            let sizePrice = size.price || 0;
+            const price = sizePrice * quantity;
 
-        const newDish = await DataStore.save(
-            new CartItem({
-                quantity,
-                Dish: dish,
+            const cartItemRef = db.collection('CartItem').doc();
+            const dishRef = db.collection('Dish').doc(dish.id);
+
+            const newCartItem = {
+                quantity: quantity,
+                dish: dishRef,
                 cartID: theCart.id,
-                sizeID: size_id,
+                sizeID: size.id,
                 price: price
-            })
-        );
-        setCartItems([...cartItems, newDish]);
+            };
 
-        // Check if a cart item with the given size is already added
+            await db.collection("CartItem").add({ ...newCartItem, id: cartItemRef.id })
+            setCartItems([...cartItems, { ...newCartItem, id: cartItemRef.id }]);
 
-        {/* const existingCartItem = await DataStore.query(CartItem, (ci) => ci.and(ci => [
-            ci.cartID.eq(theCart.id),
-            ci.sizeID.eq(size_id)
-        ])).then(ci => ci[0]);
-
-        console.log(totalPrice)
-        // If a cart item with the given size already exists, update the quantity
-        if (existingCartItem) {
-            let newQuantity = quantity
-            await DataStore.save(
-                CartItem.copyOf(existingCartItem, (updated) => {
-                    updated.quantity = newQuantity;
-                })
-            );
-        } else {
-            // add item to cart
-            const newDish = await DataStore.save(
-                new CartItem({
-                    quantity,
-                    Dish: dish,
-                    cartID: theCart.id,
-                    sizeID: size_id
-                })
-            );
-            setCartItems([...cartItems, newDish]);
-        } */}
+        } catch (error) {
+            alert(error.message)
+        }
     };
 
     const createNewCart = async () => {
-        const newCart = DataStore.save(
-            new Cart({
-                userID: dbUser.id,
-                restaurantID: restaurant.id
-            })
-        )
-        setCart(newCart);
-        return newCart
-    }
+        const cartRef = db.collection('Cart').doc();
+        const newCart = {
+            userID: dbUserID,
+            restaurantID: cartRestaurantID
+        };
+
+        await db.collection("Cart").add({ ...newCart, id: cartRef.id })
+
+        setCart({ ...newCart, id: cartRef.id });
+        return { ...newCart, id: cartRef.id };
+    };
 
     return (
         <CartContext.Provider
