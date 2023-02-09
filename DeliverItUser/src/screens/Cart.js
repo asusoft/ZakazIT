@@ -14,7 +14,7 @@ import { useCartContext } from '../contexts/CartContext';
 const CartScreen = ({ navigation }) => {
 
     const [cart, setCart] = useState(dummyData.cart)
-    const { cartItems, total } = useCartContext();
+    const { cartItems, total, onPlus, onMinus, onRemove } = useCartContext();
 
     const [cartDishes, setCartDishes] = useState(null)
 
@@ -23,19 +23,20 @@ const CartScreen = ({ navigation }) => {
         setCartDishes(cartItems)
     }, [cartItems])
 
-    const handleUpdateQuantity = (newQty, id) => {
-        const newMyCartList = cart.map(cl => {
-            return cl.id === id ? { ...cl, quantity: newQty } : cl;
-        });
-        setCart(newMyCartList);
+    const handleRemoveFromCart = async (itemID) => {
+        await onRemove(itemID);
+        if(cartItems.length < 1){
+            navigation.goBack();
+        }
     };
 
-    const handleRemoveFromCart = (id) => {
-        let newMyCartList = [...cart];
-        const index = cart.findIndex(cart => cart.id === id);
-        newMyCartList.splice(index, 1);
-        setCart(newMyCartList);
-    };
+    const onIncrease =  async (itemID, size) => {
+        await onPlus(itemID, size);
+    }
+
+    const onDecrease =  async (itemID, size) => {
+        await onMinus(itemID, size);
+    }
 
     function RenderHeader() {
         return (
@@ -152,7 +153,7 @@ const CartScreen = ({ navigation }) => {
 
                             <View style={{ width: 80, height: 60, marginLeft: 10, marginRight: 10, borderRadius: 10, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
                                 <Pressable
-                                    onPress={() => handleUpdateQuantity(data.item.quantity - 1, data.item.id)} >
+                                   onPress={() => onDecrease(data.item.id, data.item.size)} >
                                     <Image
                                         source={icons.minus}
                                         style={{
@@ -164,7 +165,7 @@ const CartScreen = ({ navigation }) => {
                                 </Pressable>
                                 <Text>{data.item.quantity}</Text>
                                 <Pressable
-                                    onPress={() => handleUpdateQuantity(data.item.quantity + 1, data.item.id)} >
+                                    onPress={() => onIncrease(data.item.id, data.item.size)} >
                                     <Image
                                         source={icons.plus}
                                         style={{

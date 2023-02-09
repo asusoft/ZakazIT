@@ -59,7 +59,7 @@ const CartContextProvider = ({ children }) => {
             let theCart = cart || await createNewCart();
             // Check for existing cart item with the same size
 
-            const snapshot = await db.collection("CartItem").where("sizeID", "==", size.id).get();
+            const snapshot = await db.collection("CartItem").where("size", "==", size).get();
 
             if (!snapshot.empty) {
                 const itemRef = snapshot.docs[0].ref;
@@ -75,7 +75,7 @@ const CartContextProvider = ({ children }) => {
                 await db.collection('Dish').doc(dish.id).get().then(dishDoc => {
                     if (dishDoc.exists) {
                         const itemDishID = dishDoc.id;
-                        itemDish = {...dishDoc.data(), id: itemDishID} ;
+                        itemDish = { ...dishDoc.data(), id: itemDishID };
                     }
                 });
 
@@ -83,7 +83,7 @@ const CartContextProvider = ({ children }) => {
                 await db.collection('Sizes').doc(size.id).get().then(sizeDoc => {
                     if (sizeDoc.exists) {
                         const itemSizeID = sizeDoc.id;
-                        itemSize = {...sizeDoc.data(), id: itemSizeID} ;
+                        itemSize = { ...sizeDoc.data(), id: itemSizeID };
                     }
                 });
 
@@ -95,7 +95,7 @@ const CartContextProvider = ({ children }) => {
                     price: price
                 };
 
-                await db.collection("CartItem").add({ ...newCartItem, id: cartItemRef.id })
+                await db.collection("CartItem").doc(cartItemRef.id).set({ ...newCartItem, id: cartItemRef.id })
                 setCartItems([...cartItems, { ...newCartItem, id: cartItemRef.id }]);
             }
         } catch (error) {
@@ -110,11 +110,52 @@ const CartContextProvider = ({ children }) => {
             restaurantID: cartRestaurantID
         };
 
-        await db.collection("Cart").add({ ...newCart, id: cartRef.id })
+        await db.collection("Cart").doc(cartRef.id).set({ ...newCart, id: cartRef.id })
 
         setCart({ ...newCart, id: cartRef.id });
         return { ...newCart, id: cartRef.id };
     };
+
+    const onPlus = async (cartItem_ID, size) => {
+
+        const snapshot = await db.collection("CartItem").where("id", "==", cartItem_ID).get();
+
+        if (!snapshot.empty) {
+            const itemRef = snapshot.docs[0].ref;
+            const itemQuantity = snapshot.docs[0].data().quantity;
+            if(itemQuantity < 99) {
+                const updatedQuantity = itemQuantity + 1;
+                const updatedPrice = size.price * updatedQuantity;
+                await itemRef.update({ quantity: updatedQuantity, price: updatedPrice });
+            }
+        }
+    }
+
+    const onMinus = async (cartItem_ID, size) => {
+
+        const snapshot = await db.collection("CartItem").where("id", "==", cartItem_ID).get();
+
+        if (!snapshot.empty) {
+            const itemRef = snapshot.docs[0].ref;
+            const itemQuantity = snapshot.docs[0].data().quantity;
+
+            if(itemQuantity > 1) {
+                const updatedQuantity = itemQuantity - 1;
+                const updatedPrice = size.price * updatedQuantity;
+                await itemRef.update({ quantity: updatedQuantity, price: updatedPrice });
+            }
+        }
+    }
+
+    const onRemove = async (cartItem_ID) => {
+        await db.collection("CartItem").doc(cartItem_ID).delete()
+
+        let newLength = cartItems.length -1;
+        if(newLength < 1){
+            console.log(cart.id)
+            await db.collection("Cart").doc(cart.id).delete()
+        }
+    }
 
     return (
         <CartContext.Provider
@@ -124,7 +165,10 @@ const CartContextProvider = ({ children }) => {
                 cart,
                 cartItems,
                 restaurant,
-                total
+                total,
+                onPlus,
+                onMinus, 
+                onRemove
             }}
         >
             {children}
