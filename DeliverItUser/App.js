@@ -5,13 +5,16 @@ import RootNavigator from './src/navigation';
 
 import AuthContextProvider from './src/contexts/AuthContext';
 import CartContextProvider from './src/contexts/CartContext';
+import OrderContextProvider from './src/contexts/OrderContext';
 
 const App = () => {
   return (
     <NavigationContainer>
       <AuthContextProvider>
         <CartContextProvider>
-          <RootNavigator />
+          <OrderContextProvider>
+            <RootNavigator />
+          </OrderContextProvider>
         </CartContextProvider>
       </AuthContextProvider>
     </NavigationContainer>

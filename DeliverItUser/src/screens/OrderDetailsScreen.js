@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
     View,
     Text,
@@ -10,12 +10,30 @@ import {
 } from "react-native";
 import COLORS from "../../assets/constants/colors";
 import icons from "../../assets/constants/icons";
-import profile from "../../assets/constants/profile";
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useOrderContext } from "../contexts/OrderContext";
+import { useAuthContext } from "../contexts/AuthContext";
+import { db } from "../../config";
 
 // create a component
 const OrderdetailsScreen = ({ navigation, route }) => {
     const { order } = route.params;
+    const { dbUser } = useAuthContext();
+
+    const [orderItems, setOrderItems] = useState([])
+
+    React.useEffect(() => {
+        db.collection("OrderItems").where("orderID", "==", order.id)
+        .onSnapshot((querySnapshot) => {
+            const itemList = [];
+            querySnapshot.forEach((doc) => {
+                const itemID = doc.id;
+                const item = doc.data()
+                itemList.push({ ...item, id: itemID.toString() });
+            });
+            setOrderItems(itemList)
+        });
+    }, [order])
 
     function RenderHeader() {
         return (
@@ -108,7 +126,7 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                             </View>
 
                             <Text style={{ position: "absolute", right: 0, fontSize: 16 }}>
-                                {order.status.name}
+                                order.status.name
                             </Text>
                         </View>
                         <View style={{ marginTop: 20 }}>
@@ -116,7 +134,7 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                                 Deliverd to
                             </Text>
                             <Text style={{ right: 0, fontSize: 14, fontWeight: "600" }}>
-                                {profile.myProfile.address}
+                                {dbUser.address}
                             </Text>
                         </View>
 
@@ -125,7 +143,7 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                                 Payment method
                             </Text>
                             <Text style={{ right: 0, fontSize: 14, fontWeight: "600" }}>
-                                {order.paymentMethod}
+                                order.paymentMethod
                             </Text>
                         </View>
                     </View>
@@ -140,28 +158,30 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                             marginTop: 20
                         }}
                     >
-                        {order.items.map((item, index) => {
-                            return (
-                                <View key={item.id} style={{ flexDirection: "row", marginBottom: 10 }}>
-                                    <View>
-                                        <Text style={{ right: 0, fontSize: 14, fontWeight: "600" }}>
-                                            {item.name}
-                                        </Text>
+                        {
+                            orderItems.map((item, index) => {
+                                return (
+                                    <View key={index} style={{ flexDirection: "row", marginBottom: 10 }}>
+                                        <View>
+                                            <Text style={{ right: 0, fontSize: 14, fontWeight: "600" }}>
+                                                {item.dish.name}
+                                            </Text>
+                                            <Text
+                                                style={{ fontSize: 14, fontWeight: "600", opacity: 0.6 }}
+                                            >
+                                                {item.size.name} x {item.quantity}
+                                            </Text>
+                                        </View>
+
                                         <Text
-                                            style={{ fontSize: 14, fontWeight: "600", opacity: 0.6 }}
+                                            style={{ position: "absolute", right: 0, fontSize: 14 }}
                                         >
-                                            small x 3
+                                            ${item.price}
                                         </Text>
                                     </View>
-
-                                    <Text
-                                        style={{ position: "absolute", right: 0, fontSize: 14 }}
-                                    >
-                                        ${item.price}
-                                    </Text>
-                                </View>
-                            );
-                        })}
+                                )
+                            })
+                        }
                     </View>
 
                     {/* Bill */}
@@ -182,7 +202,7 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                             </View>
 
                             <Text style={{ position: "absolute", right: 0, fontSize: 16 }}>
-                                $ 270
+                                $ {order.subTotal}
                             </Text>
                         </View>
                         <View style={{ flexDirection: "row", marginBottom: 10 }}>
@@ -193,7 +213,7 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                             </View>
 
                             <Text style={{ position: "absolute", right: 0, fontSize: 16 }}>
-                                $ 30
+                                $ {order.deliveryFee}
                             </Text>
                         </View>
                         <View style={{ flexDirection: "row", marginBottom: 10 }}>

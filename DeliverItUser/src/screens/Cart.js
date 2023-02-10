@@ -9,12 +9,14 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../components/Header';
 
 import { useCartContext } from '../contexts/CartContext';
+import { useOrderContext } from '../contexts/OrderContext';
 
 // create a component
 const CartScreen = ({ navigation }) => {
 
     const [cart, setCart] = useState(dummyData.cart)
-    const { cartItems, total, onPlus, onMinus, onRemove } = useCartContext();
+    const { cartItems, total, onPlus, onMinus, onRemove, restaurant} = useCartContext();
+    const { createOrder } = useOrderContext
 
     const [cartDishes, setCartDishes] = useState(null)
 
@@ -25,8 +27,9 @@ const CartScreen = ({ navigation }) => {
 
     const handleRemoveFromCart = async (itemID) => {
         await onRemove(itemID);
-        if(cartItems.length < 1){
-            navigation.goBack();
+        let newLength = cartItems.length -1
+        if(newLength < 1){
+            navigation.goBack()
         }
     };
 
@@ -202,7 +205,7 @@ const CartScreen = ({ navigation }) => {
     }
 
     const checkout = () => {
-        navigation.navigate("CheckoutScreen")
+        navigation.navigate("CheckoutScreen", {restaurant: restaurant, total: total})
     }
 
     function RenderChooseRestaurant() {
@@ -235,7 +238,7 @@ const CartScreen = ({ navigation }) => {
             {RenderHeader()}
             {/* Cart List */}
             {
-                cart.length > 0 ? renderCartList()
+                cartItems.length > 0 ? renderCartList()
                     :
                     <View style={{
                         flex: 1,
@@ -252,7 +255,7 @@ const CartScreen = ({ navigation }) => {
 
             {/* Footer */}
             {
-                cart.length > 0 ?
+                cartItems.length > 0 ?
                     RenderFooter()
                     :
                     RenderChooseRestaurant()

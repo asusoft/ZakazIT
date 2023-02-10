@@ -13,13 +13,25 @@ import {
 import COLORS from "../../assets/constants/colors";
 import icons from "../../assets/constants/icons";
 import profile from "../../assets/constants/profile";
+import { useAuthContext } from "../contexts/AuthContext";
+
+import { useOrderContext } from "../contexts/OrderContext";
 
 // create a component
-const CheckoutScreen = ({ navigation }) => {
+const CheckoutScreen = ({ navigation, route }) => {
+    const {dbUser} =useAuthContext();
+    const { restaurant, total } = route.params
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("1");
     const [isDelivery, setIsDelivery] = useState(true);
     const [isSuccess, setIsSuccess] = useState(true);
 
+    const { createOrder } = useOrderContext()
+
+    const subTotal = total;
+    const deliveryFee = isDelivery ? restaurant.deliveryFee : 0;
+    const finalTotal = subTotal + deliveryFee
+
+    
     const ref = useRef();
     React.useEffect(() => {
         ref.current?.scrollToIndex({
@@ -29,7 +41,8 @@ const CheckoutScreen = ({ navigation }) => {
         });
     }, [selectedPaymentMethod])
 
-    const handlePayment = () => {
+    const handlePayment = async () => {
+        await createOrder(isDelivery)
         navigation.navigate("Payment", { isSuccess: isSuccess });
     };
 
@@ -125,7 +138,7 @@ const CheckoutScreen = ({ navigation }) => {
                             style={{ fontSize: 16, fontWeight: "600", opacity: 0.5 }}
                             numberOfLines={1}
                         >
-                            {profile.myProfile.address}
+                            {dbUser.address}
                         </Text>
                         <Text
                             style={{
@@ -136,7 +149,7 @@ const CheckoutScreen = ({ navigation }) => {
                                 bottom: 0
                             }}
                         >
-                            45 - 55 mins
+                            {restaurant.minDeliveryTime} - {restaurant.maxDeliveryTime} mins
                         </Text>
                     </View>
                 </Pressable>
@@ -174,7 +187,7 @@ const CheckoutScreen = ({ navigation }) => {
                             }}
                             numberOfLines={1}
                         >
-                            {profile.myProfile.address}
+                            {restaurant.address}
                         </Text>
                         <Text
                             style={{
@@ -212,7 +225,7 @@ const CheckoutScreen = ({ navigation }) => {
                         const wait = new Promise((resolve) => setTimeout(resolve, 100));
                         wait.then(() => {
                             ref.current?.scrollToIndex({
-                                index: parseInt(selectedPaymentMethod) -1,
+                                index: parseInt(selectedPaymentMethod) - 1,
                                 animated: true,
                             });
                         });
@@ -295,7 +308,7 @@ const CheckoutScreen = ({ navigation }) => {
             <Pressable onPress={handlePayment} style={styles.Payment}>
                 <Text style={{ fontSize: 24, color: COLORS.light, fontWeight: "800" }}>
                     {" "}
-                    Pay {isDelivery ? `$300` : `$270`}
+                    Pay {finalTotal}
                 </Text>
             </Pressable>
         );
@@ -333,7 +346,7 @@ const CheckoutScreen = ({ navigation }) => {
                     }}
                 >
                     <Text style={{ fontSize: 16 }}>Sub Total</Text>
-                    <Text style={{ fontSize: 16 }}>$270</Text>
+                    <Text style={{ fontSize: 16 }}>${subTotal}</Text>
                 </View>
                 <View
                     style={{
@@ -344,7 +357,7 @@ const CheckoutScreen = ({ navigation }) => {
                     }}
                 >
                     <Text style={{ fontSize: 16 }}>Delivery fee</Text>
-                    <Text style={{ fontSize: 16 }}>{isDelivery ? `$30` : `$0`}</Text>
+                    <Text style={{ fontSize: 16 }}>{deliveryFee}</Text>
                 </View>
                 <View
                     style={{
@@ -357,7 +370,7 @@ const CheckoutScreen = ({ navigation }) => {
                 >
                     <Text style={{ fontSize: 20, fontWeight: "600" }}>Total</Text>
                     <Text style={{ fontSize: 20, fontWeight: "600" }}>
-                        {isDelivery ? `$300` : `$270`}
+                        ${finalTotal}
                     </Text>
                 </View>
             </View>

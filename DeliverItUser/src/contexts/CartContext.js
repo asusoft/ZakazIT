@@ -152,7 +152,6 @@ const CartContextProvider = ({ children }) => {
 
         let newLength = cartItems.length -1;
         if(newLength < 1){
-            console.log(cart.id)
             await db.collection("Cart").doc(cart.id).delete()
         }
     }
