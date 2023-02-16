@@ -1,11 +1,23 @@
 //import liraries
 import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, ScrollView, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import COLORS from '../../../assets/constants/colors';
-import { useOrderContext } from '../../contexts/OrderContext';
+import { db } from '../../../config';
+
 
 // create a component
 const OrderList = ({ order, navigation }) => {
+    const [orderStatus, setOrderStatus] = useState([])
+
+    React.useEffect(() => {
+        db.collection('OrderStatus').onSnapshot(snapshot => {
+            setOrderStatus(snapshot.docs.map(doc => doc.data()));
+        });
+
+    }, [order])
+
+    const status = orderStatus[0]?.Status[order.status]
+
     return (
         <View
             style={{
@@ -45,25 +57,25 @@ const OrderList = ({ order, navigation }) => {
                         fontWeight: "600",
                         opacity: 0.5,
                         marginTop: 5
-                    }}>28 Jan, 20:23 - item.items.length items</Text>
+                    }}>Jan 28, 20:34 - {order?.dishes?.length} items</Text>
                     <Text style={{
                         fontSize: 14,
                         fontWeight: "600",
                         marginTop: 5
-                    }}>{order?.status.name}</Text>
+                    }}>{status}</Text>
                 </View>
                 <View style={{ alignItems: "flex-end", marginTop: 10, marginEnd: 10 }}>
-                    <Text style={{ alignSelf: "flex-end", fontSize: 20, fontWeight: "800", color: COLORS.primary }}>${order?.total}</Text>
+                    <Text style={{ alignSelf: "flex-end", fontSize: 20, fontWeight: "800", color: COLORS.primary }}>₽{order?.total}</Text>
                 </View>
             </View>
             <View style={{ height: "40%", width: "100%", flexDirection: 'row', paddingEnd: 40, paddingBottom: 15 }}>
                 <Pressable
-                    onPress={() => navigation.push("TrackOrderScreen", { order: item })}
+                    onPress={() => navigation.push("TrackOrderScreen",  { order: order })}
                     style={{ backgroundColor: COLORS.primary, ...styles.buttons }}>
                     <Text style={{ fontSize: 18, fontWeight: '600', color: COLORS.white }}>Track order</Text>
                 </Pressable>
 
-                <Pressable onPress={() => navigation.push('OrderDetailsScreen', { order: order })} style={{ backgroundColor: COLORS.lightGray2, ...styles.buttons }}>
+                <Pressable onPress={() => navigation.push('OrderDetailsScreen', { order: {...order, status: status} })} style={{ backgroundColor: COLORS.lightGray2, ...styles.buttons }}>
                     <Text style={{ fontSize: 18, fontWeight: '600', color: COLORS.primary }}>Details</Text>
                 </Pressable>
             </View>

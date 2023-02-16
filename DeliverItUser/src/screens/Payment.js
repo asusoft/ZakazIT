@@ -6,7 +6,7 @@ import icons from '../../assets/constants/icons';
 
 // create a component
 const Payment = ({ navigation, route }) => {
-    const { isSuccess, paymentMethod } = route.params;
+    const { isSuccess, paymentMethod, total} = route.params;
     const handleClick = () => {
         isSuccess ? navigation.navigate('Orders') :
         navigation.goBack()
@@ -51,7 +51,7 @@ const Payment = ({ navigation, route }) => {
                             COLORS.red
                         }}
                         >
-                            $300
+                            ₽{total}
                         </Text>
                         <Text style={{ fontSize: 14, fontWeight: "600", marginBottom: 5, opacity: 0.5 }}>28.01.2023</Text>
                     </View>

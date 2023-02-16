@@ -22,6 +22,8 @@ const OrderdetailsScreen = ({ navigation, route }) => {
 
     const [orderItems, setOrderItems] = useState([])
 
+    console.log(order)
+
     React.useEffect(() => {
         db.collection("OrderItems").where("orderID", "==", order.id)
         .onSnapshot((querySnapshot) => {
@@ -126,7 +128,7 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                             </View>
 
                             <Text style={{ position: "absolute", right: 0, fontSize: 16 }}>
-                                order.status.name
+                                {order.status}
                             </Text>
                         </View>
                         <View style={{ marginTop: 20 }}>

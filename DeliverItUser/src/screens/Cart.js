@@ -146,7 +146,7 @@ const CartScreen = ({ navigation }) => {
                                     {data.item.dish.name}
                                 </Text>
                                 <Text style={{ color: COLORS.primary }}>
-                                    ${data.item.price}
+                                ₽{data.item.price}
                                 </Text>
                                 <Text style={{ color: COLORS.black }}>
                                 {data.item.size.name}
@@ -226,7 +226,7 @@ const CartScreen = ({ navigation }) => {
 
                 }
                 <Text style={{ fontSize: 22, color: COLORS.light, fontWeight: "600" }}> Checkout</Text>
-                <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> ${total}</Text>
+                <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> ₽{total}</Text>
             </Pressable>
         )
     }

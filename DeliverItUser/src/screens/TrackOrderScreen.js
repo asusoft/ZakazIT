@@ -12,15 +12,15 @@ import utils from '../utils/Utils'
 import Rating from '../components/RestaurantInfoScreenComponents/Rating';
 import { useRoute } from '@react-navigation/native';
 import dummyData from '../../assets/constants/dummyData';
+import { useAuthContext } from '../contexts/AuthContext';
 
 // create a component
 const TrackOrderScreen = ({ navigation, route }) => {
     const { order } = route.params;
+    const { dbUser } = useAuthContext();
 
-    const ordersList = dummyData.orders;
     const orderStatuses = dummyData.OrderStatus;
-    const [orderStatus, setOrderStatus] = useState(order.status.name)
-    const [currentStatus, setCurrentStatus] = useState(1);
+    const [currentStatus, setCurrentStatus] = useState(order.status + 1);
 
     const insets = useSafeAreaInsets();
     const { width, height } = useWindowDimensions();
@@ -38,7 +38,7 @@ const TrackOrderScreen = ({ navigation, route }) => {
 
 
     React.useEffect(() => {
-        setCurrentStatus(order.status.id)
+        setCurrentStatus(order.status + 1)
     }, [order])
 
     React.useEffect(() => {
@@ -50,13 +50,13 @@ const TrackOrderScreen = ({ navigation, route }) => {
         };
 
         let myLocation = {
-            latitude: 48.714690,
-            longitude: 44.530590,
+            latitude: dbUser?.lat,
+            longitude: dbUser?.lng,
         };
 
         let fromLocation = {
-            latitude: 48.723100,
-            longitude: 44.535950,
+            latitude: order?.restaurant?.lat,
+            longitude: order?.restaurant?.lng,
         };
 
         let courierLocation = {
@@ -349,7 +349,6 @@ const TrackOrderScreen = ({ navigation, route }) => {
                         <Text style={{ fontSize: 12, fontWeight: '500', marginHorizontal: 5, }}>order number</Text>
                     </View>
                 </View>
-
             </View>
         )
     }
@@ -446,13 +445,16 @@ const TrackOrderScreen = ({ navigation, route }) => {
             {RenderOrderStatus()}
 
             {
-                currentStatus < 4 && currentStatus > 1 ? [
-                    RenderMap(),
-                    RenderInfo(),
-                    RenderCourierInfo(),
-                ]
+                currentStatus == 3 ?
+                    [
+                        RenderMap(),
+                        RenderInfo(),
+                        RenderCourierInfo()
+                    ]
                     :
-                    []
+                    [
+                        RenderInfo(),
+                    ]
             }
 
         </View>

@@ -212,7 +212,7 @@ const RestaurantInfoScreen = ({ navigation, route }) => {
                     <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> {cartItems.length} item</Text>
                 }
                 <Text style={{ fontSize: 22, color: COLORS.light, fontWeight: "600" }}> Go To Cart</Text>
-                <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> ${total}</Text>
+                <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> ₽{total}</Text>
             </Pressable>
         )
     }

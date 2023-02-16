@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 import { useAuthContext } from "./AuthContext";
+import firebase from "firebase";
 
 import { db } from "../../config";
 import { useCartContext } from "./CartContext";
@@ -19,24 +20,18 @@ const OrderContextProvider = ({ children }) => {
             db.collection("Orders")
                 .where("userID", "==", dbUserID)
                 .onSnapshot(snapshot => {
-                    setOrders(snapshot.docs.map(doc => doc.data()));
+                    snapshot.docs.map(doc => 
+                        setOrders(snapshot.docs.map(doc => doc.data()))
+                    );
+                   
                 });
-            /* db.collection("Orders").where("userID", "==", dbUserID)
-                .onSnapshot((querySnapshot) => {
-                    const ordersList = [];
-                    querySnapshot.forEach((doc) => {
-                        const order = doc.data()
-                        ordersList.push({ ...order });
-                        setOrders(ordersList)
-                    });
-                }); */
         }
 
     }, [dbUser])
 
     const createOrder = async (isDelivery) => {
         const orderRef = db.collection('Orders').doc();
-    
+
         const newOrder = {
             userID: dbUserID,
             restaurant: restaurant,
@@ -47,14 +42,14 @@ const OrderContextProvider = ({ children }) => {
             userID: dbUserID,
             id: orderRef.id,
         };
-       
+
         await db.collection("Orders").doc(orderRef.id).set({ ...newOrder })
 
         // add all basketDishes to the order
 
         cartItems.map(async (item) => {
             const orderItemRef = db.collection('OrderItems').doc();
-    
+
             const newOrderItem = {
                 quantity: item.quantity,
                 dish: item.dish,
@@ -63,7 +58,7 @@ const OrderContextProvider = ({ children }) => {
                 price: item.price,
                 id: orderItemRef.id
             };
-    
+
             await db.collection("OrderItems").doc(orderItemRef.id).set({ ...newOrderItem })
             await db.collection("CartItem").doc(item.id).delete()
         })

@@ -43,7 +43,7 @@ const CheckoutScreen = ({ navigation, route }) => {
 
     const handlePayment = async () => {
         await createOrder(isDelivery)
-        navigation.navigate("Payment", { isSuccess: isSuccess });
+        navigation.navigate("Payment", { isSuccess: isSuccess, total: finalTotal });
     };
 
     function RenderHeader() {
@@ -308,7 +308,7 @@ const CheckoutScreen = ({ navigation, route }) => {
             <Pressable onPress={handlePayment} style={styles.Payment}>
                 <Text style={{ fontSize: 24, color: COLORS.light, fontWeight: "800" }}>
                     {" "}
-                    Pay {finalTotal}
+                    Pay ₽{finalTotal}
                 </Text>
             </Pressable>
         );
@@ -346,7 +346,7 @@ const CheckoutScreen = ({ navigation, route }) => {
                     }}
                 >
                     <Text style={{ fontSize: 16 }}>Sub Total</Text>
-                    <Text style={{ fontSize: 16 }}>${subTotal}</Text>
+                    <Text style={{ fontSize: 16 }}>₽{subTotal}</Text>
                 </View>
                 <View
                     style={{
@@ -370,7 +370,7 @@ const CheckoutScreen = ({ navigation, route }) => {
                 >
                     <Text style={{ fontSize: 20, fontWeight: "600" }}>Total</Text>
                     <Text style={{ fontSize: 20, fontWeight: "600" }}>
-                        ${finalTotal}
+                        ₽{finalTotal}
                     </Text>
                 </View>
             </View>
