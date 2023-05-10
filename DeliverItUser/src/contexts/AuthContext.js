@@ -30,9 +30,18 @@ const AuthContextProvider = ({ children }) => {
 
     }, [uid]);
 
+    const signOut = () => {
+        auth
+            .signOut()
+            .then(function () {
+                setAuthUser(null)
+                setDbUser(null)
+            })
+            .catch(error => alert(error.message));
+    };
 
     return (
-        <AuthContext.Provider value={{ authUser, dbUser, sub, setDbUser, setAuthUser }}>
+        <AuthContext.Provider value={{ authUser, dbUser, sub, signOut, setDbUser, setAuthUser }}>
             {children}
         </AuthContext.Provider>
     )

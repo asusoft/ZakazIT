@@ -10,7 +10,7 @@ import { useAuthContext } from "../../contexts/AuthContext";
 const Header = () => {
   const drawerIsOpen = useDrawerStatus();
   const navigation = useNavigation();
-  const {dbUser} = useAuthContext();
+  const { dbUser } = useAuthContext();
 
   const onPress = () => {
     navigation.toggleDrawer();
@@ -42,7 +42,7 @@ const Header = () => {
         </Pressable>
         <Pressable style={styles.location}>
           <Text style={styles.locationText} numberOfLines={1}>
-            {dbUser.address}
+            {dbUser?.address}
           </Text>
           <View style={styles.locationIcon}>
             <SimpleLineIcons name="location-pin" size={17} color="black" />
@@ -52,7 +52,7 @@ const Header = () => {
       </View>
       <View style={styles.greetings}>
         <Text style={styles.greetingHeader}>
-          Hello, {dbUser.name}
+          Hello, {dbUser?.name}
         </Text>
         <Text style={styles.greetingSubheader}>what do you want to eat?</Text>
       </View>

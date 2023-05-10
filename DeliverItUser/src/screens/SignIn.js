@@ -1,50 +1,45 @@
 //import liraries
-import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, Alert } from 'react-native';
-import COLORS from '../../assets/constants/colors'
-import Header from '../components/Header';
-import icons from '../../assets/constants/icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import COLORS from "../../assets/constants/colors";
+import Header from "../components/Header";
+import { SafeAreaView } from "react-native-safe-area-context";
 import FormInput from "../components/FormInput";
 
 import { useAuthContext } from "../contexts/AuthContext";
 
-import { auth } from '../../config'
-
+import { auth } from "../../config";
+import { useNavigation } from "@react-navigation/native";
 
 // create a component
-const SignIn = ({ navigation }) => {
-    const user = auth.currentUser;
-
+const SignIn = () => {
+    const navigation = useNavigation();
     const { setAuthUser } = useAuthContext();
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const onSignUp = async () => {
+        navigation.navigate("SignUp");
+    };
+
     const signOut = () => {
-        auth.signOut().then(function () {
-            console.log('Signed out');
-        }).catch(error => alert(error.message))
-    }
+        auth
+            .signOut()
+            .then(function () {
+                console.log("Signed out");
+            })
+            .catch(error => alert(error.message));
+    };
 
     const onSignIn = async () => {
-        auth.signInWithEmailAndPassword(email, password).then(userCredentials => {
-            const user = userCredentials.user;
-            setAuthUser(user)
-            console.log('Signe In with:', user.email);
-        }).catch(error => alert(error.message))
-    }
-
-    const onSignUp = async () => {
-        auth.createUserWithEmailAndPassword(email, password).then(userCredentials => {
-            const user = userCredentials.user;
-            console.log('Created a User In with:', user.email);
-        }).catch(error => alert(error.message))
-    }
-
-    const showUser = () => {
-        alert(user.email)
-    }
+        auth
+            .signInWithEmailAndPassword(email, password)
+            .then(userCredentials => {
+                const user = userCredentials.user;
+                setAuthUser(user);
+            })
+            .catch(error => alert(error.message));
+    };
 
     function RenderHeader() {
         return (
@@ -56,30 +51,7 @@ const SignIn = ({ navigation }) => {
                     marginTop: 10
                 }}
                 titleStyle={{}}
-                leftComponent={
-                    <Pressable
-                        style={{
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 35,
-                            width: 35,
-                            borderRadius: 10,
-                            borderWidth: 2,
-                            borderColor: COLORS.dark,
-                            backgroundColor: COLORS.background
-                        }}
-                        onPress={() => navigation.goBack()}
-                    >
-                        <Image
-                            source={icons.back}
-                            style={{
-                                width: 20,
-                                height: 20,
-                                tintColor: COLORS.dark
-                            }}
-                        />
-                    </Pressable>
-                }
+                leftComponent={<View style={{ width: 40 }} />}
                 rightComponent={<View style={{ width: 40 }} />}
             />
         );
@@ -89,8 +61,8 @@ const SignIn = ({ navigation }) => {
         return (
             <View style={{ marginHorizontal: 20, marginTop: 10 }}>
                 <FormInput
-                    label="Name"
-                    placeholder={email}
+                    label="Email"
+                    placeholder="email.example.com"
                     value={email}
                     inputContainerStyle={{
                         borderColor: COLORS.grey
@@ -99,27 +71,28 @@ const SignIn = ({ navigation }) => {
                         setEmail(value);
                     }}
                 />
-                <FormInput
-                    label="Password"
-                    value={password}
-                    placeholder={password}
-                    inputContainerStyle={{
-                        borderColor: COLORS.grey
-                    }}
-                    onChange={value => {
-                        setPassword(value);
-                    }}
-                />
+                <View style={{ marginTop: 15 }}>
+                    <FormInput
+                        label="Password"
+                        value={password}
+                        placeholder="Password"
+                        inputContainerStyle={{
+                            borderColor: COLORS.grey
+                        }}
+                        onChange={value => {
+                            setPassword(value);
+                        }}
+                    />
+                </View>
             </View>
-        )
+        );
     }
 
     function RenderFooter() {
         return (
-            <Pressable
-                onPress={onSignUp} style={{ bottom: 50, ...styles.Footer }}>
+            <Pressable onPress={onSignIn} style={{ bottom: 50, ...styles.Footer }}>
                 <Text style={{ fontSize: 24, color: COLORS.light, fontWeight: "800" }}>
-                    Sign Up
+                    Sign In
                 </Text>
             </Pressable>
         );
@@ -129,24 +102,19 @@ const SignIn = ({ navigation }) => {
         <SafeAreaView style={styles.container}>
             {RenderHeader()}
             {RenderForm()}
-            <Pressable onPress={signOut}>
-                <Text>SignOut</Text>
-            </Pressable>
 
-            <Pressable onPress={showUser}>
-                <Text>Show User</Text>
-            </Pressable>
-
-            <Pressable onPress={onSignIn} style={{
-                bottom: 150, ...styles.Footer
-            }}>
-                <Text style={{ fontSize: 24, color: COLORS.light, fontWeight: "800" }}>
-                    Sign In
-                </Text>
-            </Pressable>
+            <View
+                style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25 }}
+            >
+                <Text style={{ fontSize: 16 }}>New to ЗаказIT? </Text>
+                <Pressable onPress={onSignUp}>
+                    <Text style={{ fontSize: 16, color: COLORS.primary }}>
+                        Sign Up here
+                    </Text>
+                </Pressable>
+            </View>
 
             {RenderFooter()}
-
         </SafeAreaView>
     );
 };
@@ -155,7 +123,7 @@ const SignIn = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.background,
+        backgroundColor: COLORS.background
     },
     Footer: {
         position: "absolute",

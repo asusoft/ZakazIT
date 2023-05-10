@@ -65,10 +65,10 @@ const DrawerNavigation = ({ selectedTab, setSelectedTab }) => {
                     name="Home"
                     options={{
                         title: 'Home',
-                        drawerIcon: ({color}) => (
-                          <Image source={icons.home} style={{tintColor: color, ...styles.drawerImage}} />
+                        drawerIcon: ({ color }) => (
+                            <Image source={icons.home} style={{ tintColor: color, ...styles.drawerImage }} />
                         ),
-                      }}>
+                    }}>
                     {props => (
                         <DrawerView styler={styles.container}>
                             <HomeScreen {...props} />
@@ -79,8 +79,8 @@ const DrawerNavigation = ({ selectedTab, setSelectedTab }) => {
                     name="Restaurant"
                     options={{
                         drawerItemStyle: { display: 'none' }
-                      }}
-                      >
+                    }}
+                >
                     {props => (
                         <DrawerView styler={styles.container}>
                             <RestaurantStackNavigator {...props} />
@@ -91,10 +91,10 @@ const DrawerNavigation = ({ selectedTab, setSelectedTab }) => {
                     name="Favorites"
                     options={{
                         title: 'Favorites',
-                        drawerIcon: ({color}) => (
-                          <Image source={icons.heart} style={{tintColor: color, ...styles.drawerImage}} />
+                        drawerIcon: ({ color }) => (
+                            <Image source={icons.heart} style={{ tintColor: color, ...styles.drawerImage }} />
                         ),
-                      }}>
+                    }}>
                     {props => (
                         <DrawerView styler={styles.container}>
                             <Favorites {...props} />
@@ -105,10 +105,10 @@ const DrawerNavigation = ({ selectedTab, setSelectedTab }) => {
                     name="Cart"
                     options={{
                         title: 'My Cart',
-                        drawerIcon: ({color}) => (
-                          <Image source={icons.cart} style={{tintColor: color, ...styles.drawerImage}} />
+                        drawerIcon: ({ color }) => (
+                            <Image source={icons.cart} style={{ tintColor: color, ...styles.drawerImage }} />
                         ),
-                      }}>
+                    }}>
                     {props => (
                         <DrawerView styler={styles.container}>
                             <CartStackNavigator {...props} />
@@ -120,7 +120,7 @@ const DrawerNavigation = ({ selectedTab, setSelectedTab }) => {
                     name="Payment"
                     options={{
                         drawerItemStyle: { display: 'none' }
-                      }}>
+                    }}>
                     {props => (
                         <DrawerView styler={styles.container}>
                             <Payment {...props} />
@@ -131,10 +131,10 @@ const DrawerNavigation = ({ selectedTab, setSelectedTab }) => {
                     name="Orders"
                     options={{
                         title: 'My Orders',
-                        drawerIcon: ({color}) => (
-                          <Image source={icons.list} style={{tintColor: color, ...styles.drawerImage}} />
+                        drawerIcon: ({ color }) => (
+                            <Image source={icons.list} style={{ tintColor: color, ...styles.drawerImage }} />
                         ),
-                      }}>
+                    }}>
                     {props => (
                         <DrawerView styler={styles.container}>
                             <OrdersStackNavigator {...props} />
@@ -145,28 +145,13 @@ const DrawerNavigation = ({ selectedTab, setSelectedTab }) => {
                     name="Profile"
                     options={{
                         title: 'My Profile',
-                        drawerIcon: ({color}) => (
-                          <Image source={icons.cards} style={{tintColor: color, ...styles.drawerImage}} />
+                        drawerIcon: ({ color }) => (
+                            <Image source={icons.cards} style={{ tintColor: color, ...styles.drawerImage }} />
                         ),
-                      }}>
+                    }}>
                     {props => (
                         <DrawerView styler={styles.container}>
                             <ProfileStackNavigator {...props} />
-                        </DrawerView>
-                    )}
-                </Drawer.Screen>
-
-                <Drawer.Screen
-                    name="SignIn"
-                    options={{
-                        title: 'Sign In',
-                        drawerIcon: ({color}) => (
-                          <Image source={icons.home} style={{tintColor: color, ...styles.drawerImage}} />
-                        ),
-                      }}>
-                    {props => (
-                        <DrawerView styler={styles.container}>
-                            <SignIn {...props} />
                         </DrawerView>
                     )}
                 </Drawer.Screen>
@@ -220,7 +205,7 @@ const OrdersStackNavigator = () => {
     return (
         <OrdersStack.Navigator
             screenOptions={{ headerShown: false }}
-            initialRouteName= "OrdersScreen"
+            initialRouteName="OrdersScreen"
         >
             <OrdersStack.Screen
                 name="OrdersScreen"
@@ -244,7 +229,7 @@ const ProfileStackNavigator = () => {
     return (
         <ProfileStack.Navigator
             screenOptions={{ headerShown: false }}
-            initialRouteName= "Profile"
+            initialRouteName="Profile"
         >
             <ProfileStack.Screen
                 name="Profile"
@@ -273,5 +258,5 @@ const styles = StyleSheet.create({
     drawerImage: {
         width: 25,
         height: 25,
-      },
+    },
 }); 
