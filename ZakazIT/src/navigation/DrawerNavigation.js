@@ -20,7 +20,7 @@ import COLORS from '../../assets/constants/colors';
 import icons from "../../assets/constants/icons";
 import Favorites from "../screens/Favorites";
 import ProfileScreen from "../screens/ProfileScreen";
-import SignIn from "../screens/SignIn";
+import CartList from "../screens/CartList";
 
 const Drawer = createDrawerNavigator();
 
@@ -104,7 +104,7 @@ const DrawerNavigation = ({ selectedTab, setSelectedTab }) => {
                 <Drawer.Screen
                     name="Cart"
                     options={{
-                        title: 'My Cart',
+                        title: 'My Carts',
                         drawerIcon: ({ color }) => (
                             <Image source={icons.cart} style={{ tintColor: color, ...styles.drawerImage }} />
                         ),
@@ -186,8 +186,12 @@ const CartStackNavigator = () => {
     return (
         <CartStack.Navigator
             screenOptions={{ headerShown: false }}
-            initialRouteName="CartScreen"
+            initialRouteName="CartList"
         >
+            <CartStack.Screen
+                name="CartList"
+                component={CartList}
+            />
             <CartStack.Screen
                 name="CartScreen"
                 component={CartScreen}
@@ -229,10 +233,10 @@ const ProfileStackNavigator = () => {
     return (
         <ProfileStack.Navigator
             screenOptions={{ headerShown: false }}
-            initialRouteName="Profile"
+            initialRouteName="ProfileScreen"
         >
             <ProfileStack.Screen
-                name="Profile"
+                name="ProfileScreen"
                 component={ProfileScreen}
             />
             <ProfileStack.Screen

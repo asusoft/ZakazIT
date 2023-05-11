@@ -4,65 +4,23 @@ import { View, Text, StyleSheet, Pressable, Image, Alert } from 'react-native';
 import COLORS from '../../assets/constants/colors'
 import Header from '../components/Header';
 import icons from '../../assets/constants/icons';
+import { useDrawerStatus } from "@react-navigation/drawer";
 import { SafeAreaView } from 'react-native-safe-area-context';
-import FormInput from "../components/FormInput";
 
 import { db, auth } from '../../config';
 import { useAuthContext } from '../contexts/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 // create a component
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = () => {
     const { dbUser } = useAuthContext();
-    const [name, setName] = useState(dbUser?.name || "");
-    const [address, setAddress] = useState(dbUser?.address || "");
-    const [lng, setLng] = useState(dbUser?.lng + "" || "0");
-    const [lat, setLat] = useState(dbUser?.lat + "" || "0");
-
-    const { sub, setDbUser } = useAuthContext();
-
-    const onSave = async () => {
-        await createUser()
-
-        navigation.goBack()
-    }
-
-    /* const updateUser = async () => {
-        try {
-            const user = await DataStore.save(
-                User.copyOf(dbUser, (updated) => {
-                    updated.name = name;
-                    updated.address = address;
-                    updated.lat = parseFloat(lat);
-                    updated.lng = parseFloat(lng);
-                })
-            )
-            setDbUser(user);
-        } catch (error) {
-            Alert.alert("Error", error.message);
-        }
-    } */
-
-    const createUser = async () => {
-
-        db.collection("User").add({
-            name: name,
-            address: address,
-            lat: parseFloat(lat),
-            lng: parseFloat(lng),
-            sub: sub
-        })
-            .then((docRef) => {
-                setDbUser(docRef);;
-            })
-            .catch((error) => {
-                console.error("Error adding document: ", error);
-            });
-    }
+    const drawerIsOpen = useDrawerStatus();
+    const navigation = useNavigation();
 
     function RenderHeader() {
         return (
             <Header
-                title="PROFILE"
+                title="MY PROFILE"
                 containerStyle={{
                     height: 50,
                     marginHorizontal: 20,
@@ -81,10 +39,10 @@ const ProfileScreen = ({ navigation }) => {
                             borderColor: COLORS.dark,
                             backgroundColor: COLORS.background
                         }}
-                        onPress={() => navigation.goBack()}
+                        onPress={() => navigation.toggleDrawer()}
                     >
                         <Image
-                            source={icons.back}
+                            source={drawerIsOpen === "closed" ? icons.menu : icons.cross}
                             style={{
                                 width: 20,
                                 height: 20,
@@ -98,83 +56,9 @@ const ProfileScreen = ({ navigation }) => {
         );
     }
 
-    function RenderForm() {
-        return (
-            <View style={{ marginHorizontal: 20, marginTop: 10 }}>
-                <FormInput
-                    label="Name"
-                    placeholder={name}
-                    value={name}
-                    inputContainerStyle={{
-                        borderColor: COLORS.grey
-                    }}
-                    onChange={value => {
-                        setName(value);
-                    }}
-                />
-                <FormInput
-                    label="Address"
-                    value={address}
-                    placeholder={address}
-                    inputContainerStyle={{
-                        borderColor: COLORS.grey
-                    }}
-                    onChange={value => {
-                        setAddress(value);
-                    }}
-                />
-                <View style={{ flexDirection: 'row', marginTop: 15 }}>
-                    <FormInput
-                        label="Latitude"
-                        keyboardType="number-pad"
-                        value={lat}
-                        placeholder={lat}
-                        containerStyle={{
-                            flex: 1,
-                        }}
-                        inputContainerStyle={{
-                            borderColor: COLORS.grey
-                        }}
-                        onChange={value => {
-                            setLat(value);
-                        }}
-                    />
-                    <FormInput
-                        label="Longitude"
-                        value={lng}
-                        placeholder={lng}
-                        keyboardType="number-pad"
-                        containerStyle={{
-                            flex: 1,
-                            marginLeft: 10,
-                        }}
-                        inputContainerStyle={{
-                            borderColor: COLORS.grey
-                        }}
-                        onChange={value => {
-                            setLng(value);
-                        }}
-                    />
-                </View>
-            </View>
-        )
-    }
-
-    function RenderFooter() {
-        return (
-            <Pressable onPress={onSave} style={styles.Footer}>
-                <Text style={{ fontSize: 24, color: COLORS.light, fontWeight: "800" }}>
-                    Save
-                </Text>
-            </Pressable>
-        );
-    }
-
     return (
         <SafeAreaView style={styles.container}>
             {RenderHeader()}
-            {RenderForm()}
-            {RenderFooter()}
         </SafeAreaView>
     );
 };

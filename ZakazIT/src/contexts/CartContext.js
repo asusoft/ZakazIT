@@ -11,6 +11,7 @@ const CartContextProvider = ({ children }) => {
     const [restaurant, setRestaurant] = useState(null);
     const [cart, setCart] = useState(null);
     const [cartItems, setCartItems] = useState([]);
+    const [userCarts, setUserCarts] = useState([]);
 
     const dbUserID = dbUser?.id
     const cartRestaurantID = restaurant?.id
@@ -19,6 +20,30 @@ const CartContextProvider = ({ children }) => {
         (sum, cartItem) => sum + cartItem.price, 0
     )
 
+    React.useEffect(() => {
+        setUserCarts(null)
+        if (dbUser) {
+            db.collection("Cart").where("userID", "==", dbUser?.id)
+                .onSnapshot((querySnapshot) => {
+                    const cartList = [];
+                    querySnapshot.forEach((doc) => {
+                        const itemID = doc.id;
+                        const item = doc.data()
+                        db.collection("Restaurant").doc(item.restaurantID).get()
+                            .then((doc) => {
+                                if (doc.exists) {
+                                    const restaurantData = doc.data()
+                                    const restaurantObject = { ...restaurantData, id: doc.id };
+                                    cartList.push({ ...item, id: itemID.toString(), restaurant: restaurantObject });
+                                }
+                            }).catch((error) => {
+                                console.log("Error getting document:", error);
+                            });
+                    });
+                    setUserCarts(cartList)
+                });
+        }
+    }, [dbUser])
 
     React.useEffect(() => {
         setCart(null)
@@ -123,7 +148,7 @@ const CartContextProvider = ({ children }) => {
         if (!snapshot.empty) {
             const itemRef = snapshot.docs[0].ref;
             const itemQuantity = snapshot.docs[0].data().quantity;
-            if(itemQuantity < 99) {
+            if (itemQuantity < 99) {
                 const updatedQuantity = itemQuantity + 1;
                 const updatedPrice = size.price * updatedQuantity;
                 await itemRef.update({ quantity: updatedQuantity, price: updatedPrice });
@@ -139,7 +164,7 @@ const CartContextProvider = ({ children }) => {
             const itemRef = snapshot.docs[0].ref;
             const itemQuantity = snapshot.docs[0].data().quantity;
 
-            if(itemQuantity > 1) {
+            if (itemQuantity > 1) {
                 const updatedQuantity = itemQuantity - 1;
                 const updatedPrice = size.price * updatedQuantity;
                 await itemRef.update({ quantity: updatedQuantity, price: updatedPrice });
@@ -150,12 +175,33 @@ const CartContextProvider = ({ children }) => {
     const onRemove = async (cartItem_ID) => {
         await db.collection("CartItem").doc(cartItem_ID).delete()
 
-        let newLength = cartItems.length -1;
-        if(newLength < 1){
+        let newLength = cartItems.length - 1;
+        if (newLength < 1) {
             await db.collection("Cart").doc(cart.id).delete()
+            setCart(null)
         }
     }
 
+    const deleteCart = async (cart_ID) => {
+        try {
+            // Delete the cart document
+            await db.collection("Cart").doc(cart_ID).delete();
+
+            // Delete the cart items associated with the cart
+            const cartItemsSnapshot = await db.collection("CartItem").where("cartID", "==", cart_ID).get();
+            const deletePromises = [];
+
+            cartItemsSnapshot.forEach((doc) => {
+                const cartItemID = doc.id;
+                const deletePromise = db.collection("CartItem").doc(cartItemID).delete();
+                deletePromises.push(deletePromise);
+            });
+
+            await Promise.all(deletePromises);
+        } catch (error) {
+            console.error("Error deleting cart and cart items:", error);
+        }
+    }
     return (
         <CartContext.Provider
             value={{
@@ -165,9 +211,11 @@ const CartContextProvider = ({ children }) => {
                 cartItems,
                 restaurant,
                 total,
+                userCarts,
                 onPlus,
-                onMinus, 
-                onRemove
+                onMinus,
+                onRemove,
+                deleteCart
             }}
         >
             {children}

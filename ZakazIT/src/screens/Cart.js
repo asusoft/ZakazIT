@@ -15,7 +15,7 @@ import { useOrderContext } from '../contexts/OrderContext';
 const CartScreen = ({ navigation }) => {
 
     const [cart, setCart] = useState(dummyData.cart)
-    const { cartItems, total, onPlus, onMinus, onRemove, restaurant} = useCartContext();
+    const { cartItems, total, onPlus, onMinus, onRemove, restaurant } = useCartContext();
     const { createOrder } = useOrderContext
 
     const [cartDishes, setCartDishes] = useState(null)
@@ -27,24 +27,24 @@ const CartScreen = ({ navigation }) => {
 
     const handleRemoveFromCart = async (itemID) => {
         await onRemove(itemID);
-        let newLength = cartItems.length -1
-        if(newLength < 1){
+        let newLength = cartItems.length - 1
+        if (newLength < 1) {
             navigation.goBack()
         }
     };
 
-    const onIncrease =  async (itemID, size) => {
+    const onIncrease = async (itemID, size) => {
         await onPlus(itemID, size);
     }
 
-    const onDecrease =  async (itemID, size) => {
+    const onDecrease = async (itemID, size) => {
         await onMinus(itemID, size);
     }
 
     function RenderHeader() {
         return (
             <Header
-                title="MY CART"
+                title={restaurant.name}
                 containerStyle={{
                     height: 50,
                     marginHorizontal: 20,
@@ -146,17 +146,17 @@ const CartScreen = ({ navigation }) => {
                                     {data.item.dish.name}
                                 </Text>
                                 <Text style={{ color: COLORS.primary }}>
-                                ₽{data.item.price}
+                                    ₽{data.item.price}
                                 </Text>
                                 <Text style={{ color: COLORS.black }}>
-                                {data.item.size.name}
+                                    {data.item.size.name}
                                 </Text>
                             </View>
                             {/* Quantity */}
 
                             <View style={{ width: 80, height: 60, marginLeft: 10, marginRight: 10, borderRadius: 10, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
                                 <Pressable
-                                   onPress={() => onDecrease(data.item.id, data.item.size)} >
+                                    onPress={() => onDecrease(data.item.id, data.item.size)} >
                                     <Image
                                         source={icons.minus}
                                         style={{
@@ -205,7 +205,7 @@ const CartScreen = ({ navigation }) => {
     }
 
     const checkout = () => {
-        navigation.navigate("CheckoutScreen", {restaurant: restaurant, total: total})
+        navigation.navigate("CheckoutScreen", { restaurant: restaurant, total: total })
     }
 
     function RenderChooseRestaurant() {

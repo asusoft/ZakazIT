@@ -19,7 +19,7 @@ const RestaurantInfoScreen = ({ navigation, route }) => {
 
     const { setRestaurant: setCartRestaurant, cart, cartItems, total } = useCartContext();
 
-    
+
     React.useEffect(() => {
         setCartRestaurant(null);
         db.collection("Restaurant").doc(restaurant_ID)
@@ -51,9 +51,9 @@ const RestaurantInfoScreen = ({ navigation, route }) => {
     }
     const goToCart = () => {
         navigation.navigate('Cart', {
-            screen: 'CartScreen', 
-            params: { cartID: cart.id},
-          });
+            screen: 'CartScreen',
+            params: { cartID: cart.id },
+        });
     }
 
     const scrollY = useRef(new Animated.Value(0)).current;
