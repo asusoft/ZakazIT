@@ -13,7 +13,7 @@ const MenuItem = ({ item }) => {
     return (
         <Pressable onPress={() =>
             navigation.navigate('DishInfoScreen',
-                { dish_ID: item.id}
+                { dish_ID: item.id }
             )
         }
             style={styles.container}>
@@ -22,8 +22,7 @@ const MenuItem = ({ item }) => {
             </View>
             <View style={styles.itemInfo}>
                 <Text style={styles.itemName}>{item.name}</Text>
-                <Text style={styles.itemDescription} numberOfLines={1}>{item.description}</Text>
-                <Text style={styles.itemPrice}>$</Text>
+                <Text style={styles.itemDescription} numberOfLines={2}>{item.description}</Text>
             </View>
             <View style={styles.itemOptions}>
                 <TouchableOpacity style={styles.like}>

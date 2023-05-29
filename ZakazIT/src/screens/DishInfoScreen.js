@@ -21,15 +21,15 @@ const DishInfoScreen = () => {
     const [price, setPrice] = useState(null);
     const [size, setSize] = useState(sizes[parseInt(selectedSize)] || {})
 
-    const {addDishToCart} = useCartContext();
+    const { addDishToCart } = useCartContext();
 
     React.useEffect(() => {
         db.collection("Dish").doc(dish_ID)
-        .onSnapshot((doc) => {
-            const dishData = doc.data()
-            const dishObject = { ...dishData, id: dish_ID };
-            setDish(dishObject)
-        });
+            .onSnapshot((doc) => {
+                const dishData = doc.data()
+                const dishObject = { ...dishData, id: dish_ID };
+                setDish(dishObject)
+            });
 
         db.collection("Sizes").where("dishID", "==", dish_ID)
             .onSnapshot((querySnapshot) => {
@@ -68,7 +68,7 @@ const DishInfoScreen = () => {
     }, [selectedSize])
 
 
-    const handleAddToCart =  async () => {
+    const handleAddToCart = async () => {
         await addDishToCart(dish, size, quantity);
         navigation.goBack()
     }
@@ -234,10 +234,7 @@ const DishInfoScreen = () => {
                     <Text style={{ fontSize: 20, fontWeight: "800", marginBottom: 10 }}>{dish.name}</Text>
                     <Text style={{ fontSize: 16, }}>{dish.description}</Text>
                     <View style={{ marginTop: 30, flexDirection: 'row' }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600", }}>{price}</Text>
-                        <Text style={{ fontSize: 20, fontWeight: "600", marginLeft: 10 }}>{price}</Text>
-                        <Text style={{ fontSize: 20, fontWeight: "600", marginLeft: 10 }}>{price}</Text>
-                        <Text style={{ fontSize: 20, fontWeight: "600", marginLeft: 10 }}>{price}</Text>
+                        <Text style={{ fontSize: 20, fontWeight: "600", }}>₽ {price}</Text>
                     </View>
                     {RenderSizes()}
                 </View>
