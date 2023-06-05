@@ -21,6 +21,7 @@ import icons from "../../assets/constants/icons";
 import Favorites from "../screens/Favorites";
 import ProfileScreen from "../screens/ProfileScreen";
 import CartList from "../screens/CartList";
+import EditProfile from "../screens/EditProfile"
 
 const Drawer = createDrawerNavigator();
 
@@ -246,6 +247,10 @@ const ProfileStackNavigator = () => {
             <ProfileStack.Screen
                 name="AddCardScreen"
                 component={AddCardScreen}
+            />
+            <ProfileStack.Screen
+                name="EditProfile"
+                component={EditProfile}
             />
         </ProfileStack.Navigator>
     );

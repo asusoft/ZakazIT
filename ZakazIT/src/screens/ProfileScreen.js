@@ -59,6 +59,12 @@ const ProfileScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             {RenderHeader()}
+            <Pressable onPress={() => navigation.push("CardScreen")}>
+                <Text>Go to cards Screen</Text>
+            </Pressable>
+            <Pressable onPress={() => navigation.push("EditProfile")}>
+                <Text>Edit Profile</Text>
+            </Pressable>
         </SafeAreaView>
     );
 };

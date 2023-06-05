@@ -15,8 +15,6 @@ const EditProfile = ({ navigation }) => {
     const { dbUser } = useAuthContext();
     const [name, setName] = useState(dbUser?.name || "");
     const [address, setAddress] = useState(dbUser?.address || "");
-    const [lng, setLng] = useState(dbUser?.lng + "" || "0");
-    const [lat, setLat] = useState(dbUser?.lat + "" || "0");
 
     const { sub, setDbUser } = useAuthContext();
 
@@ -62,7 +60,7 @@ const EditProfile = ({ navigation }) => {
     function RenderHeader() {
         return (
             <Header
-                title="PROFILE"
+                title="EDIT PROFILE"
                 containerStyle={{
                     height: 50,
                     marginHorizontal: 20,
@@ -123,39 +121,6 @@ const EditProfile = ({ navigation }) => {
                         setAddress(value);
                     }}
                 />
-                <View style={{ flexDirection: 'row', marginTop: 15 }}>
-                    <FormInput
-                        label="Latitude"
-                        keyboardType="number-pad"
-                        value={lat}
-                        placeholder={lat}
-                        containerStyle={{
-                            flex: 1,
-                        }}
-                        inputContainerStyle={{
-                            borderColor: COLORS.grey
-                        }}
-                        onChange={value => {
-                            setLat(value);
-                        }}
-                    />
-                    <FormInput
-                        label="Longitude"
-                        value={lng}
-                        placeholder={lng}
-                        keyboardType="number-pad"
-                        containerStyle={{
-                            flex: 1,
-                            marginLeft: 10,
-                        }}
-                        inputContainerStyle={{
-                            borderColor: COLORS.grey
-                        }}
-                        onChange={value => {
-                            setLng(value);
-                        }}
-                    />
-                </View>
             </View>
         )
     }

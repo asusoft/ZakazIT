@@ -20,27 +20,27 @@ export default function HomeScreen() {
 
   React.useEffect(() => {
     db.collection("Restaurant")
-    .onSnapshot((querySnapshot) => {
-      const restaurantList = [];
+      .onSnapshot((querySnapshot) => {
+        const restaurantList = [];
         querySnapshot.forEach((doc) => {
           const resID = doc.id;
           const rest = doc.data()
-          restaurantList.push({...rest, id: resID.toString()});
+          restaurantList.push({ ...rest, id: resID.toString() });
           setRestaurants(restaurantList)
         });
-    });
+      });
 
     db.collection("Categories")
-    .onSnapshot((querySnapshot) => {
-      const categoriesList = [];
+      .onSnapshot((querySnapshot) => {
+        const categoriesList = [];
         querySnapshot.forEach((doc) => {
           const catID = doc.id;
           const cat = doc.data()
-          categoriesList.push({...cat, id: catID.toString()});
+          categoriesList.push({ ...cat, id: catID.toString() });
           setCategories(categoriesList)
         });
-    });
-    
+      });
+
 
   }, [])
 
@@ -48,7 +48,7 @@ export default function HomeScreen() {
     <SafeAreaView style={[styles.container, styles.droidSafeArea]}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header profile={profile.myProfile} />
-        <SearchBar />
+        {/*<SearchBar />*/}
         <View>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingRight: 20, marginBottom: 10 }}>
             <Text style={styles.SectionHeader}>Explore Catergories</Text>

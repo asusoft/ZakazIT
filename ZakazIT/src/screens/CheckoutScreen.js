@@ -19,7 +19,7 @@ import { useOrderContext } from "../contexts/OrderContext";
 
 // create a component
 const CheckoutScreen = ({ navigation, route }) => {
-    const {dbUser} =useAuthContext();
+    const { dbUser } = useAuthContext();
     const { restaurant, total } = route.params
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("1");
     const [isDelivery, setIsDelivery] = useState(true);
@@ -31,7 +31,7 @@ const CheckoutScreen = ({ navigation, route }) => {
     const deliveryFee = isDelivery ? restaurant.deliveryFee : 0;
     const finalTotal = subTotal + deliveryFee
 
-    
+
     const ref = useRef();
     React.useEffect(() => {
         ref.current?.scrollToIndex({
@@ -357,7 +357,7 @@ const CheckoutScreen = ({ navigation, route }) => {
                     }}
                 >
                     <Text style={{ fontSize: 16 }}>Delivery fee</Text>
-                    <Text style={{ fontSize: 16 }}>{deliveryFee}</Text>
+                    <Text style={{ fontSize: 16 }}>₽{deliveryFee}</Text>
                 </View>
                 <View
                     style={{

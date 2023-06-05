@@ -19,8 +19,8 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const [lng, setLng] = useState("0");
-  const [lat, setLat] = useState("0");
+  const [lng, setLng] = useState("44.52833");
+  const [lat, setLat] = useState("48.71391");
 
   const navigation = useNavigation();
 
@@ -28,20 +28,20 @@ const SignUp = () => {
 
   const onSave = async () => {
     {
-        password === password2 ? await SignUp() : alert("Password Does not Match")
+      password === password2 ? await SignUp() : alert("Password Does not Match")
     }
 
   };
 
   const SignUp = async () => {
     auth.createUserWithEmailAndPassword(email, password).then(userCredentials => {
+      const user = userCredentials.user;
+    }).catch(error => alert(error.message)).then(() => {
+      auth.signInWithEmailAndPassword(email, password).then(async userCredentials => {
         const user = userCredentials.user;
-    }).catch(error => alert(error.message)).then(() =>{
-        auth.signInWithEmailAndPassword(email, password).then(async userCredentials => {
-            const user = userCredentials.user;
-            setAuthUser(user)
-            await createUser(user.uid)
-        }).catch(error => alert(error.message))
+        setAuthUser(user)
+        await createUser(user.uid)
+      }).catch(error => alert(error.message))
     })
   };
 
@@ -148,40 +148,6 @@ const SignUp = () => {
             }}
             onChange={(value) => {
               setPassword2(value);
-            }}
-          />
-        </View>
-
-        <View style={{ flexDirection: "row", marginTop: 15 }}>
-          <FormInput
-            label="Latitude"
-            keyboardType="number-pad"
-            value={lat}
-            placeholder="Lat"
-            containerStyle={{
-              flex: 1
-            }}
-            inputContainerStyle={{
-              borderColor: COLORS.grey
-            }}
-            onChange={(value) => {
-              setLat(value);
-            }}
-          />
-          <FormInput
-            label="Longitude"
-            value={lng}
-            placeholder="Lng"
-            keyboardType="number-pad"
-            containerStyle={{
-              flex: 1,
-              marginLeft: 10
-            }}
-            inputContainerStyle={{
-              borderColor: COLORS.grey
-            }}
-            onChange={(value) => {
-              setLng(value);
             }}
           />
         </View>
