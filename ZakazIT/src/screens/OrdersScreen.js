@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, ActivityIndicator , ScrollView, FlatList} from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, ActivityIndicator, ScrollView, FlatList } from 'react-native';
 import COLORS from '../../assets/constants/colors';
 import icons from '../../assets/constants/icons';
 import OrderList from '../components/OrderScreenComponents/OrderList';
@@ -57,7 +57,7 @@ const OrdersScreen = ({ navigation }) => {
     if (!orders) {
         return (
             <View style={styles.loading}>
-                <ActivityIndicator size={"large"} color={COLORS.primary} />
+                <Text>You don't have any order yet</Text>
             </View>)
     } else return (
         <SafeAreaView style={styles.container}>

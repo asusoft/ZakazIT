@@ -6,14 +6,20 @@ import Header from '../components/Header';
 import icons from '../../assets/constants/icons';
 import { useDrawerStatus } from "@react-navigation/drawer";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 import { db, auth } from '../../config';
 import { useAuthContext } from '../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
+import { useOrderContext } from '../contexts/OrderContext';
 
+import images from "../../assets/constants/images";
 // create a component
 const ProfileScreen = () => {
     const { dbUser } = useAuthContext();
+    const { orders } = useOrderContext();
+
+
     const drawerIsOpen = useDrawerStatus();
     const navigation = useNavigation();
 
@@ -59,12 +65,90 @@ const ProfileScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             {RenderHeader()}
-            <Pressable onPress={() => navigation.push("CardScreen")}>
-                <Text>Go to cards Screen</Text>
-            </Pressable>
-            <Pressable onPress={() => navigation.push("EditProfile")}>
-                <Text>Edit Profile</Text>
-            </Pressable>
+
+            <View style={{
+                flex: 1,
+                backgroundColor: COLORS.background,
+                alignItems: "center",
+            }}>
+
+                <View style={{
+                    backgroundColor: COLORS.primary,
+                    height: "100%",
+                    width: "100%",
+                    top: 125,
+                    paddingTop: 100,
+                    alignItems: "center"
+                }}>
+                    <Text style={{ fontSize: 30, fontWeight: "700" }}>{dbUser?.name}</Text>
+                    <SimpleLineIcons name="location-pin" size={15} color="white">
+                        <Text style={{ fontSize: 16, fontWeight: "600", marginBottom: 10 }}> {dbUser?.address}</Text>
+                    </SimpleLineIcons>
+
+                    <View style={{
+                        width: "100%",
+                        paddingTop: 20,
+                        alignItems: "center",
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                    }}>
+                        <Pressable
+                            style={{
+                                height: 100,
+                                width: 100,
+                                borderRadius: 20,
+                                backgroundColor: COLORS.secondary,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginRight: 25
+                            }}
+                            onPress={() => navigation.push("CardScreen")}
+                        >
+                            <Text>MY CARDS</Text>
+                        </Pressable>
+                        <Pressable
+                            style={{
+                                height: 100,
+                                width: 100,
+                                borderRadius: 20,
+                                backgroundColor: COLORS.secondary,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginRight: 25
+                            }}>
+                            <Text>ORDERS</Text>
+                            <Text>{orders?.length}</Text>
+                        </Pressable>
+                        <Pressable
+                            style={{
+                                height: 100,
+                                width: 100,
+                                borderRadius: 20,
+                                backgroundColor: COLORS.secondary,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                            onPress={() => navigation.push("EditProfile")}>
+                            <Text>Edit Profile</Text>
+                        </Pressable>
+
+                    </View>
+
+
+                </View>
+                <Image resizeMode='stretch' style={{
+                    position: 'absolute',
+                    top: 10,
+                    height: 200,
+                    width: 200,
+                    borderRadius: 100,
+                    backgroundColor: COLORS.secondary,
+
+                }} source={images.profile} />
+
+            </View>
+
+
         </SafeAreaView>
     );
 };

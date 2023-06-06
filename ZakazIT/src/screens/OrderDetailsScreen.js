@@ -26,15 +26,15 @@ const OrderdetailsScreen = ({ navigation, route }) => {
 
     React.useEffect(() => {
         db.collection("OrderItems").where("orderID", "==", order.id)
-        .onSnapshot((querySnapshot) => {
-            const itemList = [];
-            querySnapshot.forEach((doc) => {
-                const itemID = doc.id;
-                const item = doc.data()
-                itemList.push({ ...item, id: itemID.toString() });
+            .onSnapshot((querySnapshot) => {
+                const itemList = [];
+                querySnapshot.forEach((doc) => {
+                    const itemID = doc.id;
+                    const item = doc.data()
+                    itemList.push({ ...item, id: itemID.toString() });
+                });
+                setOrderItems(itemList)
             });
-            setOrderItems(itemList)
-        });
     }, [order])
 
     function RenderHeader() {
@@ -145,7 +145,7 @@ const OrderdetailsScreen = ({ navigation, route }) => {
                                 Payment method
                             </Text>
                             <Text style={{ right: 0, fontSize: 14, fontWeight: "600" }}>
-                                order.paymentMethod
+                                Master Card 5809
                             </Text>
                         </View>
                     </View>

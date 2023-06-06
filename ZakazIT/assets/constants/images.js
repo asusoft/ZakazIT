@@ -7,6 +7,7 @@ const mir_card = require('../images/mir_card.png');
 const master_card = require('../images/master_card.png');
 const visa_card = require('../images/visa_card.png');
 const burger = require('../images/burger.png');
+const profile = require('../images/profile.jpg');
 
 
 export default {
@@ -18,5 +19,6 @@ export default {
     mir_card,
     master_card,
     visa_card,
-    burger
+    burger,
+    profile
 }
